@@ -3,151 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BoxMining Sunucusu | Sınırları Zorla</title>
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <title>BoxMining | Sınırları Zorla</title>
+    <meta name="description" content="BoxMining Minecraft Sunucusu - Lagsız, keyifli ve kaliteli survival deneyimi!">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #f1c40f;
             --secondary: #e67e22;
-            --dark: #121212;
-            --card-bg: #1e1e1e;
-            --text: #ffffff;
+            --dark: #0f0f0f;
+            --card: #1a1a1a;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--dark);
-            color: var(--text);
-            margin: 0;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: #eee;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         header {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://unsplash.com') center/cover;
-            height: 400px;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1611996575749-79a3ae8e0c9d?w=1920') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            animation: fadeIn 1.5s ease-in;
+            position: relative;
         }
 
-        .container { width: 85%; margin: auto; padding: 20px; }
+        .header-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--primary), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .header-content p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
 
         .ip-box {
             background: var(--primary);
             color: #000;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
-            transition: 0.3s;
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(241, 196, 15, 0.4);
         }
 
-        .ip-box:hover { transform: scale(1.05); background: var(--secondary); }
+        .ip-box:hover {
+            transform: scale(1.08) translateY(-5px);
+            background: #fff;
+            box-shadow: 0 15px 40px rgba(241, 196, 15, 0.6);
+        }
+
+        .section {
+            padding: 80px 5%;
+        }
 
         .section-title {
             text-align: center;
-            margin: 40px 0;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
             color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
             text-align: center;
-            border-bottom: 4px solid var(--primary);
-            transition: 0.3s;
-            animation: slideUp 0.8s ease-out;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
         }
 
-        .card:hover { transform: translateY(-10px); background: #252525; }
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(241, 196, 15, 0.15);
+        }
 
-        .price { font-size: 1.5rem; color: #2ecc71; font-weight: bold; margin-top: 10px; }
+        .card h3 {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            color: #fff;
+        }
 
-        footer { text-align: center; padding: 30px; background: #0a0a0a; color: #777; }
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2ecc71;
+            margin: 15px 0;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #0a0a0a;
+            color: #666;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(241, 196, 15, 0.5); }
+            to { text-shadow: 0 0 40px rgba(241, 196, 15, 0.8); }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>BOXMINING ADVENTURE</h1>
-    <p>Lagsız Deneyim, Kaliteli BoxMining Keyfi!</p>
-    <div class="ip-box" onclick="copyIP()">
-        <i class="fas fa-copy"></i> IP: 89.47.113.47:25573
-    </div>
-</header>
+    <header>
+        <div class="header-content">
+            <h1>BOXMINING</h1>
+            <p>Lagsız • Kaliteli • Eğlenceli Minecraft Deneyimi</p>
+            <div class="ip-box" onclick="copyIP()">
+                <i class="fas fa-server"></i> 89.47.113.47:25573
+            </div>
+        </div>
+    </header>
 
-<div class="container">
-    
-    <h2 class="section-title">💎 VIP Üyelikler</h2>
-    <div class="grid">
-        <div class="card"><h3>VIP</h3><div class="price">50 TL</div></div>
-        <div class="card"><h3>VIP+</h3><div class="price">70 TL</div></div>
-        <div class="card"><h3>LVIP</h3><div class="price">80 TL</div></div>
-        <div class="card"><h3>LVIP+</h3><div class="price">110 TL</div></div>
-    </div>
-
-    <h2 class="section-title">📦 Özel Kitler</h2>
-    <div class="grid">
-        <div class="card"><h3>Warden Kit</h3><div class="price">20 TL</div></div>
-        <div class="card"><h3>Creeper Kit</h3><div class="price">10 TL</div></div>
-        <div class="card"><h3>Shulker Kit</h3><div class="price">10 TL</div></div>
-        <div class="card"><h3>Piglin Kit</h3><div class="price">10 TL</div></div>
-        <div class="card"><h3>Ghast Kit</h3><div class="price">5 TL</div></div>
-        <div class="card"><h3>Büyücü Kit</h3><div class="price">5 TL</div></div>
+    <div class="section">
+        <h2 class="section-title">💎 VIP Üyelikler</h2>
+        <div class="grid">
+            <div class="card"><h3>VIP</h3><div class="price">50 TL</div></div>
+            <div class="card"><h3>VIP+</h3><div class="price">70 TL</div></div>
+            <div class="card"><h3>LVIP</h3><div class="price">80 TL</div></div>
+            <div class="card"><h3>LVIP+</h3><div class="price">110 TL</div></div>
+        </div>
     </div>
 
-    <h2 class="section-title">✨ Tılsımlar (Charmlar)</h2>
-    <div class="grid">
-        <div class="card"><h3>Kuvvet Charm</h3><div class="price">15 TL</div></div>
-        <div class="card"><h3>Hız I</h3><div class="price">5 TL</div></div>
-        <div class="card"><h3>Hız II</h3><div class="price">10 TL</div></div>
-        <div class="card"><h3>Acele</h3><div class="price">5 TL</div></div>
+    <div class="section">
+        <h2 class="section-title">📦 Özel Kitler</h2>
+        <div class="grid">
+            <div class="card"><h3>Warden Kit</h3><div class="price">20 TL</div></div>
+            <div class="card"><h3>Creeper Kit</h3><div class="price">10 TL</div></div>
+            <div class="card"><h3>Shulker Kit</h3><div class="price">10 TL</div></div>
+            <div class="card"><h3>Piglin Kit</h3><div class="price">10 TL</div></div>
+            <div class="card"><h3>Ghast Kit</h3><div class="price">5 TL</div></div>
+            <div class="card"><h3>Büyücü Kit</h3><div class="price">5 TL</div></div>
+        </div>
     </div>
 
-    <h2 class="section-title">⚔️ Efsanevi Kılıçlar</h2>
-    <div class="grid">
-        <div class="card"><h3>Warden Kılıç</h3><div class="price">10 TL</div></div>
-        <div class="card"><h3>Creeper Kılıç</h3><div class="price">10 TL</div></div>
-        <div class="card"><h3>Shulker Kılıç</h3><div class="price">5 TL</div></div>
+    <div class="section">
+        <h2 class="section-title">✨ Tılsımlar (Charm)</h2>
+        <div class="grid">
+            <div class="card"><h3>Kuvvet Charm</h3><div class="price">15 TL</div></div>
+            <div class="card"><h3>Hız I Charm</h3><div class="price">5 TL</div></div>
+            <div class="card"><h3>Hız II Charm</h3><div class="price">10 TL</div></div>
+            <div class="card"><h3>Acele Charm</h3><div class="price">5 TL</div></div>
+        </div>
     </div>
 
-    <h2 class="section-title">🗝️ Özel Kasalar</h2>
-    <div class="grid">
-        <div class="card"><h3>VIP Kasası</h3><div class="price">200 TL</div></div>
-        <div class="card"><h3>Kit Kasası</h3><div class="price">35 TL</div></div>
-        <div class="card"><h3>Alet Kasası</h3><div class="price">15 TL</div></div>
-        <div class="card"><h3>Oy Kasası</h3><div class="price">5 TL</div></div>
+    <div class="section">
+        <h2 class="section-title">⚔️ Efsanevi Kılıçlar</h2>
+        <div class="grid">
+            <div class="card"><h3>Warden Kılıç</h3><div class="price">10 TL</div></div>
+            <div class="card"><h3>Creeper Kılıç</h3><div class="price">10 TL</div></div>
+            <div class="card"><h3>Shulker Kılıç</h3><div class="price">5 TL</div></div>
+        </div>
     </div>
 
-</div>
+    <div class="section">
+        <h2 class="section-title">🗝️ Özel Kasalar</h2>
+        <div class="grid">
+            <div class="card"><h3>VIP Kasası</h3><div class="price">200 TL</div></div>
+            <div class="card"><h3>Kit Kasası</h3><div class="price">35 TL</div></div>
+            <div class="card"><h3>Alet Kasası</h3><div class="price">15 TL</div></div>
+            <div class="card"><h3>Oy Kasası</h3><div class="price">5 TL</div></div>
+        </div>
+    </div>
 
-<footer>
-    &copy; 2024 BoxMining Sunucusu. Tüm hakları saklıdır.
-</footer>
+    <footer>
+        <p><strong>BoxMining Sunucusu</strong> © 2026 - Tüm hakları saklıdır.</p>
+        <p>IP: 89.47.113.47:25573</p>
+    </footer>
 
-<script>
-    function copyIP() {
-        navigator.clipboard.writeText("89.47.113.47:25573");
-        alert("IP Adresi Kopyalandı! Sunucuya Bekliyoruz.");
-    }
-</script>
-
+    <script>
+        function copyIP() {
+            navigator.clipboard.writeText("89.47.113.47:25573");
+            const ipBox = document.querySelector('.ip-box');
+            const originalText = ipBox.innerHTML;
+            ipBox.innerHTML = '✅ Kopyalandı!';
+            setTimeout(() => {
+                ipBox.innerHTML = originalText;
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
