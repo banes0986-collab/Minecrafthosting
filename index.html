@@ -3,83 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TriggerBabaa | BoxMining Pro</title>
+    <title>LegacyPvP | BoxMining</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Arka Plan Animasyonu -->
-    <div class="area" >
-        <ul class="circles"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
-    </div >
+    <!-- Hareketli Arka Plan Efekti -->
+    <div class="bg-animate"></div>
 
     <!-- Navigasyon -->
     <nav>
-        <div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+        <div class="menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </div>
         <div class="logo">BOX<span>MINING</span></div>
-        <div class="ip-box" onclick="copyIP()">89.47.113.47:25573 <i class="fas fa-copy"></i></div>
+        <div class="server-status">IP: 89.47.113.47:25573</div>
     </nav>
 
     <!-- Yan Menü (Sidebar) -->
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
         <div class="sidebar-content">
-            <h3>KATEGORİLER</h3>
-            <button onclick="showSection('home')"><i class="fas fa-home"></i> Anasayfa</button>
-            <button onclick="showSection('shop', 'vips')"><i class="fas fa-crown"></i> VIP Paketleri</button>
-            <button onclick="showSection('shop', 'kits')"><i class="fas fa-shield-alt"></i> Özel Kitler</button>
-            <button onclick="showSection('shop', 'swords')"><i class="fas fa-khanda"></i> Kılıçlar</button>
-            <button onclick="showSection('shop', 'crates')"><i class="fas fa-box-open"></i> Kasalar</button>
+            <h3>MARKET</h3>
+            <button onclick="showCategory('vips')"><i class="fas fa-crown"></i> VIP Paketleri</button>
+            <button onclick="showCategory('kits')"><i class="fas fa-shield-alt"></i> Kitler</button>
+            <button onclick="showCategory('swords')"><i class="fas fa-khanda"></i> Kılıçlar</button>
+            <button onclick="showCategory('crates')"><i class="fas fa-box-open"></i> Kasalar</button>
         </div>
     </div>
 
-    <div class="container">
-        
-        <!-- ANASAYFA BİLGİLERİ -->
-        <section id="home" class="page-section active">
-            <div class="hero">
-                <h1>Lagsız, Kesintisiz <br><span>BoxMining Deneyimi</span></h1>
-                <p>Türkiye'nin en gelişmiş plugin paketine sahip, aile ortamı tadında BoxMining sunucusu!</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="f-card">
-                    <i class="fas fa-bolt"></i>
-                    <h3>0 Gecikme (Lag)</h3>
-                    <p>Yüksek RAM ve optimize işlemcilerle oyun keyfiniz bölünmez.</p>
-                </div>
-                <div class="f-card">
-                    <i class="fas fa-user-shield"></i>
-                    <h3>7/24 Koruma</h3>
-                    <p>DDOS ve hile korumalarımızla emeğiniz güvende.</p>
-                </div>
-                <div class="f-card">
-                    <i class="fas fa-coins"></i>
-                    <h3>Adaletli Ekonomi</h3>
-                    <p>Çalışan kazanır! Emeklerinizin karşılığını alacağınız bir sistem.</p>
-                </div>
-            </div>
-
-            <!-- KAYIT FORMU -->
-            <div class="glass-card register-box">
-                <h2><i class="fas fa-user-plus"></i> Hızlı Kayıt</h2>
-                <input type="text" placeholder="Minecraft Kullanıcı Adı" id="reg-name">
-                <input type="password" placeholder="Şifre" id="reg-pass">
-                <button class="btn-glow">SİSTEME BAĞLAN</button>
+    <main class="container">
+        <!-- Kayıt Kartı -->
+        <section class="glass-card register-section">
+            <h2><i class="fas fa-user-plus"></i> Sunucuya Kayıt</h2>
+            <p>Oyundaki isminiz ve şifreniz ile aynı olmalıdır!</p>
+            <div class="input-group">
+                <input type="text" placeholder="Kullanıcı Adı (Örn: triggerbabaa)" id="mc-user">
+                <input type="password" placeholder="Şifre (Örn: resul123)" id="mc-pass">
+                <button class="neon-btn">HESABI BAĞLA</button>
             </div>
         </section>
 
-        <!-- MARKET BÖLÜMÜ -->
-        <section id="shop" class="page-section">
-            <h2 id="cat-title" class="section-title">VIP PAKETLERİ</h2>
-            <div id="shop-items" class="shop-grid">
-                <!-- JavaScript burayı dolduracak -->
-            </div>
-        </section>
-
-    </div>
+        <!-- Market Alanı -->
+        <div id="shop-display" class="shop-grid">
+            <!-- Ürünler buraya sihirli bir şekilde gelecek -->
+        </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
