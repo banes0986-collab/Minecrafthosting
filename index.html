@@ -3,91 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TriggerBabaa | BoxMining Elite</title>
+    <title>TriggerBabaa | Official BoxMining</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Arka Plan Görseli/Katmanı -->
-    <div class="main-bg"></div>
-
-    <!-- Üst Menü -->
-    <header>
-        <div class="nav-container">
-            <div class="menu-trigger" onclick="openNav()"><i class="fas fa-th-large"></i></div>
-            <div class="logo">BOX<span>MINING</span></div>
-            <div class="online-status">
-                <span class="dot"></span> 89.47.113.47:25573
+    <!-- Üst Bar: Minimal & Şık -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <div class="brand" onclick="showPage('home')">TRIGGER<span>BABAA</span></div>
+            <div class="nav-links">
+                <a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> ANA SAYFA</a>
+                <a href="#" onclick="showPage('market')"><i class="fas fa-shopping-cart"></i> MAĞAZA</a>
+                <a href="https://discord.gg/yakinda" target="_blank" class="dc-btn"><i class="fab fa-discord"></i> DISCORD</a>
+            </div>
+            <div class="ip-badge" onclick="copyIP()">
+                <span id="ip">89.47.113.47:25573</span>
+                <i class="fas fa-clone"></i>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Yan Panel -->
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <div class="side-links">
-            <button onclick="changePage('home')"><i class="fas fa-home"></i> Başlangıç</button>
-            <hr>
-            <button onclick="changePage('market', 'vips')"><i class="fas fa-crown"></i> VIP Üyelik</button>
-            <button onclick="changePage('market', 'kits')"><i class="fas fa-box-open"></i> Özel Kitler</button>
-            <button onclick="changePage('market', 'swords')"><i class="fas fa-khanda"></i> Kılıçlar</button>
-        </div>
-    </div>
-
-    <!-- İçerik Alanı -->
-    <main id="content">
-        <!-- Anasayfa Bölümü -->
-        <section id="home" class="page active">
-            <div class="hero-section">
-                <h1 class="glitch" data-text="BOXMINING">BOXMINING</h1>
-                <p>Türkiye'nin en teknolojik ve adaletli BoxMining dünyasına hoş geldin!</p>
-                <div class="hero-btns">
-                    <button class="btn-main" onclick="changePage('market', 'vips')">Markete Göz At</button>
-                    <button class="btn-sub" onclick="scrollToRegister()">Kayıt Ol</button>
+    <!-- ANA SAYFA -->
+    <main id="home" class="page active">
+        <section class="hero">
+            <div class="hero-text">
+                <h1 class="animate-text">BOXMINING <br><span>REBORN</span></h1>
+                <p>Türkiye'nin en gelişmiş Minecraft deneyimi. Aile ortamı, adaletli ekonomi ve sıfır lag.</p>
+                <div class="hero-stats">
+                    <div class="stat"><b>500+</b><span>Kayıtlı Oyuncu</span></div>
+                    <div class="stat"><b>%100</b><span>DDOS Koruması</span></div>
                 </div>
             </div>
-
-            <div class="stats-grid">
-                <div class="stat-card"><h3>%100</h3><p>Hile Koruması</p></div>
-                <div class="stat-card"><h3>0.1ms</h3><p>Düşük Ping</p></div>
-                <div class="stat-card"><h3>7/24</h3><p>Aktif Destek</p></div>
-            </div>
-
-            <div class="register-area" id="register">
-                <div class="glass-box">
-                    <h2><i class="fas fa-id-card"></i> Sunucuya Kaydol</h2>
-                    <div class="input-row">
-                        <input type="text" id="username" placeholder="Minecraft Kullanıcı Adı">
-                        <input type="password" id="password" placeholder="Şifreniz">
-                    </div>
-                    <button class="btn-submit">SİSTEME BAĞLAN</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Market Bölümü -->
-        <section id="market" class="page">
-            <h2 class="section-title">BOXMINING <span id="cat-label">MARKET</span></h2>
-            <div id="product-grid" class="product-grid">
-                <!-- Ürünler Buraya Gelecek -->
+            
+            <div class="auth-card glass">
+                <h3><i class="fas fa-sign-in-alt"></i> HIZLI KAYIT</h3>
+                <input type="text" placeholder="Minecraft Nick (triggerbabaa)" id="u">
+                <input type="password" placeholder="Şifre (resul123)" id="p">
+                <button class="glow-button">SUNUCUYA BAĞLAN</button>
             </div>
         </section>
     </main>
 
-    <!-- SATIN ALMA MODAL (POPUP) -->
-    <div id="buyModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <i class="fab fa-discord fa-4x" style="color: #5865F2;"></i>
-            <h2>Ürün Satın Alma</h2>
-            <p id="modal-item-name">Ürün İsmi</p>
-            <div class="alert-box">
-                Bu ürünü satın almak için lütfen Discord sunucumuz üzerinden <strong>talep (ticket)</strong> açınız.
+    <!-- MARKET -->
+    <main id="market" class="page">
+        <div class="market-header">
+            <h2>SUNUCU MARKETİ</h2>
+            <div class="categories">
+                <button onclick="filter('vips')" class="cat-btn active">VIP</button>
+                <button onclick="filter('kits')" class="cat-btn">KITLER</button>
+                <button onclick="filter('swords')" class="cat-btn">KILIÇLAR</button>
             </div>
-            <p class="dc-link">Discord Linki: <span>YAKINDA!</span></p>
-            <button class="btn-submit" onclick="closeModal()">Anladım</button>
+        </div>
+        <div id="market-grid" class="market-grid"></div>
+    </main>
+
+    <!-- SATIN ALMA MODAL -->
+    <div id="buyModal" class="modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <i class="fab fa-discord"></i>
+                <h2>TALEP OLUŞTUR</h2>
+            </div>
+            <p id="selected-item">Ürün ismi</p>
+            <div class="info-msg">
+                Bu ürünü satın almak için Discord sunucumuza katılıp <b>#satın-alım</b> kanalından talep açmalısın.
+            </div>
+            <div class="dc-box">YAKINDA SİZLERLE!</div>
+            <button class="close-btn" onclick="closeModal()">KAPAT</button>
         </div>
     </div>
 
