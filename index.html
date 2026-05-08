@@ -3,211 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecrafthosting</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #020617; 
-            --sidebar: #0f172a;
-            --accent: #38bdf8; 
-            --glass: rgba(20, 23, 42, 0.6);
-            --border: rgba(56, 189, 248, 0.1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: var(--bg); 
-            color: #f1f5f9; 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            display: flex; height: 100vh; overflow: hidden;
-            background-image: radial-gradient(circle at 50% -21%, #1e293b 0%, transparent 50%);
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: 280px; background: var(--sidebar);
-            border-right: 1px solid var(--border);
-            display: flex; flex-direction: column; padding: 40px 20px;
-            box-shadow: 10px 0 50px rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-
-        .brand {
-            font-size: 1.5rem; font-weight: 800; color: var(--accent);
-            margin-bottom: 50px; text-align: center; letter-spacing: -1px;
-        }
-
-        .nav-item {
-            padding: 16px 20px; margin-bottom: 12px; border-radius: 12px;
-            cursor: pointer; transition: 0.3s; font-weight: 600;
-            color: #94a3b8; display: flex; align-items: center; gap: 12px;
-        }
-
-        .nav-item:hover { background: rgba(56, 189, 248, 0.05); color: #fff; }
-        .nav-item.active { 
-            background: var(--accent); color: #020617;
-            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
-        }
-
-        /* --- MAIN CONTENT --- */
-        .main { flex: 1; overflow-y: auto; padding: 50px; scroll-behavior: smooth; }
-        h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; color: #fff; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        
-        .card { 
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 30px; border-radius: 24px; backdrop-filter: blur(10px);
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(15, 23, 42, 0.8); }
-        .card h2 { color: var(--accent); margin-bottom: 15px; font-size: 1.4rem; }
-        .card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
-
-        .btn { 
-            display: block; padding: 14px; background: var(--accent); color: #020617;
-            text-align: center; text-decoration: none; font-weight: 800; border-radius: 12px;
-            font-size: 0.9rem; transition: 0.3s; cursor: pointer; border: none;
-        }
-        .btn:hover { filter: brightness(1.1); transform: scale(1.02); }
-
-        .crafthost-banner {
-            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
-            padding: 40px; border-radius: 30px; margin-bottom: 40px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 30px 40px rgba(37, 99, 235, 0.2);
-        }
-
-        .tool-box { background: #020617; border-radius: 20px; padding: 30px; border: 1px solid var(--border); }
-        .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-        .input-group input { 
-            flex: 1; background: #1e293b; border: 1px solid #334155; padding: 15px;
-            border-radius: 12px; color: #fff; font-family: 'JetBrains Mono'; outline: none;
-        }
-
-        .mod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-        .mod-item { 
-            background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px;
-            font-size: 0.8rem; font-weight: 600; color: #94a3b8; text-align: center;
-            border: 1px solid transparent; transition: 0.2s;
-        }
-        .mod-item:hover { border-color: var(--accent); color: var(--accent); }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-    </style>
+    <title>LegacyPvP | BoxMining Market</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="brand">MİNECRAFTHOSTİNGS</div>
-        <div class="nav-item active" onclick="tab('host', this)">☁️ Crafthosting</div>
-        <div class="nav-item" onclick="tab('clients', this)">🛡️ Client Listesi</div>
-        <div class="nav-item" onclick="tab('tools', this)">🛠️ Sunucu Analiz</div>
-        <div class="nav-item" onclick="tab('mods', this)">🚀 100+ Mod</div>
-        <div class="nav-item" onclick="tab('mods', this)">🔴yakında!</div>
-    </aside>
-
-    <main class="main">
-        <div id="host" class="tab">
-            <h1>Crafthosting Performansı</h1>
-            <div class="crafthost-banner">
-                <div>
-                    <h2>En Güçlü Ryzen Sunucular</h2>
-                    <p style="margin-top:10px; opacity: 0.9;">Ryzen 9 9950X işlemcilerle donma riski sıfır.</p>
-                </div>
-                <a href="https://www.crafthosting.com.tr" target="_blank" class="btn" style="background:#fff; width:auto; padding:15px 40px;">SİTEYE GİT</a>
-            </div>
-            <div class="grid">
-                <div class="card">
-                    <h2>Performanslı VPS</h2>
-                    <p>En düşük ping ve en yüksek TPS garantili özel wep panel sunucular.</p>
-                    <div style="font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;">89₺<small style="font-size:1rem; color:#94a3b8">/ay</small></div>
-                    <a href="https://www.crafthosting.com.tr" class="btn">İNCELE</a>
-                </div>
-            </div>
+    <!-- Navigasyon Çubuğu -->
+    <nav>
+        <div class="logo">Legacy<span>PvP</span></div>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
         </div>
+        <ul id="nav-links">
+            <li><a href="#" onclick="showSection('home')">Anasayfa</a></li>
+            <li><a href="#" onclick="showSection('register')">Kayıt Ol</a></li>
+            <li><a href="#" onclick="showSection('shop')">Mağaza</a></li>
+        </ul>
+    </nav>
 
-        <div id="clients" class="tab" style="display:none;">
-            <h1>Özel İstemciler</h1>
-            <div class="grid">
-                <div class="card">
-                    <h3>Meteor Client</3>
-                    <p>En popüler teknik ve PvP odaklı Minecraft istemcisi.</p>
-                    <a href="https://meteorclient.com/" target="_blank" class="btn">İNDİR</a>
-                </div>
-                <div class="card">
-                    <h3>ThunderHack</h3>
-                    <p>Anarchy sunucuları için özel olarak optimize edilmiş araçlar.</p>
-                    <a href="https://github.com/Pan4ur/ThunderHack-Recode/releases" target="_blank" class="btn">İNDİR</a>
-                </div>
-                <div class="card">
-                    <h3>Catlean</h3>
-                    <p>Boxmining sunucuları için özel olarak tasarlanmış client.</p>
-                    <a href="https://catlean.su/" target="_blank" class="btn">İNDİR</a>
-                </div>
+    <!-- Yan Menü (Kategoriler) -->
+    <div id="side-panel" class="side-panel">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
+        <h3>Kategoriler</h3>
+        <button onclick="filterShop('vips')"><i class="fas fa-crown"></i> VIP Paketleri</button>
+        <button onclick="filterShop('kits')"><i class="fas fa-shield-alt"></i> Kitler</button>
+        <button onclick="filterShop('swords')"><i class="fas fa-gavel"></i> Özel Kılıçlar</button>
+        <button onclick="filterShop('crates')"><i class="fas fa-box"></i> Kasalar</button>
+    </div>
+
+    <div class="container">
+        <!-- Kayıt Bölümü -->
+        <section id="register" class="content-section">
+            <div class="card">
+                <h2><i class="fas fa-user-plus"></i> Sunucuya Kayıt Ol</h2>
+                <p>Oyundaki isminiz ve şifrenizle eşleşmelidir.</p>
+                <form id="regForm">
+                    <input type="text" placeholder="Minecraft Kullanıcı Adı (Örn: triggerbabaa)" required>
+                    <input type="password" placeholder="Şifre (Örn: resul123)" required>
+                    <button type="submit" class="btn-main">Kayıt İşlemini Tamamla</button>
+                </form>
             </div>
-        </div>
+        </section>
 
-        <div id="tools" class="tab" style="display:none;">
-            <h1>Sunucu Analiz Paneli</h1>
-            <div class="tool-box">
-                <div class="input-group">
-                    <input type="text" id="ip" placeholder="Sunucu IP Adresi (play.example.com)">
-                    <button class="btn" onclick="scan()" style="width:auto; padding:0 30px;">TARA</button>
-                </div>
-                <div id="res" style="font-family:'JetBrains Mono'; color:#94a3b8; line-height: 1.8;">
-                    > IP girin ve tarama başlatın...
-                </div>
+        <!-- Mağaza Bölümü -->
+        <section id="shop" class="content-section active">
+            <div class="server-info">
+                <p>IP Adresi: <strong>89.47.113.47:25573</strong></p>
             </div>
-        </div>
 
-        <div id="mods" class="tab" style="display:none;">
-            <h1>100+ Optimize Mod</h1>
-            <div class="mod-grid" id="modBox"></div>
-        </div>
-    </main>
+            <div id="shop-items" class="grid-container">
+                <!-- Ürünler JS ile buraya gelecek -->
+            </div>
+        </section>
+    </div>
 
-    <script>
-        // Tab Geçiş Fonksiyonu
-        function tab(id, el) {
-            document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).style.display = 'block';
-            el.classList.add('active');
-        }
-
-        // Sahte Tarama Fonksiyonu
-        function scan() {
-            const ip = document.getElementById('ip').value;
-            const res = document.getElementById('res');
-            if(!ip) {
-                res.innerHTML = "<span style='color:#ef4444'>> Hata: Lütfen bir IP adresi girin!</span>";
-                return;
-            }
-            res.innerHTML = "> Veriler çekiliyor...<br>> Portlar analiz ediliyor...";
-            setTimeout(() => {
-                res.innerHTML = `
-                    <span style="color:var(--accent)">> DURUM: ÇALIŞIYOR</span><br>
-                    > SUNUCU: ${ip}<br>
-                    > OYUNCULAR: ${Math.floor(Math.random()*500)}/1000<br>
-                    > GECİKME: ${Math.floor(Math.random()*40)}ms<br>
-                    > LOKASYON: Yakında / Fix
-                `;
-            }, 1000);
-        }
-
-        // 100 Modu Doldur - Yazım hataları düzeltildi
-        const names = ["Sodium", "Lithium", "Krypton", "ArmorStatues", "Iris", "Starlight", "FerriteCore", "Indium", "VulkanMod", "Sodium Extra", "Embeddium"];
-        const box = document.getElementById('modBox');
-        
-        let content = "";
-        for(let i=1; i<=100; i++) {
-            const modName = names[i % names.length];
-            content += `<div class="mod-item">${modName} v${(i/10 + 1).toFixed(1)}</div>`;
-        }
-        box.innerHTML = content;
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
