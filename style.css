@@ -1,97 +1,93 @@
-/* style.css - LegacyNetwork Tasarım Sistemi */
+/* style.css - LegacyNetwork Premium Design */
 
 :root {
-    --primary: #00e1ff;
-    --secondary: #6e00ff;
-    --dark-1: #0a0a0c;
-    --dark-2: #121216;
-    --glass: rgba(255, 255, 255, 0.03);
-    --border: rgba(255, 255, 255, 0.08);
+    --primary: #00f7ff;
+    --secondary: #7b00ff;
+    --dark: #050505;
+    --card-bg: #0f0f12;
     --text: #ffffff;
+    --muted: #a0a0a0;
+    --shadow: 0 10px 30px rgba(0, 247, 255, 0.2);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-
-body {
-    background-color: var(--dark-1);
-    color: var(--text);
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.6;
+/* Temel Sıfırlama */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    background-color: var(--dark); 
+    color: var(--text); 
+    font-family: 'Montserrat', sans-serif; 
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 /* Preloader */
 #preloader {
-    position: fixed; top: 0; width: 100%; height: 100%; background: #000;
-    z-index: 9999; display: flex; align-items: center; justify-content: center;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center;
+    transition: 0.8s ease-in-out;
 }
-.logo-loader { font-family: 'Syncopate'; font-size: 30px; font-weight: 700; margin-bottom: 20px; }
-.logo-loader span { color: var(--primary); }
-.loader-line { width: 150px; height: 3px; background: #222; position: relative; overflow: hidden; }
-.loader-line::after {
-    content: ''; position: absolute; width: 50%; height: 100%;
-    background: var(--primary); animation: loading 1.5s infinite;
-}
-@keyframes loading { from { left: -50%; } to { left: 100%; } }
+.loader-content { text-align: center; }
+.loader-logo { font-family: 'Syncopate'; font-size: 35px; font-weight: 700; margin-bottom: 20px; }
+.loader-logo span { color: var(--primary); }
+.loader-track { width: 250px; height: 4px; background: #111; border-radius: 10px; overflow: hidden; margin: auto; }
+.loader-fill { width: 0%; height: 100%; background: var(--primary); animation: fill 2s forwards ease-in-out; }
+@keyframes fill { to { width: 100%; } }
 
-/* Header */
+/* Navbar */
 header {
     position: fixed; top: 0; width: 100%; z-index: 1000;
-    padding: 20px 5%; background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    padding: 20px 5%; background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.nav-container { display: flex; justify-content: space-between; align-items: center; }
-.brand { font-family: 'Syncopate'; font-size: 22px; font-weight: 700; }
-.brand span { color: var(--primary); }
+.nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: auto; }
+.logo { font-family: 'Syncopate'; font-size: 24px; font-weight: 700; }
+.logo span { color: var(--primary); }
 
-.desktop-nav ul { display: flex; list-style: none; gap: 25px; }
-.desktop-nav a { 
-    text-decoration: none; color: #aaa; font-weight: 600; 
-    font-size: 13px; text-transform: uppercase; transition: 0.3s;
+.main-nav ul { display: flex; list-style: none; gap: 30px; }
+.main-nav a { 
+    text-decoration: none; color: var(--muted); font-weight: 600; 
+    text-transform: uppercase; font-size: 13px; transition: 0.3s;
 }
-.desktop-nav a:hover, .desktop-nav a.active { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+.main-nav a:hover { color: var(--primary); text-shadow: 0 0 15px var(--primary); }
 
-.copy-ip {
-    background: var(--primary); color: #000; padding: 10px 20px;
-    border-radius: 5px; font-weight: 800; cursor: pointer; transition: 0.3s;
+.ip-address {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    padding: 12px 25px; border-radius: 8px; color: #000; font-weight: 900;
+    cursor: pointer; transition: 0.4s; box-shadow: var(--shadow);
 }
-.copy-ip:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 225, 255, 0.4); }
+.ip-address:hover { transform: translateY(-3px) scale(1.05); }
 
-/* Hero */
+/* Hero Section */
 #hero {
-    height: 100vh; position: relative; display: flex;
-    align-items: center; justify-content: center; text-align: center;
-    background: url('https://i.ibb.co/V9XmS0S/minecraft-bg.jpg') center/cover;
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; background: url('https://i.ibb.co/V9XmS0S/bg-min.jpg') center/cover;
 }
-.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent, var(--dark-1)); }
-.hero-content { position: relative; z-index: 10; max-width: 900px; padding: 0 20px; }
-.hero-content h1 { font-family: 'Syncopate'; font-size: 70px; margin: 20px 0; letter-spacing: -2px; }
-.hero-content span { color: var(--primary); text-shadow: 0 0 30px var(--primary); }
+#hero::before { content: ''; position: absolute; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
 
-/* Buttons */
-.btn { padding: 15px 40px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.4s; text-decoration: none; display: inline-block; }
-.btn-main { background: linear-gradient(45deg, var(--primary), var(--secondary)); color: #fff; border: none; }
-.btn-sub { border: 2px solid var(--primary); color: var(--primary); margin-left: 15px; }
+.hero-inner { position: relative; z-index: 5; text-align: center; max-width: 900px; }
+.hero-inner h1 { font-family: 'Syncopate'; font-size: clamp(40px, 8vw, 90px); line-height: 1; margin: 20px 0; }
+.hero-inner h1 span { color: var(--primary); }
+.badge { background: rgba(0, 247, 255, 0.1); color: var(--primary); padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 12px; }
+
+/* Stats Bar */
+#stats { background: var(--card-bg); padding: 60px 5%; border-top: 1px solid rgba(255,255,255,0.05); }
+.stats-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1400px; margin: auto; }
+.stat-card { text-align: center; }
+.stat-card i { font-size: 40px; color: var(--primary); margin-bottom: 15px; }
+.stat-card h2 { font-size: 35px; font-weight: 900; }
 
 /* Market Grid */
-.market-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px; margin-top: 50px;
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 50px 0; }
+.p-card { 
+    background: #151518; padding: 40px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.03);
+    text-align: center; transition: 0.4s; position: relative; overflow: hidden;
 }
-.product-card {
-    background: var(--glass); border: 1px solid var(--border);
-    padding: 40px; border-radius: 20px; text-align: center;
-    backdrop-filter: blur(10px); transition: 0.4s;
-}
-.product-card:hover { transform: scale(1.05); border-color: var(--primary); }
+.p-card:hover { border-color: var(--primary); transform: translateY(-10px); background: #1a1a1f; }
 
-/* Kayıt Kartı */
-.glass { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); }
-.auth-container { display: flex; justify-content: center; padding: 100px 0; }
-.auth-card { width: 100%; max-width: 500px; padding: 50px; border-radius: 30px; }
-.input-group { margin-bottom: 20px; text-align: left; }
-.input-group input { width: 100%; padding: 15px; background: #000; border: 1px solid #333; color: #fff; border-radius: 8px; }
+/* Buttons */
+.btn-primary { background: var(--primary); color: #000; border: none; padding: 15px 35px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 13px 33px; border-radius: 10px; font-weight: 800; margin-left: 15px; cursor: pointer; }
 
-/* Footer */
-footer { background: #050505; padding: 80px 5% 30px; text-align: center; border-top: 1px solid var(--border); }
-.footer-logo { font-family: 'Syncopate'; font-size: 25px; margin-bottom: 20px; }
+/* Modal */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; align-items: center; justify-content: center; }
+.modal-card { background: #111; width: 90%; max-width: 500px; padding: 40px; border-radius: 30px; border: 1px solid var(--secondary); text-align: center; }
