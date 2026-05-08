@@ -1,82 +1,112 @@
-/* style.css - TriggerBaba Mobil Pro Edition */
 :root {
-    --bg: #030712;
-    --card: #0f172a;
-    --primary: #38bdf8;
-    --text: #f1f5f9;
-    --success: #10b981;
-    --border: rgba(56, 189, 248, 0.15);
+    --primary: #ff4757;
+    --secondary: #2f3542;
+    --dark: #1e2124;
+    --text: #ffffff;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-
-body { 
-    background: var(--bg); 
-    color: var(--text); 
-    min-height: 100vh;
-    background-image: radial-gradient(circle at 50% 0%, #1e293b, transparent);
+body {
+    background-color: var(--dark);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
 }
 
-.layout { display: flex; flex-direction: column; height: 100vh; }
-
-/* Alt Menü (Mobilde Parmakla Kolay Erişim) */
-.sidebar {
-    width: 100%; height: 80px; 
-    background: rgba(0, 0, 0, 0.95); 
-    border-top: 2px solid var(--border);
-    display: flex; flex-direction: row; 
-    justify-content: space-around; align-items: center;
-    position: fixed; bottom: 0; left: 0; z-index: 1000;
-    backdrop-filter: blur(10px);
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: var(--secondary);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
-.nav-btn {
-    width: 65px; height: 65px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    cursor: pointer; transition: 0.3s; border-radius: 15px;
-    font-size: 28px; /* Emojileri Büyüttük */
+.logo { font-size: 24px; font-weight: bold; }
+.logo span { color: var(--primary); }
+
+#nav-links { display: flex; list-style: none; }
+#nav-links li a { color: white; text-decoration: none; margin-left: 20px; transition: 0.3s; }
+#nav-links li a:hover { color: var(--primary); }
+
+.menu-icon { font-size: 25px; cursor: pointer; color: var(--primary); }
+
+/* Yan Menü Tasarımı */
+.side-panel {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
 }
 
-.nav-btn span { font-size: 10px; font-weight: 800; margin-top: 4px; display: block; color: #94a3b8; }
-.nav-btn.active { background: var(--primary); color: #000; }
-.nav-btn.active span { color: #000; }
+.side-panel h3 { text-align: center; color: var(--primary); }
 
-/* İçerik Alanı */
-.content { 
-    flex: 1; padding: 25px; padding-bottom: 100px; 
-    overflow-y: auto; -webkit-overflow-scrolling: touch; 
+.side-panel button {
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
 }
 
-.tab { display: none; animation: fadeIn 0.4s ease; }
-.tab.active-tab { display: block; }
+.side-panel button:hover { color: white; background: var(--secondary); }
 
-@keyframes fadeIn { from { opacity: 0; scale: 0.95; } to { opacity: 1; scale: 1; } }
-
-/* Kartlar */
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
-.card { 
-    background: var(--card); padding: 20px; border-radius: 20px; 
-    border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+.side-panel .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    color: white;
+    text-decoration: none;
 }
 
-.card h3 { color: var(--primary); margin-bottom: 12px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
-
-/* Terminal */
-.terminal {
-    background: #000; border-radius: 15px; padding: 15px; 
-    font-family: 'JetBrains Mono', monospace; color: var(--success); 
-    font-size: 13px; border: 1px solid #1e293b; line-height: 1.6;
+/* Kart Tasarımı */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
-.btn { 
-    width: 100%; padding: 16px; background: var(--primary); 
-    color: #000; border: none; border-radius: 12px; 
-    font-weight: 800; font-size: 1rem; cursor: pointer;
+.card {
+    background: var(--secondary);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    border-bottom: 4px solid var(--primary);
+    transition: transform 0.3s;
 }
 
-/* PC İçin Sidebar Düzenlemesi */
-@media (min-width: 1024px) {
-    .layout { flex-direction: row; }
-    .sidebar { width: 100px; height: 100vh; flex-direction: column; position: static; border-top: none; border-right: 2px solid var(--border); }
-    .nav-btn { width: 80px; height: 80px; font-size: 32px; }
+.card:hover { transform: translateY(-5px); }
+
+.price { font-size: 20px; color: #2ecc71; font-weight: bold; margin: 10px 0; }
+
+.btn-buy {
+    background: var(--primary);
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+}
+
+.content-section { display: none; padding: 40px 5%; }
+.active { display: block; }
