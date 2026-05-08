@@ -1,59 +1,61 @@
-const marketItems = {
+const DB = {
     vips: [
-        {name: "VIP Üyelik", price: "40 TL", desc: "Temel VIP avantajları."},
-        {name: "VIP+ Üyelik", price: "55 TL", desc: "Gelişmiş kasa anahtarları."},
-        {name: "LVIP Üyelik", price: "70 TL", desc: "Özel uçuş yetkisi."},
-        {name: "LVIP+ Üyelik", price: "100 TL", desc: "Sınırsız güç paketleri."}
+        {name: "VIP", price: "40 TL", icon: "fa-star"},
+        {name: "VIP+", price: "55 TL", icon: "fa-crown"},
+        {name: "LVIP", price: "70 TL", icon: "fa-shield"},
+        {name: "LVIP+", price: "100 TL", icon: "fa-dragon"}
     ],
     kits: [
-        {name: "Warden Kit", price: "20 TL", desc: "En güçlü zırh seti."},
-        {name: "Skeleton Kit", price: "20 TL", desc: "Hızlı okçu yetenekleri."},
-        {name: "Büyücü Kit", price: "1 TL", desc: "Başlangıç iksirleri."}
+        {name: "Warden Kit", price: "20 TL", icon: "fa-gem"},
+        {name: "Creeper Kit", price: "20 TL", icon: "fa-bomb"},
+        {name: "Skeleton Kit", price: "20 TL", icon: "fa-bone"},
+        {name: "Büyücü Kit", price: "1 TL", icon: "fa-wand-sparkles"}
     ],
     swords: [
-        {name: "Özel Kılıç", price: "150 TL", desc: "Tek vuruşta imha!"},
-        {name: "Piglin Kılıcı", price: "10 TL", desc: "Altın zenginliği."}
+        {name: "Özel Kılıç", price: "150 TL", icon: "fa-sword"},
+        {name: "Piglin Kılıcı", price: "10 TL", icon: "fa-piggy-bank"}
     ]
 };
 
-function tab(cat) {
-    const grid = document.getElementById('market-display');
+function loadCat(cat, btn) {
+    const grid = document.getElementById('product-grid');
     grid.innerHTML = '';
     
-    // Aktif tab stilini güncelle
-    document.querySelectorAll('.m-tab').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
 
-    marketItems[cat].forEach(item => {
+    DB[cat].forEach(item => {
         grid.innerHTML += `
-            <div class="product-card animate__animated animate__fadeIn">
-                <i class="fas fa-box-open fa-3x" style="color:var(--primary)"></i>
-                <h3 style="margin:20px 0">${item.name}</h3>
-                <p style="color:#888; font-size:14px; margin-bottom:20px">${item.desc}</p>
-                <div style="font-size:26px; font-weight:900; color:#00ff88; margin-bottom:20px;">${item.price}</div>
-                <button class="btn btn-main" style="width:100%" onclick="openM('${item.name}')">SATIN AL</button>
+            <div class="p-card animate__animated animate__fadeIn">
+                <i class="fas ${item.icon} fa-4x" style="color:var(--primary)"></i>
+                <h3 style="margin:25px 0; font-size:24px;">${item.name}</h3>
+                <div style="font-size:30px; font-weight:900; color:#00ff88; margin-bottom:25px;">${item.price}</div>
+                <button class="btn-primary" style="width:100%" onclick="openModal('${item.name}')">SATIN AL</button>
             </div>
         `;
     });
 }
 
-function openM(n) {
-    document.getElementById('p-name').innerText = "Seçilen: " + n;
-    document.getElementById('buyModal').style.display = 'flex';
+function openModal(name) {
+    document.getElementById('modal-item-name').innerText = name;
+    document.getElementById('orderModal').style.display = 'flex';
 }
 
-function closeM() { document.getElementById('buyModal').style.display = 'none'; }
+function closeModal() {
+    document.getElementById('orderModal').style.display = 'none';
+}
 
-function copyServerIP() {
+function copyIP() {
     navigator.clipboard.writeText("89.47.113.47:25573");
-    alert("LegacyNetwork IP Kopyalandı!");
+    const txt = document.getElementById('ip-text');
+    txt.innerText = "KOPYALANDI!";
+    setTimeout(() => txt.innerText = "89.47.113.47:25573", 2000);
 }
 
-// Preloader Kapatma
 window.onload = () => {
-    tab('vips');
+    loadCat('vips');
     setTimeout(() => {
         document.getElementById('preloader').style.opacity = '0';
-        setTimeout(() => document.getElementById('preloader').style.display = 'none', 500);
-    }, 1500);
+        setTimeout(() => document.getElementById('preloader').style.display = 'none', 800);
+    }, 2000);
 };
