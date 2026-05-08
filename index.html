@@ -3,174 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="LegacyNetwork - En gelişmiş BoxMining Minecraft Sunucusu. 0 Lag, %100 Adalet.">
-    <title>LegacyNetwork | Profesyonel BoxMining Portalı</title>
-    
-    <!-- Kaynaklar -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>TriggerBabaa | BoxMining</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Gelişmiş Preloader: Oyuncu siteye girdiğinde profesyonellik burada başlar -->
-    <div id="loader-wrapper">
-        <div class="loader-circle"></div>
-        <div class="loader-text">LEGACY<span>NETWORK</span></div>
+    <!-- Hareketli Arka Plan Efekti -->
+    <div class="bg-animate"></div>
+
+    <!-- Navigasyon -->
+    <nav>
+        <div class="menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">BOX<span>MINING</span></div>
+        <div class="server-status">IP: 89.47.113.47:25573</div>
+    </nav>
+
+    <!-- Yan Menü (Sidebar) -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+        <div class="sidebar-content">
+            <h3>MARKET</h3>
+            <button onclick="showCategory('vips')"><i class="fas fa-crown"></i> VIP Paketleri</button>
+            <button onclick="showCategory('kits')"><i class="fas fa-shield-alt"></i> Kitler</button>
+            <button onclick="showCategory('swords')"><i class="fas fa-khanda"></i> Kılıçlar</button>
+            <button onclick="showCategory('crates')"><i class="fas fa-box-open"></i> Kasalar</button>
+        </div>
     </div>
 
-    <!-- Sticky Navigation -->
-    <header id="nav-header">
-        <div class="container nav-flex">
-            <div class="brand-box">
-                <div class="logo-icon"><i class="fas fa-layer-group"></i></div>
-                <div class="logo-text">LEGACY<span>NETWORK</span></div>
+    <main class="container">
+        <!-- Kayıt Kartı -->
+        <section class="glass-card register-section">
+            <h2><i class="fas fa-user-plus"></i> Sunucuya Kayıt</h2>
+            <p>Oyundaki isminiz ve şifreniz ile aynı olmalıdır!</p>
+            <div class="input-group">
+                <input type="text" placeholder="Kullanıcı Adı (Örn: triggerbabaa)" id="mc-user">
+                <input type="password" placeholder="Şifre (Örn: resul123)" id="mc-pass">
+                <button class="neon-btn">HESABI BAĞLA</button>
             </div>
-            <nav class="desktop-links">
-                <ul>
-                    <li><a href="#home" class="nav-item">ANA SAYFA</a></li>
-                    <li><a href="#about" class="nav-item">HAKKIMIZDA</a></li>
-                    <li><a href="#store" class="nav-item store-highlight">MAĞAZA</a></li>
-                    <li><a href="#stats" class="nav-item">İSTATİSTİKLER</a></li>
-                    <li><a href="#rules" class="nav-item">KURALLAR</a></li>
-                    <li><a href="#support" class="nav-item">DESTEK</a></li>
-                </ul>
-            </nav>
-            <div class="server-status-pill" onclick="copyServerIP()">
-                <div class="status-dot animate__animated animate__flash animate__infinite"></div>
-                <span id="ip-display">89.47.113.47:25573</span>
-                <i class="fas fa-copy"></i>
-            </div>
+        </section>
+
+        <!-- Market Alanı -->
+        <div id="shop-display" class="shop-grid">
+            <!-- Ürünler buraya sihirli bir şekilde gelecek -->
         </div>
-    </header>
-
-    <main>
-        <!-- Hero Section: Para kazandıran ilk izlenim -->
-        <section id="home" class="hero-v2">
-            <div class="video-overlay"></div>
-            <div class="hero-content-v2">
-                <span class="top-tag">#1 BOXMINING SERVER</span>
-                <h1 class="main-title">KRALLIĞINI <br><span>BURADA KUR.</span></h1>
-                <p class="sub-text">LegacyNetwork, sadece bir oyun değil; adaletli ekonomi, profesyonel yönetim ve her hafta yenilenen etkinliklerle dolu bir dünyadır. Ailene destek olmanın, lider olmanın tam sırası.</p>
-                <div class="action-grid">
-                    <a href="#store" class="btn-primary-v2">HEMEN ALIŞVERİŞ YAP <i class="fas fa-shopping-cart"></i></a>
-                    <a href="#register" class="btn-secondary-v2">HESAP OLUŞTUR <i class="fas fa-user-plus"></i></a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats Grid: Güven verir -->
-        <section id="stats" class="stats-section">
-            <div class="container grid-4">
-                <div class="stat-card-v2">
-                    <i class="fas fa-users-rays"></i>
-                    <h3>12,450+</h3>
-                    <p>Toplam Kayıt</p>
-                </div>
-                <div class="stat-card-v2">
-                    <i class="fas fa-microchip"></i>
-                    <h3>30GB DDR5</h3>
-                    <p>Güçlü Donanım</p>
-                </div>
-                <div class="stat-card-v2">
-                    <i class="fas fa-shield-halved"></i>
-                    <h3>%100 GUARD</h3>
-                    <p>Hile Koruması</p>
-                </div>
-                <div class="stat-card-v2">
-                    <i class="fas fa-earth-americas"></i>
-                    <h3>TÜRKİYE</h3>
-                    <p>En Düşük Ping</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Store Section: Kazancın kalbi -->
-        <section id="store" class="store-section">
-            <div class="container">
-                <div class="section-heading text-center">
-                    <h2 class="title-glow">LEGACY <span>ELITE</span> MAĞAZA</h2>
-                    <p>Sunucumuzu ayakta tutan ve sizi rakiplerinizden ayıran özel paketler.</p>
-                </div>
-
-                <div class="filter-bar">
-                    <button class="filter-btn active" onclick="loadMarket('vips')">VIP ÜYELİKLER</button>
-                    <button class="filter-btn" onclick="loadMarket('kits')">PROFESYONEL KİTLER</button>
-                    <button class="filter-btn" onclick="loadMarket('swords')">EFSANEVİ SİLAHLAR</button>
-                </div>
-
-                <div id="dynamic-grid" class="market-grid-v2">
-                    <!-- JS Burayı Dolduracak -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Güvenlik & Kayıt -->
-        <section id="register" class="register-section-v2">
-            <div class="register-card-v2">
-                <div class="card-left">
-                    <h2>ŞİMDİ <br><span>KATIL!</span></h2>
-                    <p>Binlerce oyuncu arasındaki yerini al ve BoxMining dünyasının en güçlüsü ol.</p>
-                </div>
-                <div class="card-right">
-                    <div class="form-v2">
-                        <input type="text" id="r-nick" placeholder="Oyuncu Adınız">
-                        <input type="password" id="r-pass" placeholder="Şifreniz">
-                        <button class="btn-submit" onclick="registerAccount()">HESABI AKTİFLEŞTİR</button>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
-
-    <!-- Sipariş Onay Modal -->
-    <div id="payment-modal" class="modal-v2">
-        <div class="modal-inner-v2">
-            <div class="modal-header-v2">
-                <i class="fab fa-discord"></i>
-                <h3>GÜVENLİ SİPARİŞ</h3>
-                <span class="close-x" onclick="closePayment()">&times;</span>
-            </div>
-            <div class="modal-body-v2">
-                <p>Seçtiğiniz Ürün: <strong id="item-target">N/A</strong></p>
-                <div class="payment-notice">
-                    <i class="fas fa-info-circle"></i>
-                    Ödemeleriniz ve teslimatınız <strong>Yasal Güvence</strong> altındadır. İşlemler Discord Ticket sistemi üzerinden Manuel Onay ile gerçekleşmektedir.
-                </div>
-                <div class="dc-box">discord.gg/legacynetwork</div>
-                <button class="btn-primary-v2 w-100" onclick="closePayment()">ANLADIM</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer: Profesyonel Bitiş -->
-    <footer class="main-footer-v2">
-        <div class="container footer-grid-v2">
-            <div class="f-col about-col">
-                <div class="logo-text f-logo">LEGACY<span>NETWORK</span></div>
-                <p>Türkiye'nin en köklü BoxMining projesi olarak, oyuncularımıza kesintisiz ve adil bir hizmet sunmayı amaçlıyoruz.</p>
-            </div>
-            <div class="f-col links-col">
-                <h4>HIZLI MENÜ</h4>
-                <a href="#">Hakkımızda</a>
-                <a href="#">Sıralama</a>
-                <a href="#">Destek Talebi</a>
-                <a href="#">Wiki</a>
-            </div>
-            <div class="f-col social-col">
-                <h4>BİZİ TAKİP ET</h4>
-                <div class="f-socials">
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bar-v2">
-            <p>&copy; 2026 LegacyNetwork. Powered by <strong>TriggerBabaa</strong>. Bu site ticari amaçla tasarlanmıştır.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
