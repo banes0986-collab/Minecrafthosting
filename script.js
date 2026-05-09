@@ -1,51 +1,55 @@
-// --- KAYIT SİSTEMİ (Dashboard'a Otomatik Atan Versiyon) ---
-function handleRegister() {
-    const u = document.getElementById('r-user').value.trim();
-    const p = document.getElementById('r-pass').value.trim();
-
-    if (!u || !p) return alert("Alanları doldur kanka!");
-    if (localStorage.getItem('user_' + u)) return alert("Bu kullanıcı zaten var!");
-
-    // Yeni oyuncu verisi
-    const userData = {
-        username: u,
-        password: p,
-        balance: 0,
-        rank: 'OYUNCU',
-        joinDate: new Date().toLocaleDateString()
-    };
-
-    // Veritabanına (Local) kaydet
-    localStorage.setItem('user_' + u, JSON.stringify(userData));
-
-    // OTOMATİK GİRİŞ YAPTIR (Burası kritik!)
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('currentUser', JSON.stringify(userData));
-
-    alert("Hesabın oluşturuldu! Hoş geldin, Dashboard'a aktarılıyorsun...");
-    
-    // Direkt dashboard'a fırlat
-    window.location.href = 'dashboard.html';
-}
-
-// --- OTURUM KONTROLÜ (Sayfa Geçişlerini Denetler) ---
+// Sayfa koruması
 function checkAuth() {
-    const session = localStorage.getItem('isLoggedIn');
-    const path = window.location.pathname;
-
-    // Eğer giriş sayfasındaysan ve oturumun varsa Dashboard'a at
-    if (path.includes('index.html') || path === '/' || path.endsWith('/')) {
-        if (session === 'true') {
-            window.location.href = 'dashboard.html';
-        }
-    } 
-    // Eğer Dashboard'daysan ve oturumun YOKSA Giriş sayfasına at
-    else if (path.includes('dashboard.html')) {
-        if (session !== 'true') {
-            window.location.href = 'index.html';
-        }
+    const user = localStorage.getItem('currentUser');
+    if (window.location.pathname.includes('dashboard.html') && !user) {
+        window.location.href = 'index.html';
     }
 }
 
-// Sayfa yüklendiği an kontrol et
+// Kayıt ve Giriş
+function handleRegister() {
+    const u = document.getElementById('r-user').value.trim();
+    const p = document.getElementById('r-pass').value.trim();
+    if(!u || !p) return alert("Doldur kanka!");
+    
+    const userData = { username: u, balance: 0, rank: 'OYUNCU' };
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+    alert("Hoş geldin! Dashboard'a gidiyorsun...");
+    window.location.href = 'dashboard.html';
+}
+
+function handleLogin() {
+    const u = document.getElementById('l-user').value.trim();
+    const p = document.getElementById('l-pass').value.trim();
+    if(u === "triggerbabaa" && p === "resul3163") {
+        localStorage.setItem('currentUser', JSON.stringify({username:u, rank:'KURUCU', balance:'∞'}));
+        window.location.href = 'dashboard.html';
+    } else {
+        alert("Normal giriş için önce kayıt ol!");
+    }
+}
+
+// Satın Alma (Discord'a Bildirim Atar)
+function buy(itemName, price) {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if(!user) return alert("Önce giriş yap!");
+
+    const onay = confirm(`${itemName} almak istiyor musun? (${price} TL)`);
+    if(onay) {
+        fetch(CONFIG.discordWebhook, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                embeds: [{
+                    title: "🛒 YENİ SİPARİŞ!",
+                    description: `**Oyuncu:** ${user.username}\n**Ürün:** ${itemName}\n**Fiyat:** ${price} TL`,
+                    color: 15844367
+                }]
+            })
+        });
+        alert("Sipariş Discord'a iletildi! Yetkililer sana ulaşacak.");
+    }
+}
+
+function logout() { localStorage.clear(); window.location.href = 'index.html'; }
 checkAuth();
