@@ -1,8 +1,5 @@
-const SERVER_SETTINGS = {
+const CONFIG = {
     serverIP: "legacynw.craftmc.com.tr",
-    discordLink: "https://discord.gg/EagYzrV4N",
-    adminUser: "triggerbabaa",
-    adminPass: "resul3163",
-    siteName: "Legacy Network",
-    version: "v2.0.4"
+    discordWebhook: "BURAYA_YAPISTIR", // Discord'dan kopyaladığın link
+    discordLink: "https://discord.gg/EagYzrV4N"
 };
