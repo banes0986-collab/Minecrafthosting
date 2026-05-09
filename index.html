@@ -2,32 +2,68 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LegacyNW | Giriş Yap</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="auth-body">
-    <div id="auth-container">
-        <div class="auth-box">
-            <h1 class="logo-main">LEGACY<span>NW</span></h1>
-            <div class="auth-tabs">
-                <button id="login-tab" class="active" onclick="switchAuth('login')">Giriş</button>
-                <button id="register-tab" onclick="switchAuth('register')">Kayıt</button>
-            </div>
-            
-            <div id="login-form">
-                <input type="text" id="l-user" placeholder="Kullanıcı Adı">
-                <input type="password" id="l-pass" placeholder="Şifre">
-                <button class="btn-primary" onclick="handleLogin()">Giriş Yap</button>
+<body class="auth-page">
+
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1 class="main-logo">LEGACY<span>NW</span></h1>
+                <p>Türkiye'nin En Kaliteli BoxMining Sunucusu</p>
             </div>
 
-            <div id="register-form" class="hidden">
-                <input type="text" id="r-user" placeholder="Kullanıcı Adı Seç">
-                <input type="password" id="r-pass" placeholder="Şifre Belirle">
-                <button class="btn-success" onclick="handleRegister()">Hesap Oluştur</button>
+            <div class="auth-tabs">
+                <button id="tab-login" class="active" onclick="switchAuth('login')">Giriş Yap</button>
+                <button id="tab-register" onclick="switchAuth('register')">Kayıt Ol</button>
+            </div>
+
+            <div id="login-section" class="auth-form-content">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="l-user" placeholder="Kullanıcı Adın">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="l-pass" placeholder="Şifren">
+                </div>
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" checked>
+                    <label for="remember">Beni Hatırla</label>
+                </div>
+                <button class="btn-auth login" onclick="handleLogin()">
+                    <span>GİRİŞ YAP</span> <i class="fas fa-sign-in-alt"></i>
+                </button>
+            </div>
+
+            <div id="register-section" class="auth-form-content hidden">
+                <div class="input-group">
+                    <i class="fas fa-user-plus"></i>
+                    <input type="text" id="r-user" placeholder="Kullanıcı Adı Seç">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-key"></i>
+                    <input type="password" id="r-pass" placeholder="Güçlü Bir Şifre">
+                </div>
+                <div class="policy-check">
+                    <p>Kayıt olarak <a href="terms.html">kurallarımızı</a> kabul etmiş sayılırsınız.</p>
+                </div>
+                <button class="btn-auth register" onclick="handleRegister()">
+                    <span>HESAP OLUŞTUR</span> <i class="fas fa-user-check"></i>
+                </button>
+            </div>
+
+            <div class="auth-footer">
+                <a href="https://discord.gg/EagYzrV4N" target="_blank"><i class="fab fa-discord"></i> Yardıma mı ihtiyacın var?</a>
             </div>
         </div>
     </div>
+
+    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
