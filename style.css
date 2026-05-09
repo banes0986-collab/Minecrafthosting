@@ -1,28 +1,22 @@
-:root { --bg: #05080f; --side: #0a0f1a; --card: #121826; --accent: #00a8ff; --text: #dcdde1; }
-body { margin:0; font-family:'Outfit',sans-serif; background:var(--bg); color:var(--text); }
-.hidden { display: none !important; }
+.category-title {
+    margin: 40px 0 20px 0;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    border-left: 4px solid var(--accent);
+    padding-left: 15px;
+    letter-spacing: 1px;
+}
 
-/* Auth Sayfası */
-.auth-body { display:flex; justify-content:center; align-items:center; height:100vh; background: radial-gradient(circle, #0a0f1a, #05080f); }
-.auth-box { background:var(--card); padding:40px; border-radius:20px; width:350px; text-align:center; border:1px solid #1e272e; }
-.auth-tabs { display:flex; gap:10px; margin-bottom:20px; }
-.auth-tabs button { flex:1; padding:10px; background:#05080f; border:none; color:white; cursor:pointer; border-radius:10px; }
-.auth-tabs button.active { background:var(--accent); }
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
 
-/* Dashboard */
-.navbar { height:60px; background:var(--side); display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-bottom:1px solid #1e272e; }
-.layout { display:flex; height:calc(100vh - 60px); }
-.sidebar { width:240px; background:var(--side); padding:20px; border-right:1px solid #1e272e; }
-.side-link { display:block; padding:12px; color:#888; text-decoration:none; margin-bottom:5px; border-radius:10px; }
-.side-link:hover, .side-link.active { background:var(--accent); color:white; }
-.content { flex:1; padding:30px; overflow-y:auto; }
-
-/* Kartlar */
-.stats-container { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-.stat-card { background:var(--card); padding:20px; border-radius:15px; border:1px solid #1e272e; text-align:center; }
-.market-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:15px; }
-.item-card { background:var(--card); padding:20px; border-radius:15px; text-align:center; border:1px solid #1e272e; }
-.gold-border { border: 2px solid #fbc531; }
-
-input, select { width:100%; padding:12px; margin:10px 0; background:#05080f; border:1px solid #1e272e; color:white; border-radius:10px; }
-.btn-primary { width:100%; padding:12px; background:var(--accent); border:none; color:white; border-radius:10px; cursor:pointer; font-weight:bold; }
+/* Öne çıkan paket efekti */
+.highlight {
+    border: 2px solid var(--gold) !important;
+    background: linear-gradient(145deg, #121826, #1a2235) !important;
+    transform: scale(1.05);
+}
