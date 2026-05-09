@@ -1,27 +1,119 @@
-<div id="page-market" class="page-content hidden">
-    <h2 class="section-title"><i class="fas fa-shopping-cart"></i> SUNUCU MAĞAZASI</h2>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>LegacyNW | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left"><span class="nav-brand">LEGACY NW</span></div>
+        <div class="server-status-top" onclick="copyIP()" style="cursor:pointer">
+            <span id="status-text">Bağlanıyor...</span>
+        </div>
+        <div class="nav-right">
+            <span id="user-display">---</span>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-power-off"></i></button>
+        </div>
+    </nav>
 
-    <h3 class="category-title"><i class="fas fa-crown"></i> VIP Üyelikler</h3>
-    <div class="market-grid">
-        <div class="item-card"><h3>VIP</h3><p>Başlangıç Seviye</p><span>45 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card vip-gold"><h3>VIP+</h3><p>Popüler Seçim</p><span>55 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card"><h3>LVIP</h3><p>Üst Segment</p><span>70 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card highlight"><h3>LVIP+</h3><p>En Yüksek Yetki</p><span>125 TL</span><button onclick="buy()">SATIN AL</button></div>
+    <div class="layout">
+        <aside class="sidebar">
+            <a href="#" onclick="showPage('home')" class="side-link active" id="link-home"><i class="fas fa-home"></i> Ana Panel</a>
+            <a href="#" onclick="showPage('market')" class="side-link" id="link-market"><i class="fas fa-shopping-cart"></i> Mağaza</a>
+            <a href="#" onclick="showPage('rank-admin')" id="admin-link" class="side-link hidden"><i class="fas fa-user-shield"></i> Rank Ver</a>
+            <a href="https://discord.gg/EagYzrV4N" target="_blank" class="side-link"><i class="fab fa-discord"></i> Destek</a>
+        </aside>
+
+        <main class="content">
+            
+            <div id="page-home" class="page-content">
+                <div class="announcement-bar">
+                    <i class="fas fa-bullhorn"></i> <b>DUYURU:</b> Sunucumuzda bu hafta sonu tüm VIP alımlarında %20 indirim var!
+                </div>
+                <div class="stats-container">
+                    <div class="stat-card"><h4>CÜZDAN</h4><p id="user-balance">0 TL</p></div>
+                    <div class="stat-card"><h4>YETKİ</h4><p id="user-rank">OYUNCU</p></div>
+                    <div class="stat-card"><h4>AKTİF</h4><p id="status-display">0/0</p></div>
+                </div>
+                <div class="info-card">
+                    <h3>🚀 NEDEN LEGACY NW?</h3>
+                    <p>En güncel BoxMining sistemleri, i9 12900K işlemci ve %0 lag garantisi!</p>
+                </div>
+            </div>
+
+            <div id="page-market" class="page-content hidden">
+                <h2 class="section-title">SUNUCU MAĞAZASI</h2>
+
+                <h3 class="category-title">VIP Üyelikler</h3>
+                <div class="market-grid">
+                    <div class="item-card"><h3>VIP</h3><span>45 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card vip-gold"><h3>VIP+</h3><span>55 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card"><h3>LVIP</h3><span>70 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card highlight"><h3>LVIP+</h3><span>125 TL</span><button onclick="buy()">AL</button></div>
+                </div>
+
+                <h3 class="category-title">Kitler & Eşyalar</h3>
+                <div class="market-grid">
+                    <div class="item-card"><h3>Warden Kit</h3><span>35 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card"><h3>Creeper Kit</h3><span>25 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card"><h3>Shulker Kılıç</h3><span>20 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card highlight"><h3>Orta Gear</h3><span>50 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card"><h3>Magma Kılıç</h3><span>55 TL</span><button onclick="buy()">AL</button></div>
+                </div>
+
+                <h3 class="category-title">Kasa Anahtarları</h3>
+                <div class="market-grid">
+                    <div class="item-card"><h3>Charm</h3><span>10 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card"><h3>Legacy</h3><span>25 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card"><h3>VIP</h3><span>15 TL</span><button onclick="buy()">AL</button></div>
+                </div>
+            </div>
+
+            <div id="page-rank-admin" class="page-content hidden">
+                <h2 class="section-title">ADMIN PANEL</h2>
+                <div class="admin-box">
+                    <input type="text" id="target-user" placeholder="Oyuncu Adı">
+                    <select id="target-rank">
+                        <option value="VIP">VIP</option>
+                        <option value="REHBER">REHBER</option>
+                        <option value="KURUCU">KURUCU</option>
+                    </select>
+                    <button class="btn-primary" onclick="adminGiveRank()">YETKİ VER</button>
+                </div>
+            </div>
+
+        </main>
     </div>
 
-    <h3 class="category-title"><i class="fas fa-shield-alt"></i> Özel Kitler & Eşyalar</h3>
-    <div class="market-grid">
-        <div class="item-card"><h3>Warden Kit</h3><p>Full Warden Seti</p><span>35 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card"><h3>Creeper Kit</h3><p>Patlayıcı Güç</p><span>25 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card"><h3>Shulker Kılıç</h3><p>Özel Efektli</p><span>20 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card highlight"><h3>Orta Gear</h3><p>50.000 Can / Set</p><span>50 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card"><h3>Magma Kılıç</h3><p>Alevli Saldırı</p><span>55 TL</span><button onclick="buy()">SATIN AL</button></div>
-    </div>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Sayfa Değiştirme Fonksiyonu (Fixlendi)
+        function showPage(id) {
+            // Tüm sayfaları gizle
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            // Seçilen sayfayı göster
+            document.getElementById('page-' + id).classList.remove('hidden');
+            
+            // Linklerin aktifliğini temizle
+            document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+            // Tıklanan linki aktif yap (id üzerinden)
+            if(id === 'home') document.getElementById('link-home').classList.add('active');
+            if(id === 'market') document.getElementById('link-market').classList.add('active');
+            if(id === 'rank-admin') document.getElementById('admin-link').classList.add('active');
+        }
 
-    <h3 class="category-title"><i class="fas fa-key"></i> Kasa Anahtarları</h3>
-    <div class="market-grid">
-        <div class="item-card"><h3>Charm Anahtarı</h3><p>Giriş Seviye Kasa</p><span>10 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card"><h3>Legacy Anahtarı</h3><p>Özel Sunucu Kasası</p><span>25 TL</span><button onclick="buy()">SATIN AL</button></div>
-        <div class="item-card"><h3>VIP Anahtarı</h3><p>Sadece VIP'lere Özel</p><span>15 TL</span><button onclick="buy()">SATIN AL</button></div>
-    </div>
-</div>
+        window.onload = function() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if(!user) { window.location.href = 'index.html'; return; }
+            document.getElementById('user-display').innerText = user.username;
+            document.getElementById('user-balance').innerText = user.balance + (user.balance === "∞" ? "" : " TL");
+            document.getElementById('user-rank').innerText = user.rank;
+            if(user.rank === 'KURUCU') document.getElementById('admin-link').classList.remove('hidden');
+        };
+    </script>
+</body>
+</html>
