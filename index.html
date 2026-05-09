@@ -3,176 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNW | Profesyonel BoxMining</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>LegacyNW | Yönetim & Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #0fbcf9;
-            --gold: #ffdd59;
-            --dark: #0a0c10;
-            --card: #151921;
-            --text: #ffffff;
-            --discord: #7289da;
+            --bg: #0d1117; --card: #161b22; --accent: #58a6ff; --gold: #f1c40f; --text: #c9d1d9;
         }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg); color: var(--text); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-        body { background: var(--dark); color: var(--text); overflow-x: hidden; }
-
-        /* Header */
-        header {
-            height: 100vh;
-            background: linear-gradient(rgba(10,12,16,0.8), rgba(10,12,16,0.8)), url('https://wallpaperaccess.com/full/1152735.jpg');
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-bottom: 4px solid var(--gold);
+        /* Giriş Ekranı */
+        #login-screen {
+            height: 100vh; display: flex; justify-content: center; align-items: center;
+            background: linear-gradient(45deg, #0d1117, #161b22);
         }
-
-        .logo { font-size: 5rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 20px rgba(255, 221, 89, 0.5); margin-bottom: 10px; }
-        .ip-box {
-            background: rgba(255,255,255,0.1);
-            padding: 15px 40px;
-            border-radius: 50px;
-            border: 2px dashed var(--accent);
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 1.5rem;
-            font-weight: bold;
+        .login-box {
+            background: var(--card); padding: 40px; border-radius: 15px; border: 1px solid #30363d;
+            width: 100%; max-width: 400px; text-align: center;
         }
-        .ip-box:hover { background: var(--accent); color: #000; transform: scale(1.1); }
+        .login-box h2 { margin-bottom: 20px; color: var(--gold); }
+        input {
+            width: 100%; padding: 12px; margin: 10px 0; background: #010409;
+            border: 1px solid #30363d; color: white; border-radius: 8px;
+        }
+        .btn {
+            width: 100%; padding: 12px; background: var(--accent); border: none;
+            color: white; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s;
+        }
+        .btn:hover { opacity: 0.8; }
 
-        /* Market Alanı */
-        .container { max-width: 1200px; margin: 100px auto; padding: 0 20px; }
-        .category-title { font-size: 2.5rem; color: var(--gold); margin-bottom: 30px; border-bottom: 2px solid var(--gold); display: inline-block; }
+        /* Dashboard Alanı (Başlangıçta Gizli) */
+        #dashboard { display: none; padding-top: 70px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 80px; }
-        .card {
-            background: var(--card);
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.05);
+        /* Navbar */
+        .navbar {
+            position: fixed; top: 0; width: 100%; height: 60px; background: var(--card);
+            display: flex; align-items: center; justify-content: space-between; padding: 0 30px;
+            border-bottom: 1px solid #30363d; z-index: 100;
         }
-        .card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(15, 188, 249, 0.2); }
-        .card h3 { margin-bottom: 15px; font-size: 1.4rem; }
-        .price { font-size: 2rem; color: #05c46b; font-weight: 900; margin-bottom: 20px; }
-        .buy-btn {
-            display: inline-block;
-            background: var(--accent);
-            color: #000;
-            padding: 10px 25px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .buy-btn:hover { background: var(--gold); }
 
-        /* Ticket Sistemi Alanı */
-        .ticket-section {
-            background: var(--card);
-            padding: 60px;
-            border-radius: 30px;
-            max-width: 800px;
-            margin: 0 auto 100px auto;
-            border: 2px solid var(--gold);
+        /* Sidebar Menü */
+        .sidebar {
+            position: fixed; left: 0; top: 60px; width: 250px; height: 100%;
+            background: var(--card); border-right: 1px solid #30363d; padding: 20px;
         }
-        .ticket-section h2 { text-align: center; margin-bottom: 30px; color: var(--gold); }
-        input, textarea {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            background: #0a0c10;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 10px;
-            font-size: 1rem;
+        .sidebar a {
+            display: block; padding: 15px; color: var(--text); text-decoration: none;
+            margin-bottom: 10px; border-radius: 8px; transition: 0.3s;
         }
-        .send-ticket {
-            width: 100%;
-            background: var(--discord);
-            color: #fff;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .send-ticket:hover { opacity: 0.8; }
+        .sidebar a:hover { background: #21262d; color: var(--accent); }
 
-        /* Footer */
-        footer { background: #000; padding: 50px; text-align: center; }
+        /* İçerik Kartları */
+        .main-content { margin-left: 270px; padding: 30px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .stat-card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid #30363d; text-align: center; }
+        .stat-card h4 { color: #8b949e; font-size: 0.9rem; }
+        .stat-card .val { font-size: 1.8rem; font-weight: 800; color: var(--gold); }
+
+        /* Ticket & Rank Formları */
+        .form-section { background: var(--card); padding: 30px; border-radius: 12px; margin-top: 30px; border: 1px solid #30363d; }
+        .form-section h3 { margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
+
+        /* Gizleme/Gösterme sınıfları */
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">LEGACY NW</div>
-        <div class="ip-box" onclick="copyIP()">legacynw.craftmc.com.tr</div>
-        <p style="margin-top: 20px; color: #888;">Tıkla ve Hemen Katıl!</p>
-    </header>
-
-    <div class="container">
-        <!-- VIPLER -->
-        <h2 class="category-title">💎 VIP PAKETLERİ</h2>
-        <div class="grid">
-            <div class="card"><h3>VIP</h3><div class="price">45 TL</div><a href="https://discord.gg/EagYzrV4N" class="buy-btn">SATIN AL</a></div>
-            <div class="card"><h3>VIP+</h3><div class="price">55 TL</div><a href="https://discord.gg/EagYzrV4N" class="buy-btn">SATIN AL</a></div>
-            <div class="card"><h3>LVIP</h3><div class="price">70 TL</div><a href="https://discord.gg/EagYzrV4N" class="buy-btn">SATIN AL</a></div>
-            <div class="card"><h3>LVIP+</h3><div class="price">125 TL</div><a href="https://discord.gg/EagYzrV4N" class="buy-btn">SATIN AL</a></div>
-        </div>
-
-        <!-- KILIÇLAR -->
-        <h2 class="category-title">⚔️ EFSANEVİ KILIÇLAR</h2>
-        <div class="grid">
-            <div class="card"><h3>Shulker Kılıç</h3><div class="price">20 TL</div><a href="#" class="buy-btn">SATIN AL</a></div>
-            <div class="card"><h3>Warden Kılıç</h3><div class="price">50 TL</div><a href="#" class="buy-btn">SATIN AL</a></div>
-            <div class="card"><h3>Creeper Kılıç</h3><div class="price">20 TL</div><a href="#" class="buy-btn">SATIN AL</a></div>
-            <div class="card"><h3>Magma Kılıç</h3><div class="price">55 TL</div><a href="#" class="buy-btn">SATIN AL</a></div>
-        </div>
-
-        <!-- TICKET FORMU -->
-        <div class="ticket-section" id="destek">
-            <h2>🎫 DESTEK TALEBİ OLUŞTUR</h2>
-            <p style="text-align: center; margin-bottom: 20px;">Bir sorun mu var? Bize yaz, hemen çözelim.</p>
-            <input type="text" id="name" placeholder="Oyundaki Adın..." required>
-            <textarea id="message" rows="5" placeholder="Sorunun nedir?" required></textarea>
-            <button class="send-ticket" onclick="sendTicket()">TALEBİ GÖNDER (DISCORD)</button>
+    <div id="login-screen">
+        <div class="login-box">
+            <h2>LegacyNW Giriş</h2>
+            <input type="text" id="username" placeholder="Kullanıcı Adı">
+            <input type="password" id="password" placeholder="Şifre">
+            <button class="btn" onclick="checkLogin()">Giriş Yap</button>
         </div>
     </div>
 
-    <footer>
-        <p>© 2026 Legacy Network - Kalitenin Adresi</p>
-        <p style="color: #444; font-size: 0.8rem; margin-top: 10px;">Created for LegacyNW Team</p>
-    </footer>
+    <div id="dashboard">
+        <nav class="navbar">
+            <div style="font-weight: 800; color: var(--gold);">LEGACY NW | PANEL</div>
+            <div id="user-info">Hoş geldin, <span id="display-name"></span></div>
+        </nav>
+
+        <div class="sidebar">
+            <a href="#" onclick="showPage('ana')"><i class="fas fa-home"></i> Panel Ana Sayfa</a>
+            <a href="#" onclick="showPage('rank-ver')"><i class="fas fa-crown"></i> Rank Yönetimi</a>
+            <a href="#" onclick="showPage('ticket')"><i class="fas fa-ticket"></i> Ticket Sistemi</a>
+            <a href="#" onclick="addBalance()"><i class="fas fa-wallet"></i> Bakiye Yükle</a>
+            <a href="index.html" style="color: #f85149;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+        </div>
+
+        <div class="main-content">
+            <div id="page-ana">
+                <div class="stats-grid">
+                    <div class="stat-card"><h4>Mevcut Bakiyen</h4><div class="val" id="balance-val">0 TL</div></div>
+                    <div class="stat-card"><h4>Rank Durumu</h4><div class="val" style="color:var(--accent)">KURUCU</div></div>
+                    <div class="stat-card"><h4>Aktif Ticket</h4><div class="val">0</div></div>
+                </div>
+            </div>
+
+            <div id="page-rank-ver" class="hidden">
+                <div class="form-section">
+                    <h3>Oyuncuya Rank Ver</h3>
+                    <input type="text" id="player-name" placeholder="Oyuncu Adı">
+                    <select id="rank-select" style="width: 100%; padding: 12px; background: #010409; color: white; border-radius: 8px; border: 1px solid #30363d;">
+                        <option value="VIP">VIP</option>
+                        <option value="VIP+">VIP+</option>
+                        <option value="LVIP">LVIP</option>
+                        <option value="LVIP+">LVIP+</option>
+                    </select>
+                    <button class="btn" style="margin-top: 20px; background: #238636;" onclick="giveRank()">Rankı Tanımla</button>
+                </div>
+            </div>
+
+            <div id="page-ticket" class="hidden">
+                <div class="form-section">
+                    <h3>Destek Talebi (Ticket)</h3>
+                    <input type="text" id="t-subject" placeholder="Konu">
+                    <textarea id="t-msg" rows="5" placeholder="Mesajınız..." style="width: 100%; background: #010409; border: 1px solid #30363d; color: white; border-radius: 8px; padding: 10px;"></textarea>
+                    <button class="btn" onclick="sendTicket()">Talebi Oluştur</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // IP Kopyalama Fonksiyonu
-        function copyIP() {
-            const ip = "legacynw.craftmc.com.tr";
-            navigator.clipboard.writeText(ip);
-            alert("IP Adresi Kopyalandı: " + ip);
+        // Giriş Kontrolü
+        function checkLogin() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+
+            if(u === "triggerbabaa" && p === "resul3163") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('display-name').innerText = u;
+            } else {
+                alert("Hatalı kullanıcı adı veya şifre kanka!");
+            }
         }
 
-        // Ticket Gönderme Fonksiyonu (Discord Yönlendirmeli)
-        function sendTicket() {
-            const name = document.getElementById('name').value;
-            const message = document.getElementById('message').value;
-            
-            if(name === "" || message === "") {
-                alert("Lütfen tüm alanları doldur kanka!");
-                return;
-            }
+        // Sayfa Değiştirme
+        function showPage(pageId) {
+            document.getElementById('page-ana').classList.add('hidden');
+            document.getElementById('page-rank-ver').classList.add('hidden');
+            document.getElementById('page-ticket').classList.add('hidden');
+            document.getElementById('page-' + pageId).classList.remove('hidden');
+        }
 
-            // Discord sunucuna yönlendirir ve bilgileri kopyalamasını hatırlatır
-            alert("Talebin hazır! Şimdi Discord sunucumuza yönlendiriliyorsun. Lütfen mesajını oradaki yetkililere ilet.");
+        // Bakiye Sistemi (Discord Yönlendirme)
+        function addBalance() {
+            alert("Bakiye artırmak için Discord üzerinden talep açmalısınız! Yönlendiriliyorsunuz...");
             window.location.href = "https://discord.gg/EagYzrV4N";
+        }
+
+        // Rank Verme Simülasyonu
+        function giveRank() {
+            const pName = document.getElementById('player-name').value;
+            const rank = document.getElementById('rank-select').value;
+            if(pName) {
+                alert(pName + " isimli oyuncuya " + rank + " rankı başarıyla verildi!");
+            } else {
+                alert("Oyuncu adı gir kanka!");
+            }
+        }
+
+        // Ticket Gönderme
+        function sendTicket() {
+            const sub = document.getElementById('t-subject').value;
+            const msg = document.getElementById('t-msg').value;
+            if(sub && msg) {
+                alert("Ticket başarıyla oluşturuldu! Yetkililer en kısa sürede Discord üzerinden veya buradan dönecektir.");
+                document.getElementById('t-subject').value = "";
+                document.getElementById('t-msg').value = "";
+            } else {
+                alert("Boş alan bırakma kanka!");
+            }
         }
     </script>
 </body>
