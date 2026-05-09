@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegacyNW | Yönetim Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="login-box">
+            <div class="logo">LEGACY NW</div>
+            <p style="color: #8b949e; margin-bottom: 20px;">Yönetici Girişi</p>
+            <input type="text" id="username" placeholder="Kullanıcı Adı">
+            <input type="password" id="password" placeholder="Şifre">
+            <button class="btn-main" onclick="checkLogin()">Giriş Yap</button>
+        </div>
+    </div>
+
+    <div id="dashboard" class="hidden">
+        <nav class="top-nav">
+            <div class="nav-brand">LEGACY <span style="color:var(--gold)">ADMIN</span></div>
+            <div class="nav-user">Hoş geldin, <b id="display-name"></b></div>
+        </nav>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <button onclick="showPage('ana')" class="side-link active"><i class="fas fa-chart-line"></i> Genel Durum</button>
+                <button onclick="showPage('rank')" class="side-link"><i class="fas fa-crown"></i> Rank Ver</button>
+                <button onclick="showPage('ticket')" class="side-link"><i class="fas fa-ticket-alt"></i> Destek Talebi</button>
+                <button onclick="addBalance()" class="side-link gold-link"><i class="fas fa-plus-circle"></i> Bakiye Yükle</button>
+                <button onclick="location.href='index.html'" class="side-link exit-link"><i class="fas fa-sign-out-alt"></i> Siteden Çıkış</button>
+            </aside>
+
+            <main class="content">
+                
+                <div id="page-ana" class="page">
+                    <h2 style="margin-bottom: 20px;">Sunucu Özeti</h2>
+                    <div class="stat-grid">
+                        <div class="card"><h3>CÜZDAN</h3><p id="balance-txt">0 TL</p></div>
+                        <div class="card"><h3>YETKİ</h3><p style="color:var(--accent)">KURUCU</p></div>
+                        <div class="card"><h3>SUNUCU</h3><p style="color:var(--success)">AKTİF</p></div>
+                    </div>
+                </div>
+
+                <div id="page-rank" class="page hidden">
+                    <div class="form-container">
+                        <h2>Oyuncuya Rank Tanımla</h2>
+                        <p style="margin-bottom: 15px; font-size: 0.9rem; color: #888;">Buradan verilen ranklar veritabanına simüle edilir.</p>
+                        <input type="text" id="target-player" placeholder="Oyuncu Adı (Örn: triggerbabaa)">
+                        <select id="rank-type">
+                            <option value="VIP">VIP (45 TL)</option>
+                            <option value="VIP+">VIP+ (55 TL)</option>
+                            <option value="LVIP">LVIP (70 TL)</option>
+                            <option value="LVIP+">LVIP+ (125 TL)</option>
+                        </select>
+                        <button class="btn-main" onclick="giveRankAction()">Rankı Tanımla</button>
+                    </div>
+                </div>
+
+                <div id="page-ticket" class="page hidden">
+                    <div class="form-container">
+                        <h2>Destek Talebi Oluştur</h2>
+                        <input type="text" id="t-title" placeholder="Konu (Örn: Ödeme Sorunu)">
+                        <textarea id="t-body" rows="5" placeholder="Mesajınızı detaylıca yazın..."></textarea>
+                        <button class="btn-main" style="background: #7289da;" onclick="sendTicketAction()">Discord'a Gönder</button>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
