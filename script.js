@@ -1,44 +1,79 @@
-const items = {
-    vips: [
-        { n: "VIP", p: 40 }, { n: "VIP+", p: 55 }, 
-        { n: "LVIP", p: 70 }, { n: "LVIP+", p: 100 }
-    ],
-    kits: [
-        { n: "Warden Kit", p: 20 }, { n: "Creeper Kit", p: 20 },
-        { n: "İskelet Kit", p: 20 }, { n: "Ghast Kit", p: 2 },
-        { n: "Büyücü Kit", p: 1 }, { n: "Kar Adam", p: 15 },
-        { n: "Piglin Kit", p: 20 }, { n: "Full Netherite", p: 20 }
-    ],
-    swords: [
-        { n: "Piglin Kılıç", p: 10 }, { n: "Shulker Kılıç", p: 5 },
-        { n: "Warden Kılıç", p: 10 }, { n: "Creeper Kılıç", p: 10 },
-        { n: "Özel Kılıç", p: 150 }
-    ],
-    crates: [
-        { n: "Başlangıç Kasası", p: 5 }, { n: "Efsanevi Kasa", p: 25 }
-    ]
-};
-
-function toggleSidebar() {
-    const side = document.getElementById("sidebar");
-    side.style.width = side.style.width === "300px" ? "0" : "300px";
+// Kayıt ve Giriş Fonksiyonları
+function switchAuth(type) {
+    if(type === 'login') {
+        document.getElementById('login-form').classList.remove('hidden');
+        document.getElementById('register-form').classList.add('hidden');
+        document.getElementById('login-tab').classList.add('active');
+        document.getElementById('register-tab').classList.remove('active');
+    } else {
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.remove('hidden');
+        document.getElementById('login-tab').classList.remove('active');
+        document.getElementById('register-tab').classList.add('active');
+    }
 }
 
-function showCategory(cat) {
-    const display = document.getElementById("shop-display");
-    display.innerHTML = ""; // Temizle
+// Kayıt Olma
+function handleRegister() {
+    const user = document.getElementById('r-user').value;
+    const pass = document.getElementById('r-pass').value;
+
+    if(!user || !pass) return alert("Bilgileri doldur kanka!");
+
+    // Tarayıcı hafızasına kaydet (Simüle veritabanı)
+    const userData = { username: user, password: pass, balance: 0, rank: 'OYUNCU' };
+    localStorage.setItem('user_' + user, JSON.stringify(userData));
     
-    items[cat].forEach(item => {
-        display.innerHTML += `
-            <div class="glass-card" style="border-bottom: 3px solid var(--primary)">
-                <h3>${item.n}</h3>
-                <div style="font-size: 24px; margin: 15px 0; color: #00ff88;">${item.p} TL</div>
-                <button class="neon-btn">SATIN AL</button>
-            </div>
-        `;
-    });
-    toggleSidebar();
+    alert("Kayıt başarılı! Şimdi giriş yapabilirsin.");
+    switchAuth('login');
 }
 
-// İlk açılışta VIP'leri göster
-window.onload = () => showCategory('vips');
+// Giriş Yapma
+function handleLogin() {
+    const user = document.getElementById('l-user').value;
+    const pass = document.getElementById('l-pass').value;
+
+    // Özel admin hesabı kontrolü
+    if(user === "triggerbabaa" && pass === "resul3163") {
+        loginSuccess({username: "triggerbabaa", balance: 9999, rank: "KURUCU"});
+        return;
+    }
+
+    const savedUser = localStorage.getItem('user_' + user);
+    if(savedUser) {
+        const data = JSON.parse(savedUser);
+        if(data.password === pass) {
+            loginSuccess(data);
+        } else {
+            alert("Şifre yanlış kanka!");
+        }
+    } else {
+        alert("Böyle bir kullanıcı yok. Önce kayıt ol!");
+    }
+}
+
+function loginSuccess(data) {
+    document.getElementById('auth-container').classList.add('hidden');
+    document.getElementById('dashboard').classList.remove('hidden');
+    document.getElementById('user-display').innerText = data.username;
+    document.getElementById('welcome-name').innerText = data.username;
+    document.getElementById('user-balance').innerText = data.balance + " TL";
+    document.getElementById('user-rank').innerText = data.rank;
+}
+
+// Sayfa Değiştirme
+function showPage(pageId) {
+    document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+    document.getElementById('page-' + pageId).classList.remove('hidden');
+    
+    document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+}
+
+function buyItem(name) {
+    alert(name + " satın almak için bakiye yetersiz! Lütfen Discord üzerinden bakiye yükleyin.");
+}
+
+function logout() {
+    location.reload();
+}
