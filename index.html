@@ -3,32 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNW | Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>LegacyNW | Dashboard v2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="auth-container">
         <div class="auth-box">
+            <h1 class="logo-main">LEGACY<span>NW</span></h1>
             <div class="auth-tabs">
-                <button id="login-tab" class="active" onclick="switchAuth('login')">Giriş Yap</button>
-                <button id="register-tab" onclick="switchAuth('register')">Kayıt Ol</button>
+                <button id="login-tab" class="active" onclick="switchAuth('login')">Giriş</button>
+                <button id="register-tab" onclick="switchAuth('register')">Kayıt</button>
             </div>
-
             <div id="login-form">
-                <h2 class="logo-text">LEGACY NW</h2>
                 <input type="text" id="l-user" placeholder="Kullanıcı Adı">
                 <input type="password" id="l-pass" placeholder="Şifre">
-                <button class="btn-primary" onclick="handleLogin()">Giriş Yap</button>
+                <button class="btn-primary" onclick="handleLogin()">Sisteme Gir</button>
             </div>
-
             <div id="register-form" class="hidden">
-                <h2 class="logo-text">KAYIT OL</h2>
-                <input type="text" id="r-user" placeholder="Yeni Kullanıcı Adı">
-                <input type="password" id="r-pass" placeholder="Yeni Şifre">
-                <button class="btn-success" onclick="handleRegister()">Hesap Oluştur</button>
+                <input type="text" id="r-user" placeholder="Kullanıcı Adı Seç">
+                <input type="password" id="r-pass" placeholder="Şifre Belirle">
+                <button class="btn-success" onclick="handleRegister()">Hesabı Oluştur</button>
             </div>
         </div>
     </div>
@@ -36,54 +33,85 @@
     <div id="dashboard" class="hidden">
         <nav class="navbar">
             <div class="nav-left">
-                <i class="fas fa-bars" onclick="toggleSidebar()"></i>
-                <span class="nav-brand">LEGACY NW</span>
+                <span class="nav-brand"><i class="fas fa-bolt"></i> LEGACY NW</span>
+            </div>
+            <div class="server-status-top">
+                <span id="status-text">Yükleniyor...</span>
             </div>
             <div class="nav-right">
                 <span id="user-display">---</span>
-                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-power-off"></i></button>
             </div>
         </nav>
 
         <div class="layout">
-            <aside class="sidebar" id="sidebar">
-                <a href="#" onclick="showPage('home')" class="side-link active"><i class="fas fa-th-large"></i> Dashboard</a>
-                <a href="#" onclick="showPage('vipler')" class="side-link"><i class="fas fa-crown"></i> VIP Paketleri</a>
-                <a href="#" onclick="showPage('market')" class="side-link"><i class="fas fa-shopping-cart"></i> Sunucu Marketi</a>
-                <a href="#" onclick="showPage('ticket')" class="side-link"><i class="fas fa-headset"></i> Destek Talebi</a>
-                <a href="https://discord.gg/EagYzrV4N" target="_blank" class="side-link bakiye-link"><i class="fas fa-plus-circle"></i> Bakiye Yükle</a>
+            <aside class="sidebar">
+                <a href="#" onclick="showPage('home')" class="side-link active"><i class="fas fa-home"></i> Ana Panel</a>
+                <a href="#" onclick="showPage('market')" class="side-link"><i class="fas fa-shopping-basket"></i> Mağaza</a>
+                <a href="#" onclick="showPage('rank-yonetim')" id="admin-link" class="side-link hidden"><i class="fas fa-user-shield"></i> Rank Yönetimi</a>
+                <a href="#" onclick="showPage('destek')" class="side-link"><i class="fas fa-headset"></i> Destek</a>
+                <div class="sidebar-footer">
+                    <p>IP: legacynw.craftmc.com.tr</p>
+                </div>
             </aside>
 
             <main class="content">
                 <div id="page-home" class="page-content">
-                    <div class="top-stats">
-                        <div class="stat-card"><h4>BAKİYEN</h4><p id="user-balance">0 TL</p></div>
-                        <div class="stat-card"><h4>RANKIN</h4><p style="color:#0fbcf9" id="user-rank">OYUNCU</p></div>
-                        <div class="stat-card"><h4>DURUM</h4><p style="color:#05c46b">ONLINE</p></div>
+                    <div class="welcome-section">
+                        <h1>Hoş geldin, <span id="welcome-name"></span>!</h1>
+                        <p>Legacy Network BoxMining Dashboard'ına hoş geldin.</p>
                     </div>
-                    <div class="welcome-banner">
-                        <h2>Hoş geldin, <span id="welcome-name">...</span>!</h2>
-                        <p>BoxMining dünyasında bugün ne yapıyoruz?</p>
-                    </div>
-                </div>
 
-                <div id="page-vipler" class="page-content hidden">
-                    <h2 class="section-title">VIP ÜYELİKLER</h2>
-                    <div class="market-grid">
-                        <div class="item-card"><h3>VIP</h3><div class="price">45 TL</div><button class="buy-btn" onclick="buyItem('VIP')">SATIN AL</button></div>
-                        <div class="item-card"><h3>VIP+</h3><div class="price">55 TL</div><button class="buy-btn" onclick="buyItem('VIP+')">SATIN AL</a></div>
-                        <div class="item-card"><h3>LVIP</h3><div class="price">70 TL</div><button class="buy-btn" onclick="buyItem('LVIP')">SATIN AL</a></div>
-                        <div class="item-card"><h3>LVIP+</h3><div class="price">125 TL</div><button class="buy-btn" onclick="buyItem('LVIP+')">SATIN AL</a></div>
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <i class="fas fa-wallet"></i>
+                            <div><h4>BAKİYEN</h4><p id="user-balance">0 TL</p></div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-crown"></i>
+                            <div><h4>RANKIN</h4><p id="user-rank">OYUNCU</p></div>
+                        </div>
+                        <div class="stat-card status-card">
+                            <i class="fas fa-signal"></i>
+                            <div><h4>DURUM</h4><p id="status-display">KONTROL EDİLİYOR</p></div>
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3>🚀 NEDEN BİZ?</h3>
+                            <ul>
+                                <li><i class="fas fa-check"></i> %0 Lag Garantisi (i9 İşlemci)</li>
+                                <li><i class="fas fa-check"></i> 7/24 Aktif Yetkili Ekibi</li>
+                                <li><i class="fas fa-check"></i> Hile Korumalı BoxMining Keyfi</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <div id="page-market" class="page-content hidden">
-                    <h2 class="section-title">KILIÇLAR & KİTLER</h2>
+                    <h2 class="section-title">SUNUCU MAĞAZASI</h2>
                     <div class="market-grid">
-                        <div class="item-card"><h3>Warden Kılıç</h3><div class="price">50 TL</div><button class="buy-btn">SATIN AL</button></div>
-                        <div class="item-card"><h3>Magma Kılıç</h3><div class="price">55 TL</div><button class="buy-btn">SATIN AL</button></div>
-                        <div class="item-card"><h3>Warden Kit</h3><div class="price">35 TL</div><button class="buy-btn">SATIN AL</button></div>
-                        <div class="item-card"><h3>Full Gear 3X</h3><div class="price">200 TL</div><button class="buy-btn">SATIN AL</button></div>
+                        <div class="item-card vip-gold"><h3>VIP+</h3><p>Ömür Boyu</p><span>55 TL</span><button onclick="buy()">SATIN AL</button></div>
+                        <div class="item-card"><h3>LVIP+</h3><p>En Üst Seviye</p><span>125 TL</span><button onclick="buy()">SATIN AL</button></div>
+                        <div class="item-card"><h3>Warden Kit</h3><p>Full Set</p><span>35 TL</span><button onclick="buy()">SATIN AL</button></div>
+                        <div class="item-card"><h3>Creeper Kit</h3><p>Patlayıcı Güç</p><span>25 TL</span><button onclick="buy()">SATIN AL</button></div>
+                        <div class="item-card"><h3>Shulker Kılıç</h3><p>Özel Efektli</p><span>20 TL</span><button onclick="buy()">SATIN AL</button></div>
+                        <div class="item-card highlight"><h3>Orta Gear</h3><p>Başlangıç Paketi</p><span>50 TL</span><button onclick="buy()">SATIN AL</button></div>
+                    </div>
+                </div>
+
+                <div id="page-rank-yonetim" class="page-content hidden">
+                    <h2 class="section-title">RANK YÖNETİMİ</h2>
+                    <div class="admin-box">
+                        <input type="text" id="rank-player" placeholder="Oyuncu Adı">
+                        <select id="rank-type">
+                            <option value="VIP">VIP</option>
+                            <option value="LVIP+">LVIP+</option>
+                            <option value="REHBER">REHBER</option>
+                            <option value="MODERATOR">MODERATÖR</option>
+                        </select>
+                        <button class="btn-primary" onclick="adminGiveRank()">RANKI TANIMLA</button>
                     </div>
                 </div>
             </main>
