@@ -2,118 +2,99 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>LegacyNW | Dashboard</title>
+    <title>LegacyNW | Yönetim Merkezi</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="top-announcement">
+        <marquee>🔥 SEZON 2 BAŞLADI! | LEGACY KASA'DA %20 ŞANS ARTIŞI! | DESTEK İÇİN TICKET AÇMAYI UNUTMAYIN! 🔥</marquee>
+    </div>
+
     <nav class="navbar">
-        <div class="nav-left"><span class="nav-brand">LEGACY NW</span></div>
-        <div class="server-status-top" onclick="copyIP()" style="cursor:pointer">
-            <span id="status-text">Bağlanıyor...</span>
-        </div>
+        <div class="nav-left"><span class="nav-brand">LEGACY<span>NW</span></span></div>
+        <div class="nav-center" onclick="copyIP()">IP: legacynw.craftmc.com.tr <i class="fas fa-copy"></i></div>
         <div class="nav-right">
-            <span id="user-display">---</span>
+            <div class="user-pill"><i class="fas fa-user-circle"></i> <span id="user-display">---</span></div>
             <button class="logout-btn" onclick="logout()"><i class="fas fa-power-off"></i></button>
         </div>
     </nav>
 
-    <div class="layout">
+    <div class="main-layout">
         <aside class="sidebar">
-            <a href="#" onclick="showPage('home')" class="side-link active" id="link-home"><i class="fas fa-home"></i> Ana Panel</a>
-            <a href="#" onclick="showPage('market')" class="side-link" id="link-market"><i class="fas fa-shopping-cart"></i> Mağaza</a>
-            <a href="#" onclick="showPage('rank-admin')" id="admin-link" class="side-link hidden"><i class="fas fa-user-shield"></i> Rank Ver</a>
-            <a href="https://discord.gg/EagYzrV4N" target="_blank" class="side-link"><i class="fab fa-discord"></i> Destek</a>
+            <button onclick="showPage('home')" class="side-link active" id="l-home"><i class="fas fa-chart-line"></i> Genel Bakış</button>
+            <button onclick="showPage('market')" class="side-link" id="l-market"><i class="fas fa-shopping-bag"></i> Mağaza</button>
+            <button onclick="showPage('ticket')" class="side-link" id="l-ticket"><i class="fas fa-ticket-alt"></i> Destek Talebi</button>
+            
+            <div class="admin-only hidden" id="admin-menu">
+                <hr style="border: 1px solid #1e272e; margin: 20px 0;">
+                <p style="font-size: 10px; color: #555; margin-left: 15px;">YÖNETİCİ</p>
+                <button onclick="showPage('admin')" class="side-link" id="l-admin"><i class="fas fa-user-shield"></i> Oyuncu & Bakiye</button>
+                <button onclick="showPage('logs')" class="side-link" id="l-logs"><i class="fas fa-list-ul"></i> Satın Alım Kayıtları</button>
+            </div>
         </aside>
 
-        <main class="content">
-            
-            <div id="page-home" class="page-content">
-                <div class="announcement-bar">
-                    <i class="fas fa-bullhorn"></i> <b>DUYURU:</b> Sunucumuzda bu hafta sonu tüm VIP alımlarında %20 indirim var!
+        <main class="main-content">
+            <div id="page-home" class="page-container">
+                <div class="welcome-card">
+                    <h1>Hoş geldin, <span id="welcome-name">---</span>!</h1>
+                    <p>Sunucu Durumu: <span id="status-text" class="online">● Yükleniyor...</span></p>
                 </div>
-                <div class="stats-container">
-                    <div class="stat-card"><h4>CÜZDAN</h4><p id="user-balance">0 TL</p></div>
-                    <div class="stat-card"><h4>YETKİ</h4><p id="user-rank">OYUNCU</p></div>
-                    <div class="stat-card"><h4>AKTİF</h4><p id="status-display">0/0</p></div>
+                <div class="stats-grid">
+                    <div class="s-card"><span>CÜZDAN</span><h2 id="u-balance">0 TL</h2></div>
+                    <div class="s-card"><span>RÜTBE</span><h2 id="u-rank">OYUNCU</h2></div>
+                    <div class="s-card"><span>AKTİF OYUNCU</span><h2 id="s-players">0/0</h2></div>
                 </div>
-                <div class="info-card">
-                    <h3>🚀 NEDEN LEGACY NW?</h3>
-                    <p>En güncel BoxMining sistemleri, i9 12900K işlemci ve %0 lag garantisi!</p>
-                </div>
-            </div>
-
-            <div id="page-market" class="page-content hidden">
-                <h2 class="section-title">SUNUCU MAĞAZASI</h2>
-
-                <h3 class="category-title">VIP Üyelikler</h3>
-                <div class="market-grid">
-                    <div class="item-card"><h3>VIP</h3><span>45 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card vip-gold"><h3>VIP+</h3><span>55 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card"><h3>LVIP</h3><span>70 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card highlight"><h3>LVIP+</h3><span>125 TL</span><button onclick="buy()">AL</button></div>
-                </div>
-
-                <h3 class="category-title">Kitler & Eşyalar</h3>
-                <div class="market-grid">
-                    <div class="item-card"><h3>Warden Kit</h3><span>35 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card"><h3>Creeper Kit</h3><span>25 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card"><h3>Shulker Kılıç</h3><span>20 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card highlight"><h3>Orta Gear</h3><span>50 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card"><h3>Magma Kılıç</h3><span>55 TL</span><button onclick="buy()">AL</button></div>
-                </div>
-
-                <h3 class="category-title">Kasa Anahtarları</h3>
-                <div class="market-grid">
-                    <div class="item-card"><h3>Charm</h3><span>10 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card"><h3>Legacy</h3><span>25 TL</span><button onclick="buy()">AL</button></div>
-                    <div class="item-card"><h3>VIP</h3><span>15 TL</span><button onclick="buy()">AL</button></div>
+                <div class="notice-box">
+                    <h3>📢 Bilgilendirme</h3>
+                    <p>Bakiye yüklemeleri için Discord adresimize gelip 'Bakiye Yükle' kanalını kullanabilirsiniz. Sitedeki fiyatlar günceldir.</p>
                 </div>
             </div>
 
-            <div id="page-rank-admin" class="page-content hidden">
-                <h2 class="section-title">ADMIN PANEL</h2>
-                <div class="admin-box">
+            <div id="page-market" class="page-container hidden">
+                <h2 class="title">SUNUCU MAĞAZASI</h2>
+                <div class="category">Kasa Anahtarları</div>
+                <div class="grid">
+                    <div class="shop-card"><h3>Legacy Kasa</h3><p>En Değerli Kasa</p><b>100 TL</b><button onclick="buy('Legacy Kasa', 100)">SATIN AL</button></div>
+                    <div class="shop-card"><h3>Kit Kasa</h3><p>Gelişmiş Kitler</p><b>30 TL</b><button onclick="buy('Kit Kasa', 30)">SATIN AL</button></div>
+                    <div class="shop-card"><h3>VIP Kasa</h3><p>VIP Özel</p><b>15 TL</b><button onclick="buy('VIP Kasa', 15)">SATIN AL</button></div>
+                </div>
+                <div class="category">VIP Paketleri</div>
+                <div class="grid">
+                    <div class="shop-card gold"><h3>LVIP+</h3><p>Sınırsız Yetki</p><b>125 TL</b><button onclick="buy('LVIP+', 125)">SATIN AL</button></div>
+                    <div class="shop-card"><h3>VIP+</h3><p>Ömür Boyu</p><b>55 TL</b><button onclick="buy('VIP+', 55)">SATIN AL</button></div>
+                </div>
+            </div>
+
+            <div id="page-ticket" class="page-container hidden">
+                <h2 class="title">DESTEK TALEBİ</h2>
+                <div class="ticket-box">
+                    <textarea id="t-msg" placeholder="Sorununuzu detaylıca yazın..."></textarea>
+                    <button class="btn-primary" onclick="sendTicket()">Talebi Gönder</button>
+                </div>
+            </div>
+
+            <div id="page-admin" class="page-container hidden">
+                <h2 class="title">OYUNCU YÖNETİMİ</h2>
+                <div class="admin-form">
                     <input type="text" id="target-user" placeholder="Oyuncu Adı">
-                    <select id="target-rank">
-                        <option value="VIP">VIP</option>
-                        <option value="REHBER">REHBER</option>
-                        <option value="KURUCU">KURUCU</option>
-                    </select>
-                    <button class="btn-primary" onclick="adminGiveRank()">YETKİ VER</button>
+                    <input type="number" id="target-amt" placeholder="Miktar (TL)">
+                    <button onclick="adminAddBalance()">BAKİYE EKLE</button>
                 </div>
             </div>
 
+            <div id="page-logs" class="page-container hidden">
+                <h2 class="title">SATIN ALIM GEÇMİŞİ</h2>
+                <table class="log-table">
+                    <thead><tr><th>Oyuncu</th><th>Ürün</th><th>Tarih</th></tr></thead>
+                    <tbody id="log-body"></tbody>
+                </table>
+            </div>
         </main>
     </div>
 
     <script src="config.js"></script>
     <script src="script.js"></script>
-    <script>
-        // Sayfa Değiştirme Fonksiyonu (Fixlendi)
-        function showPage(id) {
-            // Tüm sayfaları gizle
-            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
-            // Seçilen sayfayı göster
-            document.getElementById('page-' + id).classList.remove('hidden');
-            
-            // Linklerin aktifliğini temizle
-            document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
-            // Tıklanan linki aktif yap (id üzerinden)
-            if(id === 'home') document.getElementById('link-home').classList.add('active');
-            if(id === 'market') document.getElementById('link-market').classList.add('active');
-            if(id === 'rank-admin') document.getElementById('admin-link').classList.add('active');
-        }
-
-        window.onload = function() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            if(!user) { window.location.href = 'index.html'; return; }
-            document.getElementById('user-display').innerText = user.username;
-            document.getElementById('user-balance').innerText = user.balance + (user.balance === "∞" ? "" : " TL");
-            document.getElementById('user-rank').innerText = user.rank;
-            if(user.rank === 'KURUCU') document.getElementById('admin-link').classList.remove('hidden');
-        };
-    </script>
 </body>
 </html>
