@@ -3,183 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNW | Yönetim & Dashboard</title>
+    <title>LegacyNW | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0d1117; --card: #161b22; --accent: #58a6ff; --gold: #f1c40f; --text: #c9d1d9;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: var(--text); }
-
-        /* Giriş Ekranı */
-        #login-screen {
-            height: 100vh; display: flex; justify-content: center; align-items: center;
-            background: linear-gradient(45deg, #0d1117, #161b22);
-        }
-        .login-box {
-            background: var(--card); padding: 40px; border-radius: 15px; border: 1px solid #30363d;
-            width: 100%; max-width: 400px; text-align: center;
-        }
-        .login-box h2 { margin-bottom: 20px; color: var(--gold); }
-        input {
-            width: 100%; padding: 12px; margin: 10px 0; background: #010409;
-            border: 1px solid #30363d; color: white; border-radius: 8px;
-        }
-        .btn {
-            width: 100%; padding: 12px; background: var(--accent); border: none;
-            color: white; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s;
-        }
-        .btn:hover { opacity: 0.8; }
-
-        /* Dashboard Alanı (Başlangıçta Gizli) */
-        #dashboard { display: none; padding-top: 70px; }
-        
-        /* Navbar */
-        .navbar {
-            position: fixed; top: 0; width: 100%; height: 60px; background: var(--card);
-            display: flex; align-items: center; justify-content: space-between; padding: 0 30px;
-            border-bottom: 1px solid #30363d; z-index: 100;
-        }
-
-        /* Sidebar Menü */
-        .sidebar {
-            position: fixed; left: 0; top: 60px; width: 250px; height: 100%;
-            background: var(--card); border-right: 1px solid #30363d; padding: 20px;
-        }
-        .sidebar a {
-            display: block; padding: 15px; color: var(--text); text-decoration: none;
-            margin-bottom: 10px; border-radius: 8px; transition: 0.3s;
-        }
-        .sidebar a:hover { background: #21262d; color: var(--accent); }
-
-        /* İçerik Kartları */
-        .main-content { margin-left: 270px; padding: 30px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .stat-card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid #30363d; text-align: center; }
-        .stat-card h4 { color: #8b949e; font-size: 0.9rem; }
-        .stat-card .val { font-size: 1.8rem; font-weight: 800; color: var(--gold); }
-
-        /* Ticket & Rank Formları */
-        .form-section { background: var(--card); padding: 30px; border-radius: 12px; margin-top: 30px; border: 1px solid #30363d; }
-        .form-section h3 { margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
-
-        /* Gizleme/Gösterme sınıfları */
-        .hidden { display: none; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="login-screen">
-        <div class="login-box">
-            <h2>LegacyNW Giriş</h2>
-            <input type="text" id="username" placeholder="Kullanıcı Adı">
-            <input type="password" id="password" placeholder="Şifre">
-            <button class="btn" onclick="checkLogin()">Giriş Yap</button>
+    <div id="auth-container">
+        <div class="auth-box">
+            <div class="auth-tabs">
+                <button id="login-tab" class="active" onclick="switchAuth('login')">Giriş Yap</button>
+                <button id="register-tab" onclick="switchAuth('register')">Kayıt Ol</button>
+            </div>
+
+            <div id="login-form">
+                <h2 class="logo-text">LEGACY NW</h2>
+                <input type="text" id="l-user" placeholder="Kullanıcı Adı">
+                <input type="password" id="l-pass" placeholder="Şifre">
+                <button class="btn-primary" onclick="handleLogin()">Giriş Yap</button>
+            </div>
+
+            <div id="register-form" class="hidden">
+                <h2 class="logo-text">KAYIT OL</h2>
+                <input type="text" id="r-user" placeholder="Yeni Kullanıcı Adı">
+                <input type="password" id="r-pass" placeholder="Yeni Şifre">
+                <button class="btn-success" onclick="handleRegister()">Hesap Oluştur</button>
+            </div>
         </div>
     </div>
 
-    <div id="dashboard">
+    <div id="dashboard" class="hidden">
         <nav class="navbar">
-            <div style="font-weight: 800; color: var(--gold);">LEGACY NW | PANEL</div>
-            <div id="user-info">Hoş geldin, <span id="display-name"></span></div>
+            <div class="nav-left">
+                <i class="fas fa-bars" onclick="toggleSidebar()"></i>
+                <span class="nav-brand">LEGACY NW</span>
+            </div>
+            <div class="nav-right">
+                <span id="user-display">---</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
         </nav>
 
-        <div class="sidebar">
-            <a href="#" onclick="showPage('ana')"><i class="fas fa-home"></i> Panel Ana Sayfa</a>
-            <a href="#" onclick="showPage('rank-ver')"><i class="fas fa-crown"></i> Rank Yönetimi</a>
-            <a href="#" onclick="showPage('ticket')"><i class="fas fa-ticket"></i> Ticket Sistemi</a>
-            <a href="#" onclick="addBalance()"><i class="fas fa-wallet"></i> Bakiye Yükle</a>
-            <a href="index.html" style="color: #f85149;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
-        </div>
+        <div class="layout">
+            <aside class="sidebar" id="sidebar">
+                <a href="#" onclick="showPage('home')" class="side-link active"><i class="fas fa-th-large"></i> Dashboard</a>
+                <a href="#" onclick="showPage('vipler')" class="side-link"><i class="fas fa-crown"></i> VIP Paketleri</a>
+                <a href="#" onclick="showPage('market')" class="side-link"><i class="fas fa-shopping-cart"></i> Sunucu Marketi</a>
+                <a href="#" onclick="showPage('ticket')" class="side-link"><i class="fas fa-headset"></i> Destek Talebi</a>
+                <a href="https://discord.gg/EagYzrV4N" target="_blank" class="side-link bakiye-link"><i class="fas fa-plus-circle"></i> Bakiye Yükle</a>
+            </aside>
 
-        <div class="main-content">
-            <div id="page-ana">
-                <div class="stats-grid">
-                    <div class="stat-card"><h4>Mevcut Bakiyen</h4><div class="val" id="balance-val">0 TL</div></div>
-                    <div class="stat-card"><h4>Rank Durumu</h4><div class="val" style="color:var(--accent)">KURUCU</div></div>
-                    <div class="stat-card"><h4>Aktif Ticket</h4><div class="val">0</div></div>
+            <main class="content">
+                <div id="page-home" class="page-content">
+                    <div class="top-stats">
+                        <div class="stat-card"><h4>BAKİYEN</h4><p id="user-balance">0 TL</p></div>
+                        <div class="stat-card"><h4>RANKIN</h4><p style="color:#0fbcf9" id="user-rank">OYUNCU</p></div>
+                        <div class="stat-card"><h4>DURUM</h4><p style="color:#05c46b">ONLINE</p></div>
+                    </div>
+                    <div class="welcome-banner">
+                        <h2>Hoş geldin, <span id="welcome-name">...</span>!</h2>
+                        <p>BoxMining dünyasında bugün ne yapıyoruz?</p>
+                    </div>
                 </div>
-            </div>
 
-            <div id="page-rank-ver" class="hidden">
-                <div class="form-section">
-                    <h3>Oyuncuya Rank Ver</h3>
-                    <input type="text" id="player-name" placeholder="Oyuncu Adı">
-                    <select id="rank-select" style="width: 100%; padding: 12px; background: #010409; color: white; border-radius: 8px; border: 1px solid #30363d;">
-                        <option value="VIP">VIP</option>
-                        <option value="VIP+">VIP+</option>
-                        <option value="LVIP">LVIP</option>
-                        <option value="LVIP+">LVIP+</option>
-                    </select>
-                    <button class="btn" style="margin-top: 20px; background: #238636;" onclick="giveRank()">Rankı Tanımla</button>
+                <div id="page-vipler" class="page-content hidden">
+                    <h2 class="section-title">VIP ÜYELİKLER</h2>
+                    <div class="market-grid">
+                        <div class="item-card"><h3>VIP</h3><div class="price">45 TL</div><button class="buy-btn" onclick="buyItem('VIP')">SATIN AL</button></div>
+                        <div class="item-card"><h3>VIP+</h3><div class="price">55 TL</div><button class="buy-btn" onclick="buyItem('VIP+')">SATIN AL</a></div>
+                        <div class="item-card"><h3>LVIP</h3><div class="price">70 TL</div><button class="buy-btn" onclick="buyItem('LVIP')">SATIN AL</a></div>
+                        <div class="item-card"><h3>LVIP+</h3><div class="price">125 TL</div><button class="buy-btn" onclick="buyItem('LVIP+')">SATIN AL</a></div>
+                    </div>
                 </div>
-            </div>
 
-            <div id="page-ticket" class="hidden">
-                <div class="form-section">
-                    <h3>Destek Talebi (Ticket)</h3>
-                    <input type="text" id="t-subject" placeholder="Konu">
-                    <textarea id="t-msg" rows="5" placeholder="Mesajınız..." style="width: 100%; background: #010409; border: 1px solid #30363d; color: white; border-radius: 8px; padding: 10px;"></textarea>
-                    <button class="btn" onclick="sendTicket()">Talebi Oluştur</button>
+                <div id="page-market" class="page-content hidden">
+                    <h2 class="section-title">KILIÇLAR & KİTLER</h2>
+                    <div class="market-grid">
+                        <div class="item-card"><h3>Warden Kılıç</h3><div class="price">50 TL</div><button class="buy-btn">SATIN AL</button></div>
+                        <div class="item-card"><h3>Magma Kılıç</h3><div class="price">55 TL</div><button class="buy-btn">SATIN AL</button></div>
+                        <div class="item-card"><h3>Warden Kit</h3><div class="price">35 TL</div><button class="buy-btn">SATIN AL</button></div>
+                        <div class="item-card"><h3>Full Gear 3X</h3><div class="price">200 TL</div><button class="buy-btn">SATIN AL</button></div>
+                    </div>
                 </div>
-            </div>
+            </main>
         </div>
     </div>
 
-    <script>
-        // Giriş Kontrolü
-        function checkLogin() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-
-            if(u === "triggerbabaa" && p === "resul3163") {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('display-name').innerText = u;
-            } else {
-                alert("Hatalı kullanıcı adı veya şifre kanka!");
-            }
-        }
-
-        // Sayfa Değiştirme
-        function showPage(pageId) {
-            document.getElementById('page-ana').classList.add('hidden');
-            document.getElementById('page-rank-ver').classList.add('hidden');
-            document.getElementById('page-ticket').classList.add('hidden');
-            document.getElementById('page-' + pageId).classList.remove('hidden');
-        }
-
-        // Bakiye Sistemi (Discord Yönlendirme)
-        function addBalance() {
-            alert("Bakiye artırmak için Discord üzerinden talep açmalısınız! Yönlendiriliyorsunuz...");
-            window.location.href = "https://discord.gg/EagYzrV4N";
-        }
-
-        // Rank Verme Simülasyonu
-        function giveRank() {
-            const pName = document.getElementById('player-name').value;
-            const rank = document.getElementById('rank-select').value;
-            if(pName) {
-                alert(pName + " isimli oyuncuya " + rank + " rankı başarıyla verildi!");
-            } else {
-                alert("Oyuncu adı gir kanka!");
-            }
-        }
-
-        // Ticket Gönderme
-        function sendTicket() {
-            const sub = document.getElementById('t-subject').value;
-            const msg = document.getElementById('t-msg').value;
-            if(sub && msg) {
-                alert("Ticket başarıyla oluşturuldu! Yetkililer en kısa sürede Discord üzerinden veya buradan dönecektir.");
-                document.getElementById('t-subject').value = "";
-                document.getElementById('t-msg').value = "";
-            } else {
-                alert("Boş alan bırakma kanka!");
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
