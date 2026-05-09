@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>LegacyNW | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left"><span class="nav-brand">LEGACY NW</span></div>
+        <div class="server-status-top"><span id="status-text">Bağlanıyor...</span></div>
+        <div class="nav-right">
+            <span id="user-display">---</span>
+            <button class="logout-btn" onclick="logout()">Çıkış</button>
+        </div>
+    </nav>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <a href="#" onclick="showPage('home')" class="side-link active">Ana Panel</a>
+            <a href="#" onclick="showPage('market')" class="side-link">Mağaza</a>
+            <a href="#" onclick="showPage('rank-admin')" id="admin-link" class="side-link hidden">Rank Yönetimi</a>
+            <a href="https://discord.gg/EagYzrV4N" class="side-link">Destek</a>
+        </aside>
+
+        <main class="content">
+            <div id="page-home" class="page-content">
+                <div class="stats-container">
+                    <div class="stat-card"><h4>BAKİYEN</h4><p id="user-balance">0 TL</p></div>
+                    <div class="stat-card"><h4>RANKIN</h4><p id="user-rank">OYUNCU</p></div>
+                    <div class="stat-card"><h4>DURUM</h4><p id="status-display">KONTROL EDİLİYOR</p></div>
+                </div>
+                <div class="info-card">
+                    <h3>🚀 SUNUCU ÖZELLİKLERİ</h3>
+                    <p>i9 İşlemci | 0 Lag | Özel BoxMining Sistemleri</p>
+                </div>
+            </div>
+
+            <div id="page-market" class="page-content hidden">
+                <h2 class="section-title">MARKET</h2>
+                <div class="market-grid">
+                    <div class="item-card"><h3>VIP+</h3><span>55 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card"><h3>Warden Kit</h3><span>35 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card"><h3>Shulker Kılıç</h3><span>20 TL</span><button onclick="buy()">AL</button></div>
+                    <div class="item-card gold-border"><h3>Orta Gear</h3><span>50 TL</span><button onclick="buy()">AL</button></div>
+                </div>
+            </div>
+
+            <div id="page-rank-admin" class="page-content hidden">
+                <h2>RANK YÖNETİMİ</h2>
+                <input type="text" id="target-user" placeholder="Oyuncu Adı">
+                <select id="target-rank">
+                    <option value="VIP">VIP</option>
+                    <option value="REHBER">REHBER</option>
+                    <option value="KURUCU">KURUCU</option>
+                </select>
+                <button class="btn-primary" onclick="adminGiveRank()">Rankı Tanımla</button>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // Sayfa yüklendiğinde kullanıcıyı kontrol et
+        window.onload = function() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if(!user) { window.location.href = 'index.html'; }
+            document.getElementById('user-display').innerText = user.username;
+            document.getElementById('user-balance').innerText = user.balance + " TL";
+            document.getElementById('user-rank').innerText = user.rank;
+            if(user.rank === 'KURUCU') document.getElementById('admin-link').classList.remove('hidden');
+        };
+    </script>
+</body>
+</html>
