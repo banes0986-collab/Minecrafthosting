@@ -1,22 +1,37 @@
+.layout {
+    display: flex;
+    height: calc(100vh - 70px);
+    width: 100%;
+}
+
+.sidebar {
+    width: 260px;
+    min-width: 260px; /* Genişlik sabit kalsın */
+    background: var(--side);
+    padding: 20px;
+    border-right: 1px solid #1e272e;
+}
+
+.content {
+    flex: 1; /* Sağ tarafı tamamen doldurur */
+    padding: 30px;
+    overflow-y: auto; /* Uzun listelerde aşağı kaydırılabilir yapar */
+}
+
 .category-title {
-    margin: 40px 0 20px 0;
+    margin: 30px 0 15px 0;
     color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: 900;
     text-transform: uppercase;
-    font-size: 1.2rem;
-    border-left: 4px solid var(--accent);
-    padding-left: 15px;
-    letter-spacing: 1px;
 }
 
 .market-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-/* Öne çıkan paket efekti */
-.highlight {
-    border: 2px solid var(--gold) !important;
-    background: linear-gradient(145deg, #121826, #1a2235) !important;
-    transform: scale(1.05);
-}
+/* Sayfalar arası geçişte gizleme */
+.hidden { display: none !important; }
