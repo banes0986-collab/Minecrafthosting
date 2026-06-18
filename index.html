@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNW | Boxmining</title>
+    <title>LegacyNW |Boxmining</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -41,6 +41,7 @@
             padding: 20px;
             position: fixed;
             height: 100vh;
+            z-index: 100;
         }
 
         .logo {
@@ -85,7 +86,7 @@
         /* Ana İçerik Alanı */
         .main-content {
             margin-left: 260px;
-            flex-content: 1;
+            flex: 1;
             width: calc(100% - 260px);
             padding: 40px;
         }
@@ -124,9 +125,7 @@
             transform: translateY(-5px);
         }
 
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+        h1, h2, h3, h4 {
             color: #fff;
         }
 
@@ -135,9 +134,7 @@
             line-height: 1.6;
         }
 
-        /* SEKMEYE ÖZEL TASARIMLAR */
-        
-        /* 1. Sunucu Tanıtım */
+        /* SUNUCU TANITIM SEKMESİ */
         .hero {
             background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.05));
             border: 1px solid var(--border);
@@ -157,6 +154,11 @@
             gap: 15px;
             margin-top: 20px;
             cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .ip-box:hover {
+            border-color: var(--accent-cyan);
         }
 
         .ip-box code {
@@ -165,7 +167,7 @@
             font-size: 1.1rem;
         }
 
-        /* 2. Panel (Dashboard) */
+        /* PANEL SEKMESİ */
         .status-bar {
             background: #232333;
             height: 10px;
@@ -177,44 +179,36 @@
         .status-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
-            width: 0%;
+            width: 30%;
             transition: width 1s ease-in-out;
         }
 
-        /* 3. Portfolyo */
+        /* PORTFOLYO SEKMESİ */
         .badge {
             background: rgba(0, 242, 254, 0.1);
             color: var(--accent-cyan);
-            padding: 4px 10px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-size: 0.85rem;
             display: inline-block;
-            margin-right: 5px;
+            margin-right: 6px;
             margin-top: 10px;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, var(--accent-purple), var(--accent-cyan));
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
+            font-weight: 600;
         }
 
         /* Mobil Uyum */
         @media (max-width: 768px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; }
+            .sidebar { width: 100%; height: auto; position: relative; padding: 15px; }
+            .logo { margin-bottom: 15px; }
+            .nav-tabs { flex-direction: row; justify-content: center; flex-wrap: wrap; }
+            .tab-btn { padding: 10px 15px; font-size: 0.9rem; }
             .main-content { margin-left: 0; width: 100%; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="logo">TRIGGERBABA</div>
         <div class="nav-tabs">
@@ -224,111 +218,139 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div class="main-content">
 
-        <!-- TAB 1: SUNUCU TANITIMI -->
         <div id="sunucu" class="tab-content active">
             <div class="hero">
                 <h1>LegacyNW Network</h1>
-                <p style="margin-top: 10px;">Erişilebilir en yüksek performanslı altyapı ile kesintisiz Minecraft deneyimi.</p>
+                <p id="live-player-text" style="margin-top: 10px;">Sunucu durumu kontrol ediliyor... <i class="fa-solid fa-spinner fa-spin"></i></p>
                 <div class="ip-box" onclick="copyIP()">
-                    <code id="server-ip">87.248.157.7:25565</code>
+                    <code id="server-ip">legacynw.craftmc.com.tr</code>
                     <i class="fa-regular fa-copy" style="color: var(--text-muted);"></i>
                 </div>
             </div>
             
             <div class="grid">
                 <div class="card">
-                    <h3><i class="fa-solid fa-bolt" style="color: #ffaa00;"></i> 0 Gecikme</h3>
-                    <p style="margin-top: 10px;">Gelişmiş optimizasyon mimarimiz sayesinde TPS düşüşü olmadan akıcı oyun zevki.</p>
+                    <h3><i class="fa-solid fa-bolt" style="color: #ffaa00;"></i> Üst Düzey Performans</h3>
+                    <p style="margin-top: 10px;">Gelişmiş optimizasyon mimarimiz sayesinde TPS düşüşü olmadan akıcı ve kesintisiz oyun zevki.</p>
                 </div>
                 <div class="card">
                     <h3><i class="fa-solid fa-shield-halved" style="color: #00ffaa;"></i> Adil Ekonomi</h3>
-                    <p style="margin-top: 10px;">Özel Skript ve Java altyapısı ile dengelenmiş, tamamen oyuncu odaklı pazar sistemi.</p>
+                    <p style="margin-top: 10px;">Özel Skript ve Java altyapısı ile dengelenmiş, tamamen oyuncu odaklı pazar ve ticaret sistemi.</p>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 2: SİSTEM PANELİ -->
         <div id="panel" class="tab-content">
             <h2>Sistem Durumu</h2>
-            <p>Altyapı ve kaynak tüketim verileri (Anlık simülasyon)</p>
+            <p>Altyapı yükü ve kaynak tüketim verileri</p>
             
             <div class="grid">
                 <div class="card">
-                    <h4>İşlemci (CPU)</h4>
+                    <h4>İşlemci Gücü (CPU)</h4>
                     <p style="font-size: 0.9rem; margin-top: 5px;">Ryzen 9 9950X @ 5.7 GHz</p>
-                    <div class="status-bar"><div class="status-fill" id="cpu-fill" style="width: 34%;"></div></div>
-                    <span style="font-size: 0.85rem; color: var(--accent-cyan);" id="cpu-text">34% Aktif</span>
+                    <div class="status-bar"><div class="status-fill" id="cpu-fill" style="width: 25%;"></div></div>
+                    <span style="font-size: 0.85rem; color: var(--accent-cyan);" id="cpu-text">25% Aktif</span>
                 </div>
                 <div class="card">
-                    <h4>Bellek (RAM) Allocation</h4>
+                    <h4>Bellek (RAM) Yükü</h4>
                     <p style="font-size: 0.9rem; margin-top: 5px;">DDR5 Yüksek Frekans RAM</p>
-                    <div class="status-bar"><div class="status-fill" id="ram-fill" style="width: 58%;"></div></div>
-                    <span style="font-size: 0.85rem; color: var(--accent-purple);" id="ram-text">58% (18.5 GB / 32 GB)</span>
+                    <div class="status-bar"><div class="status-fill" id="ram-fill" style="width: 48%;"></div></div>
+                    <span style="font-size: 0.85rem; color: var(--accent-purple);" id="ram-text">48% Aktif</span>
                 </div>
                 <div class="card">
-                    <h4>Nginx & Sunucu Durumu</h4>
-                    <span class="badge" style="background: rgba(0, 255, 170, 0.1); color: #00ffaa;">ONLINE</span>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">Proxy ve Web portları aktif, istekleri kabul ediyor.</p>
+                    <h4>Sunucu Ağ Bağlantısı</h4>
+                    <span class="badge" id="server-status-badge" style="background: rgba(0, 255, 170, 0.1); color: #00ffaa;">KONTROL EDİLİYOR</span>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Port üzerinden gelen anlık trafik ve API istekleri doğrulanıyor.</p>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: PORTFOLYO -->
         <div id="portfolyo" class="tab-content">
             <h2>Geliştirici Portfolyosu</h2>
-            <p>Yazılım dünyasında geliştirdiğim projeler ve yetkinlik alanlarım.</p>
+            <p>Yazılım dünyasında üzerinde çalıştığım teknolojiler ve yetkinlikler.</p>
             
             <div class="grid">
                 <div class="card">
-                    <h3>Yetenekler</h3>
-                    <span class="badge">Java (Spigot/Paper)</span>
-                    <span class="badge">Skript Logic</span>
-                    <span class="badge">HTML5 / CSS3</span>
-                    <span class="badge">Termux Linux Admin</span>
-                    <span class="badge">Nginx Config</span>
+                    <h3>Yetenek Sektörü</h3>
+                    <span class="badge">Java (Spigot/Paper API)</span>
+                    <span class="badge">Skript Geliştirme</span>
+                    <span class="badge">HTML5 & CSS3 Architecture</span>
+                    <span class="badge">Termux Linux Management</span>
+                    <span class="badge">Nginx Web Server Config</span>
                 </div>
                 <div class="card">
-                    <h3>Tamamlanan Projeler</h3>
-                    <p style="margin-top: 10px;">- Puan Market & Ekonomi Script Entegrasyonları</p>
-                    <p>- Gelişmiş Yetkili Dondurma (Freeze) Sistemleri</p>
-                    <p>- Web Dashboard & Mağaza Tasarımları</p>
+                    <h3>Geliştirilen Sistemler</h3>
+                    <p style="margin-top: 10px;">• Puan Market ve Dinamik Ekonomi Altyapıları</p>
+                    <p>• Yetkili Güvenlik Sistemleri (Freeze Komut Blokları)</p>
+                    <p>• Web Portalları & Modern Arayüz Entegrasyonları</p>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // Sekme Değiştirme Fonksiyonu
+    <script {
+        // Yeni sunucu domain adresin buraya tanımlandı
+        const SERVER_IP = 'legacynw.craftmc.com.tr';
+
+        // 1. CANLI MINECRAFT VERİSİ ÇEKME FONKSİYONU
+        async function checkMinecraftServer() {
+            try {
+                const response = await fetch(`https://api.mcsrvstat.us/2/${SERVER_IP}`);
+                const data = await response.json();
+                
+                const heroText = document.getElementById('live-player-text');
+                const statusBadge = document.getElementById('server-status-badge');
+
+                if (data.online === true) {
+                    // Sunucu Açıksa oyuncu sayılarını bas
+                    heroText.innerHTML = `Şu an sunucuda <strong>${data.players.online} / ${data.players.max}</strong> aktif oyuncu var! 🔥`;
+                    
+                    if (statusBadge) {
+                        statusBadge.innerText = "ONLINE";
+                        statusBadge.style.background = "rgba(0, 255, 170, 0.1)";
+                        statusBadge.style.color = "#00ffaa";
+                    }
+                } else {
+                    // Sunucu Kapalıysa hata göster
+                    heroText.innerHTML = `<span style="color: #ff4d4d; font-weight: bold;">Sunucu şu an aktif değil veya bakımdadır.</span>`;
+                    
+                    if (statusBadge) {
+                        statusBadge.innerText = "OFFLINE";
+                        statusBadge.style.background = "rgba(255, 77, 77, 0.1)";
+                        statusBadge.style.color = "#ff4d4d";
+                    }
+                }
+            } catch (error) {
+                console.error("Minecraft API Bağlantı Hatası:", error);
+                document.getElementById('live-player-text').innerText = "Sunucu verisi alınamadı.";
+            }
+        }
+
+        // 2. SEKME DEĞİŞTİRME MANTIĞI
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
-
-            if(tabId === 'panel') {
-                simulateStats();
-            }
         }
 
-        // IP Kopyalama Fonksiyonu
+        // 3. IP KOPYALAMA SİSTEMİ
         function copyIP() {
             const ipText = document.getElementById('server-ip').innerText;
             navigator.clipboard.writeText(ipText).then(() => {
-                alert('Sunucu IP adresi panoya kopyalandı! 🔥');
+                alert('Sunucu adresi başarıyla panoya kopyalandı! 🚀');
             });
         }
 
-        // Mini Panel Simülasyonu (Hareketli barlar için)
+        // 4. PANEL İÇİN HAREKETLİ SİMÜLASYON (GÜVENLİ MOCK DATA)
         function simulateStats() {
             setInterval(() => {
-                const cpuVal = Math.floor(Math.random() * (45 - 20 + 1)) + 20;
-                const ramVal = Math.floor(Math.random() * (65 - 50 + 1)) + 50;
+                const cpuVal = Math.floor(Math.random() * (40 - 15 + 1)) + 15;
+                const ramVal = Math.floor(Math.random() * (60 - 45 + 1)) + 45;
                 
                 const cpuFill = document.getElementById('cpu-fill');
                 const ramFill = document.getElementById('ram-fill');
@@ -338,10 +360,17 @@
                     document.getElementById('cpu-text').innerText = cpuVal + '% Aktif';
                     
                     ramFill.style.width = ramVal + '%';
-                    document.getElementById('ram-text').innerText = ramVal + '% (' + ((ramVal*32)/100).toFixed(1) + ' GB / 32 GB)';
+                    document.getElementById('ram-text').innerText = ramVal + '% (Simüle Ediliyor)';
                 }
             }, 3000);
         }
+
+        // SAYFA YÜKLENDİĞİNDE BAŞLATILACAKLAR
+        window.addEventListener('DOMContentLoaded', () => {
+            checkMinecraftServer();
+            simulateStats();
+            setInterval(checkMinecraftServer, 20000); // 20 saniyede bir canlı oyuncu sayısını yeniler
+        });
     </script>
 </body>
 </html>
