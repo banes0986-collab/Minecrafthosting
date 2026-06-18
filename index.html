@@ -3,92 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNW |Boxmining</title>
+    <title>LegacyNW | Resmi Web Sitesi & Mağaza</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-main: #0f0f12;
-            --bg-card: #16161f;
-            --accent-cyan: #00f2fe;
-            --accent-purple: #4facfe;
+            --bg-body: #0a0a0e;
+            --bg-card: #12121a;
+            --bg-nav: #161622;
+            --primary: #ffaa00; /* Minecraft Gold */
+            --secondary: #00ffff; /* Neon Cyan */
             --text-main: #ffffff;
             --text-muted: #a0a0b8;
-            --border: #232333;
+            --border: #222235;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background-color: var(--bg-main);
+            background-color: var(--bg-body);
             color: var(--text-main);
-            display: flex;
+            background-image: radial-gradient(circle at top, rgba(255, 170, 0, 0.05), transparent);
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* Kenar Menüsü (Sidebar) */
-        .sidebar {
-            width: 260px;
-            background: var(--bg-card);
-            border-right: 1px solid var(--border);
+        /* ÜST MENÜ (NAVBAR) */
+        nav {
+            background: var(--bg-nav);
+            border-bottom: 2px solid var(--border);
+            padding: 15px 5%;
             display: flex;
-            flex-direction: column;
-            padding: 20px;
-            position: fixed;
-            height: 100vh;
-            z-index: 100;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 40px;
-            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .nav-tabs {
+        .nav-links {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            gap: 20px;
         }
 
-        .tab-btn {
+        .nav-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 14px 20px;
-            text-align: left;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
-        .tab-btn:hover, .tab-btn.active {
+        .nav-btn:hover, .nav-btn.active {
             color: var(--text-main);
-            background: linear-gradient(90deg, rgba(0, 242, 254, 0.1), transparent);
-            border-left: 3px solid var(--accent-cyan);
-            padding-left: 17px;
+            background: rgba(255, 170, 0, 0.1);
+            box-shadow: inset 0 0 10px rgba(255, 170, 0, 0.2);
         }
 
-        /* Ana İçerik Alanı */
-        .main-content {
-            margin-left: 260px;
-            flex: 1;
-            width: calc(100% - 260px);
-            padding: 40px;
+        /* ANA ALAN CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
         .tab-content {
@@ -105,234 +98,302 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Kart Yapısı ve Gridler */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        h1, h2, h3, h4 {
-            color: #fff;
-        }
-
-        p {
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* SUNUCU TANITIM SEKMESİ */
+        /* ANA SAYFA & HERO ALANI */
         .hero {
-            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.05));
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(22, 22, 34, 0.8), rgba(10, 10, 14, 0.9)), url('https://images.unsplash.com/photo-1605899435973-ca2d1a8861cf?q=80&w=1000') center/cover;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 80px 40px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.7);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
             margin-bottom: 30px;
         }
 
         .ip-box {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            padding: 12px 24px;
-            border-radius: 8px;
+            background: #050508;
+            border: 2px dashed var(--primary);
+            padding: 15px 30px;
+            border-radius: 10px;
             display: inline-flex;
             align-items: center;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 20px;
             cursor: pointer;
-            transition: border-color 0.3s;
+            transition: transform 0.2s;
         }
 
         .ip-box:hover {
-            border-color: var(--accent-cyan);
+            transform: scale(1.03);
         }
 
         .ip-box code {
-            color: var(--accent-cyan);
+            font-size: 1.3rem;
+            color: var(--primary);
             font-weight: bold;
-            font-size: 1.1rem;
+            letter-spacing: 1px;
         }
 
-        /* PANEL SEKMESİ */
-        .status-bar {
-            background: #232333;
-            height: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
+        /* GRID YAPISI (MARKET VE ÖZELLİKLER İÇİN) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
         }
 
-        .status-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
-            width: 30%;
-            transition: width 1s ease-in-out;
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(255, 170, 0, 0.05);
         }
 
-        /* PORTFOLYO SEKMESİ */
-        .badge {
-            background: rgba(0, 242, 254, 0.1);
-            color: var(--accent-cyan);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            display: inline-block;
-            margin-right: 6px;
-            margin-top: 10px;
-            font-weight: 600;
+        /* MAĞAZA (MARKET) SEKTÖRÜ */
+        .store-header {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        /* Mobil Uyum */
+        .store-header h2 {
+            font-size: 2.5rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .price-tag {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+            display: block;
+        }
+
+        .features-list {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 25px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .features-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list li i {
+            color: #00ffaa;
+        }
+
+        .buy-btn {
+            background: linear-gradient(90deg, #ffaa00, #ff7700);
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            text-transform: uppercase;
+        }
+
+        .buy-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.4);
+        }
+
+        /* KURALLAR SEKMESİ */
+        .rules-container {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 40px;
+        }
+
+        .rules-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .rules-item h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        /* MOBİL UYUM */
         @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; padding: 15px; }
-            .logo { margin-bottom: 15px; }
-            .nav-tabs { flex-direction: row; justify-content: center; flex-wrap: wrap; }
-            .tab-btn { padding: 10px 15px; font-size: 0.9rem; }
-            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            nav { flex-direction: column; gap: 15px; }
+            .hero h1 { font-size: 2rem; }
+            .ip-box code { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="logo">TRIGGERBABA</div>
-        <div class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('sunucu')"><i class="fa-solid fa-gamepad"></i> Sunucu Tanıtımı</button>
-            <button class="tab-btn" onclick="switchTab('panel')"><i class="fa-solid fa-chart-line"></i> Sistem Paneli</button>
-            <button class="tab-btn" onclick="switchTab('portfolyo')"><i class="fa-solid fa-code"></i> Portfolyo</button>
+    <nav>
+        <div class="logo">LegacyNW</div>
+        <div class="nav-links">
+            <button class="nav-btn active" onclick="switchTab('anasayfa')"><i class="fa-solid fa-house"></i> Ana Sayfa</button>
+            <button class="nav-btn" onclick="switchTab('magaza')"><i class="fa-solid fa-basket-shopping"></i> Mağaza (Market)</button>
+            <button class="nav-btn" onclick="switchTab('kurallar')"><i class="fa-solid fa-gavel"></i> Kurallar</button>
         </div>
-    </div>
+    </nav>
 
-    <div class="main-content">
+    <div class="container">
 
-        <div id="sunucu" class="tab-content active">
+        <div id="anasayfa" class="tab-content active">
             <div class="hero">
                 <h1>LegacyNW Network</h1>
-                <p id="live-player-text" style="margin-top: 10px;">Sunucu durumu kontrol ediliyor... <i class="fa-solid fa-spinner fa-spin"></i></p>
+                <p id="live-player-text">Sunucu durumu sorgulanıyor... <i class="fa-solid fa-spinner fa-spin"></i></p>
+                
                 <div class="ip-box" onclick="copyIP()">
                     <code id="server-ip">legacynw.craftmc.com.tr</code>
-                    <i class="fa-regular fa-copy" style="color: var(--text-muted);"></i>
+                    <i class="fa-regular fa-copy" style="color: var(--primary); font-size: 1.2rem;"></i>
                 </div>
             </div>
-            
+
             <div class="grid">
                 <div class="card">
-                    <h3><i class="fa-solid fa-bolt" style="color: #ffaa00;"></i> Üst Düzey Performans</h3>
-                    <p style="margin-top: 10px;">Gelişmiş optimizasyon mimarimiz sayesinde TPS düşüşü olmadan akıcı ve kesintisiz oyun zevki.</p>
+                    <i class="fa-solid fa-bolt" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
+                    <h3>0 Gecikme & Yüksek FPS</h3>
+                    <p style="margin-top: 10px; color: var(--text-muted);">Ryzen 9 altyapımız ve optimize edilmiş sunucu mimarimiz ile akıcı PvP keyfi.</p>
                 </div>
                 <div class="card">
-                    <h3><i class="fa-solid fa-shield-halved" style="color: #00ffaa;"></i> Adil Ekonomi</h3>
-                    <p style="margin-top: 10px;">Özel Skript ve Java altyapısı ile dengelenmiş, tamamen oyuncu odaklı pazar ve ticaret sistemi.</p>
+                    <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: #00ffaa; margin-bottom: 15px;"></i>
+                    <h3>Hile Koruması</h3>
+                    <p style="margin-top: 10px; color: var(--text-muted);">Özel geliştirilmiş koruma sistemleri sayesinde adil ve temiz bir oyun ortamı.</p>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-trophy" style="font-size: 2.5rem; color: #00f2fe; margin-bottom: 15px;"></i>
+                    <h3>Sezonluk Ödüller</h3>
+                    <p style="margin-top: 10px; color: var(--text-muted);">Sıralamada dereceye giren oyunculara her ay sonu dev oyun içi ve nakit ödüller.</p>
                 </div>
             </div>
         </div>
 
-        <div id="panel" class="tab-content">
-            <h2>Sistem Durumu</h2>
-            <p>Altyapı yükü ve kaynak tüketim verileri</p>
-            
+        <div id="magaza" class="tab-content">
+            <div class="store-header">
+                <h2>Sunucu Mağazası</h2>
+                <p style="color: var(--text-muted); margin-top: 5px;">Aşağıdaki paketlerden dilediğini seçerek sunucuda avantaj yakalayabilir ve bize destek olabilirsin.</p>
+            </div>
+
             <div class="grid">
                 <div class="card">
-                    <h4>İşlemci Gücü (CPU)</h4>
-                    <p style="font-size: 0.9rem; margin-top: 5px;">Ryzen 9 9950X @ 5.7 GHz</p>
-                    <div class="status-bar"><div class="status-fill" id="cpu-fill" style="width: 25%;"></div></div>
-                    <span style="font-size: 0.85rem; color: var(--accent-cyan);" id="cpu-text">25% Aktif</span>
+                    <span style="position:absolute; top:10px; right:10px; background: rgba(255,170,0,0.1); color: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">30 GÜNLÜK</span>
+                    <h3 style="margin-top: 10px;">VIP Paket</h3>
+                    <span class="price-tag">50 ₺</span>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-circle-check"></i> Özel [VIP] tagı</li>
+                        <li><i class="fa-solid fa-circle-check"></i> VIP Özel Kitleri (/kit vip)</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Dolu sunucuya anında giriş</li>
+                        <li><i class="fa-solid fa-circle-check"></i> +5 Arsa/Klan hakkı</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyProcess('VIP Paketi')">Satın Al</button>
                 </div>
-                <div class="card">
-                    <h4>Bellek (RAM) Yükü</h4>
-                    <p style="font-size: 0.9rem; margin-top: 5px;">DDR5 Yüksek Frekans RAM</p>
-                    <div class="status-bar"><div class="status-fill" id="ram-fill" style="width: 48%;"></div></div>
-                    <span style="font-size: 0.85rem; color: var(--accent-purple);" id="ram-text">48% Aktif</span>
+
+                <div class="card" style="border-color: var(--secondary);">
+                    <span style="position:absolute; top:10px; right:10px; background: rgba(0,255,255,0.1); color: var(--secondary); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">30 GÜNLÜK</span>
+                    <h3 style="margin-top: 10px; color: var(--secondary);">MVP Paket</h3>
+                    <span class="price-tag" style="color: var(--secondary);">100 ₺</span>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-circle-check"></i> Özel [MVP] VIP tagı</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Tüm VIP avantajları dahil</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Sanal fırın ve çalışma masası</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Uçuş yetkisi (/fly)</li>
+                    </ul>
+                    <button class="buy-btn" style="background: linear-gradient(90deg, #00f2fe, #4facfe);" onclick="buyProcess('MVP Paketi')">Satın Al</button>
                 </div>
+
                 <div class="card">
-                    <h4>Sunucu Ağ Bağlantısı</h4>
-                    <span class="badge" id="server-status-badge" style="background: rgba(0, 255, 170, 0.1); color: #00ffaa;">KONTROL EDİLİYOR</span>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">Port üzerinden gelen anlık trafik ve API istekleri doğrulanıyor.</p>
+                    <i class="fa-solid fa-coins" style="font-size: 2.5rem; color: #ffd700; margin-bottom: 10px;"></i>
+                    <h3>100 Site Kredisi</h3>
+                    <span class="price-tag">100 ₺</span>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-circle-check"></i> Oyun içi markette geçerli</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Kasa anahtarı alımında kullanılır</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Başka oyunculara transfer edilebilir</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyProcess('100 Kredi')">Kredi Yükle</button>
                 </div>
             </div>
         </div>
 
-        <div id="portfolyo" class="tab-content">
-            <h2>Geliştirici Portfolyosu</h2>
-            <p>Yazılım dünyasında üzerinde çalıştığım teknolojiler ve yetkinlikler.</p>
-            
-            <div class="grid">
-                <div class="card">
-                    <h3>Yetenek Sektörü</h3>
-                    <span class="badge">Java (Spigot/Paper API)</span>
-                    <span class="badge">Skript Geliştirme</span>
-                    <span class="badge">HTML5 & CSS3 Architecture</span>
-                    <span class="badge">Termux Linux Management</span>
-                    <span class="badge">Nginx Web Server Config</span>
+        <div id="kurallar" class="tab-content">
+            <div class="rules-container">
+                <h2 style="margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 10px;"><i class="fa-solid fa-shield"></i> Sunucu Kuralları</h2>
+                
+                <div class="rules-item">
+                    <h3>1. Hile ve Makro Kullanımı</h3>
+                    <p>Oyun yapısını bozan her türlü hile, makro, harici yazılım ve avantaj sağlayan modların kullanımı tamamen yasaktır. Tespiti halinde sınırsız uzaklaştırma uygulanır.</p>
                 </div>
-                <div class="card">
-                    <h3>Geliştirilen Sistemler</h3>
-                    <p style="margin-top: 10px;">• Puan Market ve Dinamik Ekonomi Altyapıları</p>
-                    <p>• Yetkili Güvenlik Sistemleri (Freeze Komut Blokları)</p>
-                    <p>• Web Portalları & Modern Arayüz Entegrasyonları</p>
+
+                <div class="rules-item">
+                    <h3>2. Saygı ve Sohbet Kuralları</h3>
+                    <p>Sohbet üzerinden oyunculara, yetkililere veya ailevi değerlere küfür, hakaret, aşağılama veya kışkırtma yapmak yasaktır. Cezası mute (susturma) veya geçici bandır.</p>
+                </div>
+
+                <div class="rules-item">
+                    <h3>3. Reklam ve Dolandırıcılık</h3>
+                    <p>Başka sunucuların reklamını yapmak, oyun içi sistemleri kullanarak oyuncuları dolandırmak kesinlikle yasaktır. Hesaplar anında kapatılır.</p>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <script {
-        // Yeni sunucu domain adresin buraya tanımlandı
+    <script>
         const SERVER_IP = 'legacynw.craftmc.com.tr';
 
-        // 1. CANLI MINECRAFT VERİSİ ÇEKME FONKSİYONU
+        // 1. CANLI OYUNCU SAYISI VERİSİ
         async function checkMinecraftServer() {
             try {
                 const response = await fetch(`https://api.mcsrvstat.us/2/${SERVER_IP}`);
                 const data = await response.json();
                 
                 const heroText = document.getElementById('live-player-text');
-                const statusBadge = document.getElementById('server-status-badge');
 
                 if (data.online === true) {
-                    // Sunucu Açıksa oyuncu sayılarını bas
-                    heroText.innerHTML = `Şu an sunucuda <strong>${data.players.online} / ${data.players.max}</strong> aktif oyuncu var! 🔥`;
-                    
-                    if (statusBadge) {
-                        statusBadge.innerText = "ONLINE";
-                        statusBadge.style.background = "rgba(0, 255, 170, 0.1)";
-                        statusBadge.style.color = "#00ffaa";
-                    }
+                    heroText.innerHTML = `Şu an sunucuda <strong style="color: var(--primary); font-size: 1.4rem;">${data.players.online} / ${data.players.max}</strong> aktif oyuncu var! 🔥`;
                 } else {
-                    // Sunucu Kapalıysa hata göster
-                    heroText.innerHTML = `<span style="color: #ff4d4d; font-weight: bold;">Sunucu şu an aktif değil veya bakımdadır.</span>`;
-                    
-                    if (statusBadge) {
-                        statusBadge.innerText = "OFFLINE";
-                        statusBadge.style.background = "rgba(255, 77, 77, 0.1)";
-                        statusBadge.style.color = "#ff4d4d";
-                    }
+                    heroText.innerHTML = `<span style="color: #ff4d4d; font-weight: bold;">Sunucu şu an kapalı veya bakımda.</span>`;
                 }
             } catch (error) {
-                console.error("Minecraft API Bağlantı Hatası:", error);
-                document.getElementById('live-player-text').innerText = "Sunucu verisi alınamadı.";
+                console.error("API Hatası:", error);
+                document.getElementById('live-player-text').innerText = "Sunucu aktif fakat oyuncu sayısı alınamadı.";
             }
         }
 
-        // 2. SEKME DEĞİŞTİRME MANTIĞI
+        // 2. SAYFA SEKME DEĞİŞTİRME SİSTEMİ
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
@@ -342,34 +403,21 @@
         function copyIP() {
             const ipText = document.getElementById('server-ip').innerText;
             navigator.clipboard.writeText(ipText).then(() => {
-                alert('Sunucu adresi başarıyla panoya kopyalandı! 🚀');
+                alert('Sunucu IP adresi panoya kopyalandı! Sunucuya giriş yapabilirsin. 🚀');
             });
         }
 
-        // 4. PANEL İÇİN HAREKETLİ SİMÜLASYON (GÜVENLİ MOCK DATA)
-        function simulateStats() {
-            setInterval(() => {
-                const cpuVal = Math.floor(Math.random() * (40 - 15 + 1)) + 15;
-                const ramVal = Math.floor(Math.random() * (60 - 45 + 1)) + 45;
-                
-                const cpuFill = document.getElementById('cpu-fill');
-                const ramFill = document.getElementById('ram-fill');
-                
-                if(cpuFill && ramFill) {
-                    cpuFill.style.width = cpuVal + '%';
-                    document.getElementById('cpu-text').innerText = cpuVal + '% Aktif';
-                    
-                    ramFill.style.width = ramVal + '%';
-                    document.getElementById('ram-text').innerText = ramVal + '% (Simüle Ediliyor)';
-                }
-            }, 3000);
+        // 4. SATIN ALMA İŞLEMİ (Buraya kendi Discord veya Ödeme siteni bağlayabilirsin)
+        function buyProcess(packageName) {
+            // Örnek olarak Discord yönlendirmesi ekledim, istersen burayı kendi linkinle değiştirebilirsin.
+            alert(`${packageName} satın alımı için Discord sunucumuz üzerinden destek talebi (ticket) açman gerekmektedir.`);
+            // window.open('https://discord.gg/SENINDISCORDLINKIN', '_blank'); // Burayı açıp kendi linkini yazabilirsin
         }
 
-        // SAYFA YÜKLENDİĞİNDE BAŞLATILACAKLAR
+        // SAYFA YÜKLENDİĞİNDE TETİKLENECEKLER
         window.addEventListener('DOMContentLoaded', () => {
             checkMinecraftServer();
-            simulateStats();
-            setInterval(checkMinecraftServer, 20000); // 20 saniyede bir canlı oyuncu sayısını yeniler
+            setInterval(checkMinecraftServer, 20000); // 20 saniyede bir canlı sayıyı yeniler
         });
     </script>
 </body>
