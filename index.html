@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNetwork | Neon Pink & Green Extreme</title>
+    <title>LegacyNetwork | Neon Pink & Green Supreme</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
@@ -18,7 +18,7 @@
             min-height: 100vh;
         }
 
-        /* Pembe ve Yeşil Baloncuklar */
+        /* Pembe ve Yeşil Süzülen Baloncuklar */
         .bubbles {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -61,10 +61,13 @@
             color: #fff; text-decoration: none; font-weight: 700; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.9rem;
         }
         .nav-links a:hover { color: #ff1493; text-shadow: 0 0 8px #ff1493; }
-        .user-menu { display: flex; gap: 15px; align-items: center; }
-        .user-menu span { color: #00ff7f; font-weight: 900; }
+        
+        .admin-btn {
+            background: transparent; color: #00ff7f; border: 1px solid #00ff7f; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.85rem;
+        }
+        .admin-btn:hover { background: #00ff7f; color: #000; box-shadow: 0 0 10px #00ff7f; }
 
-        /* Bölümler */
+        /* Bölümler (Sections) */
         .section { display: none; padding: 60px 20px; text-align: center; min-height: 80vh; animation: fadeIn 0.4s; }
         .active-section { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -90,26 +93,6 @@
         }
         .online-count { color: #00ff7f; text-shadow: 0 0 10px #00ff7f; }
 
-        /* Formlar */
-        .auth-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 40px; }
-        .auth-box {
-            background: #0a020a; padding: 40px; border-radius: 15px; width: 350px;
-            border: 2px solid #ff1493; box-shadow: 0 0 25px rgba(255,20,147,0.2);
-        }
-        .auth-box h3 { color: #00ff7f; margin-bottom: 20px; text-transform: uppercase; font-size: 1.4rem; }
-        .auth-box input {
-            width: 100%; padding: 15px; margin: 10px 0; border-radius: 8px; border: 1px solid #333;
-            background: #000; color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
-        }
-        .auth-box input:focus { border-color: #00ff7f; box-shadow: 0 0 10px rgba(0,255,127,0.3); }
-        .auth-box button {
-            width: 100%; padding: 15px; background: #ff1493; color: #fff; border: none;
-            border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; margin-top: 15px; text-transform: uppercase; transition: 0.3s;
-        }
-        .auth-box button:hover { background: #e01179; box-shadow: 0 0 15px #ff1493; transform: scale(1.02); }
-        .msg { font-size: 0.9rem; margin-top: 15px; font-weight: bold; min-height: 20px; }
-        .error-msg { color: #ff4500; } .success-msg { color: #00ff7f; }
-
         /* Mağaza Kartları */
         .store-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1200px; margin: auto; }
         .vip-card {
@@ -124,15 +107,32 @@
         }
         .vip-card button:hover { background: #ff1493; color: #fff; box-shadow: 0 0 10px #ff1493; }
 
-        /* Rank Badge'leri */
-        .rank-badge { display: inline-block; padding: 8px 20px; border-radius: 6px; font-weight: 900; text-transform: uppercase; }
-        .rank-Kurucu { background: #ff1493; color: #fff; box-shadow: 0 0 15px #ff1493; }
-        .rank-VIP { background: #00ff7f; color: #000; }
-        .rank-VIPPlus { background: #eab308; color: #000; }
-        .rank-MVIP { background: #a855f7; color: #fff; }
-        .rank-LegacyVIP { background: #ef4444; color: #fff; }
-        .rank-LegacyVIPPlus { background: #f97316; color: #fff; }
-        .rank-Oyuncu { background: #4b5563; color: #fff; }
+        /* KURAL KUTULARI SİSTEMİ */
+        .rules-container { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: auto; text-align: left; }
+        .rule-card {
+            background: rgba(10, 2, 10, 0.7); border-left: 5px solid #ff1493; padding: 20px; border-radius: 0 10px 10px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.3s;
+        }
+        .rule-card:hover { border-left-color: #00ff7f; transform: translateX(10px); }
+        .rule-card h3 { color: #00ff7f; font-size: 1.2rem; margin-bottom: 5px; text-transform: uppercase; }
+        .rule-card p { color: #ddd; font-size: 0.95rem; line-height: 1.5; }
+
+        /* Admin Giriş Penceresi */
+        .auth-box {
+            background: #0a020a; padding: 40px; border-radius: 15px; width: 350px; margin: auto; margin-top: 50px;
+            border: 2px solid #ff1493; box-shadow: 0 0 25px rgba(255,20,147,0.2);
+        }
+        .auth-box h3 { color: #00ff7f; margin-bottom: 20px; text-transform: uppercase; font-size: 1.4rem; }
+        .auth-box input {
+            width: 100%; padding: 15px; margin: 10px 0; border-radius: 8px; border: 1px solid #333;
+            background: #000; color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
+        }
+        .auth-box input:focus { border-color: #00ff7f; box-shadow: 0 0 10px rgba(0,255,127,0.3); }
+        .auth-box button {
+            width: 100%; padding: 15px; background: #ff1493; color: #fff; border: none;
+            border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; margin-top: 15px; text-transform: uppercase; transition: 0.3s;
+        }
+        .auth-box button:hover { background: #e01179; box-shadow: 0 0 15px #ff1493; }
+        .msg { font-size: 0.9rem; margin-top: 15px; font-weight: bold; color: #ff4500; min-height: 20px; }
 
         /* Admin Paneli Tablosu */
         .admin-table {
@@ -141,8 +141,11 @@
         .admin-table th, .admin-table td { padding: 15px; border: 1px solid #333; text-align: left; }
         .admin-table th { background: #ff1493; color: white; text-transform: uppercase; }
         .admin-table select { background: #000; color: #00ff7f; padding: 8px; border: 1px solid #00ff7f; border-radius: 5px; font-weight: 700; outline: none; }
+        
+        .rank-badge { display: inline-block; padding: 5px 12px; border-radius: 4px; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; }
+        .rank-Kurucu { background: #ff1493; color: #fff; } .rank-VIP { background: #00ff7f; color: #000; } .rank-Oyuncu { background: #4b5563; color: #fff; }
 
-        /* VIP İsim Renkleri */
+        /* VIP Renk Sınıfları */
         .c-vip { color: #00ff7f; } .c-vipplus { color: #eab308; } .c-mvip { color: #a855f7; } .c-legacy { color: #ef4444; } .c-legacyplus { color: #f97316; }
     </style>
 </head>
@@ -150,41 +153,20 @@
 
     <div class="bubbles" id="bubble-container"></div>
 
-    <nav id="main-nav" style="display: none;">
+    <nav>
         <div class="logo">LegacyNetwork</div>
         <div class="nav-links">
             <a onclick="showSection('home')">Ana Sayfa</a>
+            <a onclick="showSection('rules')">Kurallar</a>
             <a onclick="showSection('store')">Mağaza</a>
-            <a onclick="showSection('admin-panel')" id="admin-nav-link" style="display: none; color: #00ff7f; border: 1px solid #00ff7f; padding: 5px 10px; border-radius: 5px;">Admin Panel</a>
+            <a onclick="showSection('admin-panel')" id="admin-nav-link" style="display: none; color: #00ff7f; font-weight: bold;">[PANEL]</a>
         </div>
-        <div class="user-menu">
-            <a onclick="showSection('profile')" style="color: white; font-weight: bold; text-decoration: none; cursor: pointer;">Profilim (<span id="nav-username"></span>)</a>
-            <a onclick="logout()" style="color: #ff4500; margin-left: 15px; font-weight: bold; cursor: pointer;">Çıkış</a>
+        <div>
+            <button class="admin-btn" id="auth-action-btn" onclick="handleAdminNav()">Admin Girişi</button>
         </div>
     </nav>
 
-    <div id="auth" class="section active-section" style="padding-top: 100px;">
-        <h1>LegacyNetwork Geçidi</h1>
-        <p class="slogan" style="margin-bottom: 10px;">Bizim için kalite seçenek değil, zorunluluktur!</p>
-        <div class="auth-container">
-            <div class="auth-box">
-                <h3>Giriş Yap</h3>
-                <input type="text" id="login-user" placeholder="Kullanıcı Adı" autocomplete="off">
-                <input type="password" id="login-pass" placeholder="Şifre">
-                <button onclick="login()">Giriş Yap</button>
-                <div id="login-msg" class="msg error-msg"></div>
-            </div>
-            <div class="auth-box">
-                <h3>Kayıt Ol</h3>
-                <input type="text" id="reg-user" placeholder="Kullanıcı Adı" autocomplete="off">
-                <input type="password" id="reg-pass" placeholder="Şifre">
-                <button onclick="register()">Hesap Oluştur</button>
-                <div id="reg-msg" class="msg"></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="home" class="section">
+    <div id="home" class="section active-section">
         <h1>LegacyNetwork</h1>
         <p class="slogan">0 Lag & %99.9 Uptime ile Kusursuz Performans!</p>
         
@@ -197,15 +179,34 @@
             <div class="ip-box">Sayısal IP: <span>193.164.7.167:25570</span></div>
         </div>
         
-        <p style="max-width: 700px; margin: auto; line-height: 1.8;">"Bizim için kalite seçenek değil, zorunluluktur." felsefesiyle kurulan LegacyNetwork, oyuncularına en kesintisiz, en performanslı Minecraft deneyimini sunuyor. Hemen topluluğumuza katıl!</p>
+        <p style="max-width: 700px; margin: auto; line-height: 1.8;">"Bizim için kalite seçenek değil, zorunluluktur." felsefesiyle kurulan LegacyNetwork, oyuncularına en kesintisiz, en performanslı Minecraft deneyimini sunuyor. Hemen topluluğumuza katıl ve efsaneye ortak ol!</p>
     </div>
 
-    <div id="profile" class="section">
-        <h1>Oyuncu Bilgi Merkezi</h1>
-        <div style="background: rgba(0,0,0,0.5); padding: 40px; border-radius: 15px; display: inline-block; border: 2px solid #00ff7f; margin-top: 30px;">
-            <h2 id="prof-username" style="font-size: 2.5rem; margin-bottom: 15px;">Kullanıcı</h2>
-            <p style="margin-bottom: 15px; color: #aaa;">Mevcut Rank Durumun:</p>
-            <div id="prof-rank" class="rank-badge rank-Oyuncu">Oyuncu</div>
+    <div id="rules" class="section">
+        <h1>Sunucu Kuralları</h1>
+        <p class="slogan">Adil ve eğlenceli bir oyun ortamı için kurallara uymak zorunludur.</p>
+        
+        <div class="rules-container">
+            <div class="rule-card">
+                <h3>1. Hile ve İllegal İstemci Kullanımı</h3>
+                <p>Oyun içerisinde avantaj sağlayan her türlü hile, makro, x-ray ve modifiye edilmiş istemci kullanımı kesinlikle yasaktır. Tespiti halinde süresiz uzaklaştırma (IP Ban) cezası uygulanır.</p>
+            </div>
+            <div class="rule-card">
+                <h3>2. Saygısızlık, Küfür ve Argo</h3>
+                <p>Diğer oyunculara veya sunucu yetkililerine yönelik küfür, argo, hakaret, aşağılama ve kışkırtıcı davranışlar sergilemek yasaktır. Huzurlu bir topluluk önceliğimizdir.</p>
+            </div>
+            <div class="rule-card">
+                <h3>3. Reklam ve Tanıtım</h3>
+                <p>Sohbet pencerelerinde, özel mesajlarda veya tabela gibi oyun içi ögelerde başka sunucuların, Discord adreslerinin veya ticari platformların reklamını yapmak kalıcı uzaklaştırma sebebidir.</p>
+            </div>
+            <div class="rule-card">
+                <h3>4. Oyun İçi Dolandırıcılık</h3>
+                <p>Oyuncuları kandırarak eşyalarını çalmak, sahte takaslar düzenlemek veya hesap güvenliğini tehlikeye atacak faaliyetlerde bulunmak tamamen yasaktır.</p>
+            </div>
+            <div class="rule-card">
+                <h3>5. Açıklardan Yararlanma (Bug Abuse)</h3>
+                <p>Sunucuda veya oyun modlarında bulunan sistemsel hataları, açıkları kendi lehine kullanıp bildirmemek yasaktır. Fark edilen açıklar derhal yetkililere iletilmelidir.</p>
+            </div>
         </div>
     </div>
 
@@ -221,24 +222,53 @@
         </div>
     </div>
 
+    <div id="admin-auth" class="section">
+        <h1>Yönetici Doğrulaması</h1>
+        <div class="auth-box">
+            <h3>Kurucu Girişi</h3>
+            <input type="text" id="admin-username-input" placeholder="Admin Kullanıcı Adı" autocomplete="off">
+            <input type="password" id="admin-password-input" placeholder="Şifre">
+            <button onclick="checkAdminLogin()">Sisteme Gir</button>
+            <div id="admin-error-msg" class="msg"></div>
+        </div>
+    </div>
+
     <div id="admin-panel" class="section">
-        <h1>Yönetim Paneli (Kurucu Özel)</h1>
-        <p style="color: #00ff7f;">Kayıtlı kullanıcıların rütbelerini buradan gerçek zamanlı olarak değiştirebilirsin.</p>
+        <h1>Yönetim Masası</h1>
+        <p style="color: #00ff7f;">Sunucu rütbe simülasyonunu ve yetki dağılımlarını buradan test edebilirsin.</p>
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>Kullanıcı Adı</th>
-                    <th>Mevcut Rank</th>
-                    <th>Rank Değiştir</th>
+                    <th>Simüle Oyuncu</th>
+                    <th>Mevcut Durum</th>
+                    <th>Rütbe Ata</th>
                 </tr>
             </thead>
-            <tbody id="admin-users-list">
-                </tbody>
+            <tbody>
+                <tr>
+                    <td><strong>X_Gamer_X</strong></td>
+                    <td><span class="rank-badge rank-Oyuncu" id="r-user1">Oyuncu</span></td>
+                    <td>
+                        <select onchange="document.getElementById('r-user1').className='rank-badge rank-'+this.value; document.getElementById('r-user1').innerText=this.value;">
+                            <option value="Oyuncu">Oyuncu</option><option value="VIP">VIP</option><option value="Kurucu">Kurucu</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>CraftMaster</strong></td>
+                    <td><span class="rank-badge rank-VIP" id="r-user2">VIP</span></td>
+                    <td>
+                        <select onchange="document.getElementById('r-user2').className='rank-badge rank-'+this.value; document.getElementById('r-user2').innerText=this.value;">
+                            <option value="VIP">VIP</option><option value="Oyuncu">Oyuncu</option><option value="Kurucu">Kurucu</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
     <script>
-        // Baloncuk Motoru (Pembe-Yeşil Hibrit)
+        // Hibrit Baloncuk Süzülme Motoru (Pembe-Yeşil)
         const bubbleContainer = document.getElementById('bubble-container');
         for (let i = 0; i < 25; i++) {
             let bubble = document.createElement('div');
@@ -253,11 +283,9 @@
             bubbleContainer.appendChild(bubble);
         }
 
-        const API_URL = "http://localhost:3000/api";
-        let currentUser = localStorage.getItem('legacyUser');
-        let currentRank = localStorage.getItem('legacyRank');
+        let isAdminLoggedIn = false;
 
-        // Minecraft Canlı Veri Çekme Motoru
+        // Canlı Oyuncu Sayacı API Çağrısı (Minecraft)
         function fetchServerStatus() {
             fetch('https://api.mcsrvstat.us/2/legacynw.craftmc.com.tr')
                 .then(response => response.json())
@@ -269,134 +297,59 @@
                         countEl.innerText = "0 / 0 (Sunucu Kapalı)";
                     }
                 })
-                .catch(err => {
+                .catch(() => {
                     document.getElementById('player-count').innerText = "0 (Bağlantı Hatası)";
                 });
         }
 
-        function updateUI() {
-            if (currentUser && currentRank) {
-                document.getElementById('auth').style.display = 'none';
-                document.getElementById('main-nav').style.display = 'flex';
-                document.getElementById('nav-username').innerText = currentUser;
-                document.getElementById('prof-username').innerText = currentUser;
-                
-                let rankEl = document.getElementById('prof-rank');
-                rankEl.innerText = currentRank;
-                rankEl.className = "rank-badge rank-" + currentRank.replace('+', 'Plus'); 
-
-                if (currentUser === "Admin") {
-                    document.getElementById('admin-nav-link').style.display = 'block';
-                    loadAdminPanel();
-                } else {
-                    document.getElementById('admin-nav-link').style.display = 'none';
-                }
-            } else {
-                document.getElementById('main-nav').style.display = 'none';
-                document.getElementById('auth').style.display = 'block';
-                showSection('auth');
-            }
-        }
-
+        // Sayfa Değiştirme Motoru
         function showSection(id) {
-            if(!currentUser && id !== 'auth') id = 'auth';
-            
             document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            
             if(id === 'home') fetchServerStatus();
         }
 
-        // Sunucu Tabanlı Kayıt Motoru
-        function register() {
-            let u = document.getElementById('reg-user').value.trim();
-            let p = document.getElementById('reg-pass').value.trim();
-            let msgBox = document.getElementById('reg-msg');
-
-            fetch(`${API_URL}/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: u, password: p })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success) {
-                    currentUser = u;
-                    currentRank = data.rank;
-                    localStorage.setItem('legacyUser', u);
-                    localStorage.setItem('legacyRank', data.rank);
-                    
-                    document.getElementById('reg-user').value = "";
-                    document.getElementById('reg-pass').value = "";
-                    msgBox.innerText = "";
-                    
-                    updateUI();
-                    showSection('home'); // Kayıttan hemen sonra direkt ana sayfaya!
-                } else {
-                    msgBox.className = "msg error-msg"; msgBox.innerText = data.message;
-                }
-            })
-            .catch(() => { msgBox.className = "msg error-msg"; msgBox.innerText = "Sunucuya bağlanılamadı!"; });
+        // Admin Menü Aksiyon Butonu Mantığı
+        function handleAdminNav() {
+            if(isAdminLoggedIn) {
+                // Eğer zaten giriş yaptıysa çıkış yaptır
+                isAdminLoggedIn = false;
+                document.getElementById('admin-nav-link').style.display = 'none';
+                document.getElementById('auth-action-btn').innerText = "Admin Girişi";
+                document.getElementById('auth-action-btn').style.borderColor = "#00ff7f";
+                document.getElementById('auth-action-btn').style.color = "#00ff7f";
+                showSection('home');
+            } else {
+                showSection('admin-auth');
+            }
         }
 
-        // Sunucu Tabanlı Giriş Motoru
-        function login() {
-            let u = document.getElementById('login-user').value.trim();
-            let p = document.getElementById('login-pass').value.trim();
-            let msgBox = document.getElementById('login-msg');
+        // Giriş Kontrolü
+        function checkAdminLogin() {
+            let u = document.getElementById('admin-username-input').value.trim();
+            let p = document.getElementById('admin-password-input').value.trim();
+            let err = document.getElementById('admin-error-msg');
 
-            fetch(`${API_URL}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: u, password: p })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success) {
-                    currentUser = data.username;
-                    currentRank = data.rank;
-                    localStorage.setItem('legacyUser', data.username);
-                    localStorage.setItem('legacyRank', data.rank);
-                    
-                    document.getElementById('login-user').value = "";
-                    document.getElementById('login-pass').value = "";
-                    msgBox.innerText = "";
-                    
-                    updateUI();
-                    showSection('home'); // Giriş yapınca direkt ana sayfaya!
-                } else {
-                    msgBox.className = "msg error-msg"; msgBox.innerText = data.message;
-                }
-            })
-            .catch(() => { msgBox.className = "msg error-msg"; msgBox.innerText = "Sunucuya bağlanılamadı!"; });
+            if(u === "Admin" && p === "123456") {
+                isAdminLoggedIn = true;
+                err.innerText = "";
+                document.getElementById('admin-username-input').value = "";
+                document.getElementById('admin-password-input').value = "";
+                
+                // UI'ı Güncelle ve Gizli Paneli Göster
+                document.getElementById('admin-nav-link').style.display = 'block';
+                document.getElementById('auth-action-btn').innerText = "Güvenli Çıkış";
+                document.getElementById('auth-action-btn').style.borderColor = "#ff4500";
+                document.getElementById('auth-action-btn').style.color = "#ff4500";
+                
+                showSection('admin-panel');
+            } else {
+                err.innerText = "Hatalı Yönetici Kimliği veya Şifre!";
+            }
         }
 
-        function logout() {
-            currentUser = null; currentRank = null;
-            localStorage.removeItem('legacyUser'); localStorage.removeItem('legacyRank');
-            updateUI();
-        }
-
-        // Admin Paneli Veri Çekme Fonksiyonu
-        function loadAdminPanel() {
-            let tbody = document.getElementById('admin-users-list');
-            tbody.innerHTML = "<tr><td colspan='3'>Oyuncular Yükleniyor...</td></tr>";
-            
-            fetch(`${API_URL}/admin/users`, {
-                method: 'GET',
-                headers: { 'admin-user': currentUser }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success) {
-                    tbody.innerHTML = "";
-                    Object.keys(data.users).forEach(username => {
-                        let uRank = data.users[username].rank;
-                        let tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td><strong>${username}</strong></td>
-                            <td><span class="rank-badge rank-${uRank.replace('+', 'Plus')}">${uRank}</span></td>
-                            <td>
-                                <select onchange="changeRank('${username}', this.value)">
-                                    <option value="">Rütbe Seç...</option>
-                             
+        // İlk Çalıştırma
+        fetchServerStatus();
+    </script>
+</body>
+</html>
