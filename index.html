@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNetwork | Boxmining</title>
+    <title>LegacyNetwork | Neon Pink & Green Extreme</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
@@ -238,7 +238,7 @@
     </div>
 
     <script>
-        // Baloncuk Motoru (Pembe-Yeşil Karışık)
+        // Baloncuk Motoru (Pembe-Yeşil Hibrit)
         const bubbleContainer = document.getElementById('bubble-container');
         for (let i = 0; i < 25; i++) {
             let bubble = document.createElement('div');
@@ -247,5 +247,156 @@
             let size = Math.random() * 45 + 10;
             bubble.style.width = size + 'px';
             bubble.style.height = size + 'px';
-            bubble.
-                                                  
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.animationDuration = Math.random() * 4 + 6 + 's';
+            bubble.style.animationDelay = Math.random() * 4 + 's';
+            bubbleContainer.appendChild(bubble);
+        }
+
+        const API_URL = "http://localhost:3000/api";
+        let currentUser = localStorage.getItem('legacyUser');
+        let currentRank = localStorage.getItem('legacyRank');
+
+        // Minecraft Canlı Veri Çekme Motoru
+        function fetchServerStatus() {
+            fetch('https://api.mcsrvstat.us/2/legacynw.craftmc.com.tr')
+                .then(response => response.json())
+                .then(data => {
+                    const countEl = document.getElementById('player-count');
+                    if(data.online) {
+                        countEl.innerText = data.players.online + " / " + data.players.max;
+                    } else {
+                        countEl.innerText = "0 / 0 (Sunucu Kapalı)";
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('player-count').innerText = "0 (Bağlantı Hatası)";
+                });
+        }
+
+        function updateUI() {
+            if (currentUser && currentRank) {
+                document.getElementById('auth').style.display = 'none';
+                document.getElementById('main-nav').style.display = 'flex';
+                document.getElementById('nav-username').innerText = currentUser;
+                document.getElementById('prof-username').innerText = currentUser;
+                
+                let rankEl = document.getElementById('prof-rank');
+                rankEl.innerText = currentRank;
+                rankEl.className = "rank-badge rank-" + currentRank.replace('+', 'Plus'); 
+
+                if (currentUser === "Admin") {
+                    document.getElementById('admin-nav-link').style.display = 'block';
+                    loadAdminPanel();
+                } else {
+                    document.getElementById('admin-nav-link').style.display = 'none';
+                }
+            } else {
+                document.getElementById('main-nav').style.display = 'none';
+                document.getElementById('auth').style.display = 'block';
+                showSection('auth');
+            }
+        }
+
+        function showSection(id) {
+            if(!currentUser && id !== 'auth') id = 'auth';
+            
+            document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            
+            if(id === 'home') fetchServerStatus();
+        }
+
+        // Sunucu Tabanlı Kayıt Motoru
+        function register() {
+            let u = document.getElementById('reg-user').value.trim();
+            let p = document.getElementById('reg-pass').value.trim();
+            let msgBox = document.getElementById('reg-msg');
+
+            fetch(`${API_URL}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: u, password: p })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    currentUser = u;
+                    currentRank = data.rank;
+                    localStorage.setItem('legacyUser', u);
+                    localStorage.setItem('legacyRank', data.rank);
+                    
+                    document.getElementById('reg-user').value = "";
+                    document.getElementById('reg-pass').value = "";
+                    msgBox.innerText = "";
+                    
+                    updateUI();
+                    showSection('home'); // Kayıttan hemen sonra direkt ana sayfaya!
+                } else {
+                    msgBox.className = "msg error-msg"; msgBox.innerText = data.message;
+                }
+            })
+            .catch(() => { msgBox.className = "msg error-msg"; msgBox.innerText = "Sunucuya bağlanılamadı!"; });
+        }
+
+        // Sunucu Tabanlı Giriş Motoru
+        function login() {
+            let u = document.getElementById('login-user').value.trim();
+            let p = document.getElementById('login-pass').value.trim();
+            let msgBox = document.getElementById('login-msg');
+
+            fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: u, password: p })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    currentUser = data.username;
+                    currentRank = data.rank;
+                    localStorage.setItem('legacyUser', data.username);
+                    localStorage.setItem('legacyRank', data.rank);
+                    
+                    document.getElementById('login-user').value = "";
+                    document.getElementById('login-pass').value = "";
+                    msgBox.innerText = "";
+                    
+                    updateUI();
+                    showSection('home'); // Giriş yapınca direkt ana sayfaya!
+                } else {
+                    msgBox.className = "msg error-msg"; msgBox.innerText = data.message;
+                }
+            })
+            .catch(() => { msgBox.className = "msg error-msg"; msgBox.innerText = "Sunucuya bağlanılamadı!"; });
+        }
+
+        function logout() {
+            currentUser = null; currentRank = null;
+            localStorage.removeItem('legacyUser'); localStorage.removeItem('legacyRank');
+            updateUI();
+        }
+
+        // Admin Paneli Veri Çekme Fonksiyonu
+        function loadAdminPanel() {
+            let tbody = document.getElementById('admin-users-list');
+            tbody.innerHTML = "<tr><td colspan='3'>Oyuncular Yükleniyor...</td></tr>";
+            
+            fetch(`${API_URL}/admin/users`, {
+                method: 'GET',
+                headers: { 'admin-user': currentUser }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    tbody.innerHTML = "";
+                    Object.keys(data.users).forEach(username => {
+                        let uRank = data.users[username].rank;
+                        let tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><strong>${username}</strong></td>
+                            <td><span class="rank-badge rank-${uRank.replace('+', 'Plus')}">${uRank}</span></td>
+                            <td>
+                                <select onchange="changeRank('${username}', this.value)">
+                                    <option value="">Rütbe Seç...</option>
+                             
