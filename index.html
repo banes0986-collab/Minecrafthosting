@@ -3,93 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNetwork | Ana Sayfa</title>
+    <title>LegacyNetwork | Extreme Edition</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
-        /* Temel Ayarlar & Koyu Mavi Tema */
+        /* Temel Ayarlar & Sarı/Siyah Extreme Tema */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0b1120;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0d0d0d;
             color: #ffffff;
             overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Arka Plan Pembe Baloncuk Efektleri */
+        .bubbles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none; /* Tıklamayı engellememesi için */
+        }
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background-color: rgba(255, 105, 180, 0.3); /* Pembe */
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+            animation: floatUp 10s infinite ease-in;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
         }
 
         /* Navigasyon Çubuğu */
         nav {
-            background-color: #1e293b;
-            padding: 15px 30px;
+            background: rgba(13, 13, 13, 0.9);
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #3b82f6;
+            border-bottom: 2px solid #facc15;
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.2);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .logo { font-size: 1.5rem; font-weight: 800; color: #3b82f6; }
-        .nav-links { display: flex; gap: 20px; }
+        .logo { font-size: 1.8rem; font-weight: 900; color: #facc15; text-shadow: 0 0 10px #facc15; text-transform: uppercase; letter-spacing: 2px; }
+        .nav-links { display: flex; gap: 25px; }
         .nav-links a {
-            color: #cbd5e1; text-decoration: none; font-weight: 600; cursor: pointer; transition: color 0.3s;
+            color: #fff; text-decoration: none; font-weight: 700; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.9rem;
         }
-        .nav-links a:hover { color: #3b82f6; }
+        .nav-links a:hover { color: #facc15; text-shadow: 0 0 8px #facc15; }
         .user-menu { display: none; gap: 15px; align-items: center; }
-        .user-menu span { color: #22c55e; font-weight: bold; }
+        .user-menu span { color: #facc15; font-weight: 900; }
 
-        /* Bölümler (Sayfalar) */
-        .section { display: none; padding: 50px 20px; text-align: center; min-height: 80vh; }
+        /* Sayfa Bölümleri */
+        .section { display: none; padding: 60px 20px; text-align: center; min-height: 80vh; animation: fadeIn 0.5s; }
         .active-section { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 { color: #3b82f6; margin-bottom: 20px; font-size: 2.5rem; text-transform: uppercase; }
-        p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 30px; }
+        h1 { color: #facc15; margin-bottom: 15px; font-size: 3rem; text-transform: uppercase; text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
+        p { color: #a1a1aa; font-size: 1.2rem; margin-bottom: 40px; }
 
-        /* Formlar (Giriş/Kayıt) */
-        .auth-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        /* Kayıt ve Giriş Formları */
+        .auth-container { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }
         .auth-box {
-            background: #1e293b; padding: 30px; border-radius: 10px; width: 300px;
-            border: 1px solid #334155; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            background: rgba(20, 20, 20, 0.8); padding: 40px; border-radius: 15px; width: 350px;
+            border: 2px solid #333; box-shadow: 0 0 30px rgba(0,0,0,0.8); position: relative; overflow: hidden;
         }
+        .auth-box::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, #facc15);
+            animation: rotate 4s linear infinite; z-index: -1;
+        }
+        .auth-box::after {
+            content: ''; position: absolute; inset: 4px; background: #111; border-radius: 10px; z-index: -1;
+        }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        
+        .auth-box h3 { color: #facc15; margin-bottom: 20px; font-size: 1.5rem; text-transform: uppercase; }
         .auth-box input {
-            width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; outline: none;
+            width: 100%; padding: 15px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; 
+            background: #000; color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
         }
+        .auth-box input:focus { border-color: #facc15; box-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
         .auth-box button {
-            width: 100%; padding: 10px; background-color: #3b82f6; color: white; border: none;
-            border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px;
+            width: 100%; padding: 15px; background: #facc15; color: #000; border: none;
+            border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; margin-top: 15px; text-transform: uppercase; transition: 0.3s;
         }
-        .auth-box button:hover { background-color: #2563eb; }
+        .auth-box button:hover { background: #eab308; box-shadow: 0 0 20px #facc15; transform: scale(1.05); }
+        
+        .msg { font-size: 0.9rem; margin-top: 15px; font-weight: bold; min-height: 20px; }
+        .error-msg { color: #ef4444; } .success-msg { color: #22c55e; }
 
-        /* Profil / Rank Kutusu */
+        /* Profil / Rank Kartı */
         .profile-card {
-            background: #1e293b; padding: 40px; border-radius: 15px; display: inline-block;
-            border: 2px solid #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+            background: #111; padding: 50px; border-radius: 20px; display: inline-block;
+            border: 3px solid #facc15; box-shadow: 0 0 40px rgba(250, 204, 21, 0.2);
         }
         .rank-badge {
-            display: inline-block; padding: 5px 15px; border-radius: 5px; font-weight: bold; font-size: 1.2rem; margin-top: 10px;
+            display: inline-block; padding: 10px 25px; border-radius: 8px; font-weight: 900; font-size: 1.5rem; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;
         }
-        .rank-Kurucu { background-color: #dc2626; color: white; }
-        .rank-Oyuncu { background-color: #64748b; color: white; }
+        .rank-Kurucu { background-color: #ef4444; color: white; text-shadow: 0 0 10px #000; box-shadow: 0 0 15px #ef4444; }
+        .rank-Oyuncu { background-color: #3f3f46; color: white; }
 
-        /* Mağaza Kartları */
-        .store-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1200px; margin: auto;}
+        /* Extreme Mağaza Tasarımı */
+        .store-container { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; max-width: 1300px; margin: auto; }
         .vip-card {
-            background: linear-gradient(145deg, #1e293b, #0f172a); border: 2px solid #334155;
-            border-radius: 15px; padding: 25px; width: 230px; text-align: center; transition: 0.3s;
+            background: #111; border: 2px solid #333; border-radius: 20px; padding: 35px 25px; 
+            width: 260px; text-align: center; transition: 0.4s; position: relative; overflow: hidden;
         }
-        .vip-card:hover { transform: translateY(-10px); border-color: #3b82f6; }
-        .vip-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
-        .price { font-size: 2rem; font-weight: 600; margin-bottom: 15px; }
-        .price span { font-size: 1rem; color: #94a3b8; }
+        .vip-card:hover { transform: translateY(-15px); border-color: #facc15; box-shadow: 0 15px 30px rgba(250, 204, 21, 0.2); }
+        .vip-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 15px; text-transform: uppercase; }
+        .price { font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; color: #fff; }
+        .price span { font-size: 1.2rem; color: #a1a1aa; }
         .vip-card button {
-            background: #3b82f6; color: white; border: none; padding: 10px; width: 100%;
-            border-radius: 5px; cursor: pointer; font-weight: bold;
+            background: transparent; color: #facc15; border: 2px solid #facc15; padding: 12px; width: 100%;
+            border-radius: 8px; cursor: pointer; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; transition: 0.3s;
         }
-        .vip-card button:hover { background: #2563eb; }
+        .vip-card button:hover { background: #facc15; color: #000; box-shadow: 0 0 15px #facc15; }
 
-        /* Rank Renkleri */
+        /* VIP Renkleri */
         .c-vip { color: #22c55e; } .c-vipplus { color: #eab308; }
         .c-mvip { color: #a855f7; } .c-legacy { color: #ef4444; } .c-legacyplus { color: #f97316; }
 
     </style>
 </head>
 <body>
+
+    <!-- Arka Plan Pembe Baloncuklar -->
+    <div class="bubbles" id="bubble-container"></div>
 
     <!-- Menü -->
     <nav>
@@ -99,58 +147,58 @@
             <a onclick="showSection('store')">Mağaza</a>
         </div>
         <div class="nav-links" id="guest-menu">
-            <a onclick="showSection('auth')">Giriş / Kayıt Ol</a>
+            <a onclick="showSection('auth')" style="background: #facc15; color: #000; padding: 8px 15px; border-radius: 5px;">Giriş / Kayıt</a>
         </div>
         <div class="user-menu" id="logged-menu">
-            <a onclick="showSection('profile')">Profilim (<span id="nav-username"></span>)</a>
-            <a onclick="logout()" style="color: #ef4444;">Çıkış Yap</a>
+            <a onclick="showSection('profile')">Profil (<span id="nav-username"></span>)</a>
+            <a onclick="logout()" style="color: #ef4444; border: 1px solid #ef4444; padding: 5px 10px; border-radius: 5px;">Çıkış</a>
         </div>
     </nav>
 
     <!-- Ana Sayfa -->
     <div id="home" class="section active-section">
-        <h1>LegacyNetwork'e Hoş Geldin!</h1>
-        <p>Macera kaldığı yerden devam ediyor. Savaş, geliş ve en iyisi ol!</p>
-        <img src="https://via.placeholder.com/600x300/1e293b/3b82f6?text=Sunucu+Gorseli" alt="Banner" style="border-radius: 10px; width: 100%; max-width: 600px;">
+        <h1>Sınırları Zorla</h1>
+        <p>Efsanevi macera sarı temalı Extreme Edition ile devam ediyor. Sunucuya hükmet!</p>
+        <img src="https://via.placeholder.com/800x400/111111/facc15?text=LEGACY+NETWORK+EXTREME" alt="Banner" style="border-radius: 15px; width: 100%; max-width: 800px; border: 2px solid #facc15; box-shadow: 0 0 20px rgba(250, 204, 21, 0.3);">
     </div>
 
     <!-- Giriş / Kayıt -->
     <div id="auth" class="section">
-        <h1>Hesap İşlemleri</h1>
+        <h1>Sisteme Katıl</h1>
         <div class="auth-container">
             <!-- Giriş -->
             <div class="auth-box">
                 <h3>Giriş Yap</h3>
-                <input type="text" id="login-user" placeholder="Kullanıcı Adı">
+                <input type="text" id="login-user" placeholder="Kullanıcı Adı" autocomplete="off">
                 <input type="password" id="login-pass" placeholder="Şifre">
-                <button onclick="login()">Giriş Yap</button>
-                <p id="login-msg" style="color: #ef4444; font-size: 0.9rem; margin-top: 10px;"></p>
+                <button onclick="login()">Giriş</button>
+                <div id="login-msg" class="msg error-msg"></div>
             </div>
             <!-- Kayıt -->
             <div class="auth-box">
                 <h3>Kayıt Ol</h3>
-                <input type="text" id="reg-user" placeholder="Kullanıcı Adı">
+                <input type="text" id="reg-user" placeholder="Kullanıcı Adı" autocomplete="off">
                 <input type="password" id="reg-pass" placeholder="Şifre">
-                <button onclick="register()">Kayıt Ol</button>
-                <p id="reg-msg" style="color: #22c55e; font-size: 0.9rem; margin-top: 10px;"></p>
+                <button onclick="register()">Kayıt</button>
+                <div id="reg-msg" class="msg"></div>
             </div>
         </div>
     </div>
 
     <!-- Profil Sayfası -->
     <div id="profile" class="section">
-        <h1>Oyuncu Profili</h1>
+        <h1>Oyuncu Karargahı</h1>
         <div class="profile-card">
-            <h2 id="prof-username" style="font-size: 2rem;">Kullanıcı</h2>
-            <p>Mevcut Yetki Durumu:</p>
-            <div id="prof-rank" class="rank-badge rank-Oyuncu">Oyuncu</div>
+            <h2 id="prof-username" style="font-size: 2.5rem; color: #fff; margin-bottom: 10px;">Kullanıcı</h2>
+            <p style="margin-bottom: 10px;">Mevcut Yetki Durumu:</p>
+            <div id="prof-rank" class="rank-badge">Oyuncu</div>
         </div>
     </div>
 
     <!-- Mağaza Sayfası -->
     <div id="store" class="section">
-        <h1>VİP Mağazası</h1>
-        <p>Sunucuyu destekle, rakiplerinin önüne geç!</p>
+        <h1>Extreme Mağaza</h1>
+        <p>VIP satın alarak gücüne güç kat ve serverın hakimi ol!</p>
         <div class="store-container">
             <div class="vip-card"><div class="vip-title c-vip">VIP</div><div class="price">30 <span>TL</span></div><button>Satın Al</button></div>
             <div class="vip-card"><div class="vip-title c-vipplus">VIP+</div><div class="price">50 <span>TL</span></div><button>Satın Al</button></div>
@@ -161,21 +209,43 @@
     </div>
 
     <script>
-        // Veritabanı simülasyonu (Tarayıcı hafızasını kullanır)
-        let users = JSON.parse(localStorage.getItem('legacyDB'));
-        
-        // Sana özel kurucu hesabı yoksa oluştur
-        if (!users) {
-            users = {
-                "Admin": { password: "123", rank: "Kurucu" }
-            };
-            localStorage.setItem('legacyDB', JSON.stringify(users));
+        // Pembe Baloncuk Üretici
+        const bubbleContainer = document.getElementById('bubble-container');
+        for (let i = 0; i < 20; i++) {
+            let bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            let size = Math.random() * 40 + 10; // 10px ile 50px arası
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.animationDuration = Math.random() * 5 + 5 + 's'; // 5s ile 10s arası hız
+            bubble.style.animationDelay = Math.random() * 5 + 's';
+            bubbleContainer.appendChild(bubble);
         }
 
-        let currentUser = localStorage.getItem('legacyActiveUser');
+        // --- HESAP VE GİRİŞ SİSTEMİ (GÜNCELLENDİ VE DÜZELTİLDİ) ---
+        
+        // Veritabanını güvenli bir şekilde çek veya boş obje oluştur
+        let users = {};
+        try {
+            let storedData = localStorage.getItem('legacyExtremeDB');
+            if(storedData) {
+                users = JSON.parse(storedData);
+            }
+        } catch(e) {
+            console.log("Veri çekme hatası", e);
+        }
+
+        // Admin hesabını zorunlu olarak ekle (eğer yoksa)
+        if (!users["Admin"]) {
+            users["Admin"] = { password: "123", rank: "Kurucu" };
+            localStorage.setItem('legacyExtremeDB', JSON.stringify(users));
+        }
+
+        let currentUser = localStorage.getItem('legacyActiveExtremeUser');
 
         function updateNav() {
-            if (currentUser) {
+            if (currentUser && users[currentUser]) {
                 document.getElementById('guest-menu').style.display = 'none';
                 document.getElementById('logged-menu').style.display = 'flex';
                 document.getElementById('nav-username').innerText = currentUser;
@@ -184,9 +254,12 @@
                 let rank = users[currentUser].rank;
                 let rankEl = document.getElementById('prof-rank');
                 rankEl.innerText = rank;
-                rankEl.className = "rank-badge rank-" + rank;
-                if(rank !== "Kurucu") rankEl.className = "rank-badge rank-Oyuncu";
-                if(rank === "Kurucu") rankEl.className = "rank-badge rank-Kurucu";
+                
+                if(rank === "Kurucu") {
+                    rankEl.className = "rank-badge rank-Kurucu";
+                } else {
+                    rankEl.className = "rank-badge rank-Oyuncu";
+                }
             } else {
                 document.getElementById('guest-menu').style.display = 'flex';
                 document.getElementById('logged-menu').style.display = 'none';
@@ -196,43 +269,70 @@
         function showSection(id) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
             document.getElementById(id).classList.add('active-section');
-            if(id === 'profile' && !currentUser) showSection('auth');
+            // Profil sayfasına girmek isterse ve giriş yapmamışsa
+            if(id === 'profile' && !currentUser) {
+                showSection('auth');
+            }
         }
 
         function register() {
-            let u = document.getElementById('reg-user').value;
-            let p = document.getElementById('reg-pass').value;
-            if (u === "" || p === "") { document.getElementById('reg-msg').innerText = "Boş alan bırakma!"; return; }
-            if (users[u]) { document.getElementById('reg-msg').style.color = "red"; document.getElementById('reg-msg').innerText = "Bu isim alınmış!"; return; }
+            let u = document.getElementById('reg-user').value.trim();
+            let p = document.getElementById('reg-pass').value.trim();
+            let msgBox = document.getElementById('reg-msg');
             
+            if (u === "" || p === "") { 
+                msgBox.className = "msg error-msg";
+                msgBox.innerText = "Boş alan bırakma!"; 
+                return; 
+            }
+            if (users[u]) { 
+                msgBox.className = "msg error-msg";
+                msgBox.innerText = "Bu isim zaten alınmış!"; 
+                return; 
+            }
+            
+            // Yeni kullanıcıyı kaydet
             users[u] = { password: p, rank: "Oyuncu" };
-            localStorage.setItem('legacyDB', JSON.stringify(users));
-            document.getElementById('reg-msg').style.color = "#22c55e";
-            document.getElementById('reg-msg').innerText = "Kayıt Başarılı! Giriş yapabilirsiniz.";
+            localStorage.setItem('legacyExtremeDB', JSON.stringify(users));
+            
+            msgBox.className = "msg success-msg";
+            msgBox.innerText = "Kayıt Başarılı! Soldan giriş yapabilirsin.";
+            
+            // Kutuları temizle
+            document.getElementById('reg-user').value = "";
+            document.getElementById('reg-pass').value = "";
         }
 
         function login() {
-            let u = document.getElementById('login-user').value;
-            let p = document.getElementById('login-pass').value;
+            let u = document.getElementById('login-user').value.trim();
+            let p = document.getElementById('login-pass').value.trim();
+            let msgBox = document.getElementById('login-msg');
+
             if (users[u] && users[u].password === p) {
                 currentUser = u;
-                localStorage.setItem('legacyActiveUser', u);
-                document.getElementById('login-msg').innerText = "";
+                localStorage.setItem('legacyActiveExtremeUser', u);
+                msgBox.innerText = ""; // Hatayı temizle
+                
+                // Girdileri temizle
+                document.getElementById('login-user').value = "";
+                document.getElementById('login-pass').value = "";
+                
                 updateNav();
                 showSection('profile');
             } else {
-                document.getElementById('login-msg').innerText = "Hatalı kullanıcı adı veya şifre!";
+                msgBox.className = "msg error-msg";
+                msgBox.innerText = "Hatalı kullanıcı adı veya şifre!";
             }
         }
 
         function logout() {
             currentUser = null;
-            localStorage.removeItem('legacyActiveUser');
+            localStorage.removeItem('legacyActiveExtremeUser');
             updateNav();
             showSection('home');
         }
 
-        // Sayfa yüklendiğinde menüyü güncelle
+        // Sayfa ilk açıldığında çalıştır
         updateNav();
     </script>
 </body>
