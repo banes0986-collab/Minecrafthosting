@@ -3,520 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegacyNW | Boxmining </title>
-    <!-- Gerekli Kütüphaneler -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-    
+    <title>LegacyNetwork | Ana Sayfa</title>
     <style>
-        :root {
-            --bg-main: #0a0a0f;
-            --bg-card: #12121d;
-            --bg-nav: #161626;
-            --primary: #ffaa00; /* Altın / Turuncu */
-            --secondary: #00f2fe; /* Neon Mavi */
-            --danger: #ff3333; /* Kırmızı Uyarı */
-            --text: #ffffff;
-            --text-muted: #94a3b8;
-            --border: #222239;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        /* Temel Ayarlar & Koyu Mavi Tema */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--bg-main);
-            color: var(--text);
-            background-image: radial-gradient(circle at top, rgba(0, 242, 254, 0.05), transparent);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0b1120;
+            color: #ffffff;
+            overflow-x: hidden;
         }
 
-        /* 🚨 ÜSTTE BELİREN KIRMIZI UYARI KUTUSU */
-        #custom-alert {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--danger), #cc0000);
-            color: white;
-            padding: 16px 28px;
-            border-radius: 12px;
-            z-index: 10000;
-            box-shadow: 0 10px 30px rgba(255, 51, 51, 0.4);
-            text-align: center;
-            font-weight: 600;
-            width: 90%;
-            max-width: 550px;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        #custom-alert a {
-            color: #fff;
-            background: rgba(0,0,0,0.3);
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 8px;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        #custom-alert a:hover {
-            background: rgba(0,0,0,0.5);
-        }
-
-        .close-alert-btn {
-            position: absolute;
-            top: 4px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        @keyframes popIn {
-            from { transform: translate(-50%, -100px); opacity: 0; }
-            to { transform: translate(-50%, 0); opacity: 1; }
-        }
-
-        /* NAVBAR (ESNEK VE MOBİL UYUMLU) */
+        /* Navigasyon Çubuğu */
         nav {
-            background: var(--bg-nav);
-            border-bottom: 2px solid var(--border);
-            padding: 15px 5%;
+            background-color: #1e293b;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            position: sticky;
-            top: 0;
-            z-index: 999;
+            border-bottom: 2px solid #3b82f6;
         }
+        .logo { font-size: 1.5rem; font-weight: 800; color: #3b82f6; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            color: #cbd5e1; text-decoration: none; font-weight: 600; cursor: pointer; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #3b82f6; }
+        .user-menu { display: none; gap: 15px; align-items: center; }
+        .user-menu span { color: #22c55e; font-weight: bold; }
 
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .logo span { color: var(--primary); }
+        /* Bölümler (Sayfalar) */
+        .section { display: none; padding: 50px 20px; text-align: center; min-height: 80vh; }
+        .active-section { display: block; }
 
-        .nav-links {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        h1 { color: #3b82f6; margin-bottom: 20px; font-size: 2.5rem; text-transform: uppercase; }
+        p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 30px; }
 
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 10px 16px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            color: var(--text);
-            background: rgba(0, 242, 254, 0.1);
-            box-shadow: inset 0 0 8px rgba(0, 242, 254, 0.2);
-        }
-
-        #admin-nav-link {
-            display: none; /* Sadece kurucu girişinde açılır */
-            border: 1px dashed var(--primary);
-            color: var(--primary);
-        }
-        #admin-nav-link:hover, #admin-nav-link.active {
-            background: rgba(255, 170, 0, 0.1);
-        }
-
-        /* ANA İÇERİK ALANI */
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 0 20px;
-            flex: 1;
-        }
-
-        .tab-content {
-            display: none; /* JS ile yönetilir */
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* HERO BÖLÜMÜ */
-        .hero {
-            background: linear-gradient(135deg, rgba(18, 18, 29, 0.95), rgba(10, 10, 15, 0.9)), url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1000') center/cover;
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 50px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            margin-bottom: 35px;
-        }
-
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 25px;
-        }
-
-        .ip-box {
-            background: #06060a;
-            border: 2px dashed var(--secondary);
-            padding: 12px 24px;
-            border-radius: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .ip-box:hover { transform: scale(1.02); }
-        .ip-box code { font-size: 1.1rem; color: var(--secondary); font-weight: bold; letter-spacing: 0.5px; }
-
-        /* GRID TASARIMI */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: var(--secondary);
-        }
-
-        /* MAĞAZA PAKETLERİ */
-        .price-tag {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 15px 0;
-            display: block;
-        }
-
-        .features-list {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 20px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .features-list li {
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .features-list li i { color: #00ff88; }
-
-        .buy-btn {
-            background: linear-gradient(90deg, var(--secondary), #00bfff);
-            color: #000;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: opacity 0.2s;
-        }
-        .buy-btn:hover { opacity: 0.9; }
-
-        /* GİRİŞ & KAYIT SİSTEMİ KUTUSU */
+        /* Formlar (Giriş/Kayıt) */
+        .auth-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
         .auth-box {
-            max-width: 420px;
-            margin: 30px auto;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: #1e293b; padding: 30px; border-radius: 10px; width: 300px;
+            border: 1px solid #334155; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
+        .auth-box input {
+            width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; outline: none;
+        }
+        .auth-box button {
+            width: 100%; padding: 10px; background-color: #3b82f6; color: white; border: none;
+            border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+        .auth-box button:hover { background-color: #2563eb; }
 
-        .auth-tabs {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--border);
+        /* Profil / Rank Kutusu */
+        .profile-card {
+            background: #1e293b; padding: 40px; border-radius: 15px; display: inline-block;
+            border: 2px solid #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
         }
+        .rank-badge {
+            display: inline-block; padding: 5px 15px; border-radius: 5px; font-weight: bold; font-size: 1.2rem; margin-top: 10px;
+        }
+        .rank-Kurucu { background-color: #dc2626; color: white; }
+        .rank-Oyuncu { background-color: #64748b; color: white; }
 
-        .auth-tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: bold;
-            padding-bottom: 10px;
-            cursor: pointer;
+        /* Mağaza Kartları */
+        .store-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1200px; margin: auto;}
+        .vip-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a); border: 2px solid #334155;
+            border-radius: 15px; padding: 25px; width: 230px; text-align: center; transition: 0.3s;
         }
-        .auth-tab-btn.active {
-            color: var(--secondary);
-            border-bottom: 2px solid var(--secondary);
+        .vip-card:hover { transform: translateY(-10px); border-color: #3b82f6; }
+        .vip-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
+        .price { font-size: 2rem; font-weight: 600; margin-bottom: 15px; }
+        .price span { font-size: 1rem; color: #94a3b8; }
+        .vip-card button {
+            background: #3b82f6; color: white; border: none; padding: 10px; width: 100%;
+            border-radius: 5px; cursor: pointer; font-weight: bold;
         }
+        .vip-card button:hover { background: #2563eb; }
 
-        .form-group {
-            margin-bottom: 18px;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            background: #07070b;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: #fff;
-            font-size: 1rem;
-        }
-        .form-group input:focus { border-color: var(--secondary); outline: none; }
+        /* Rank Renkleri */
+        .c-vip { color: #22c55e; } .c-vipplus { color: #eab308; }
+        .c-mvip { color: #a855f7; } .c-legacy { color: #ef4444; } .c-legacyplus { color: #f97316; }
 
-        .auth-submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--primary);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* ADMİN VE KURALLAR PANELİ KUTULARI */
-        .content-block {
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 30px;
-        }
-
-        .content-block h2 { margin-bottom: 20px; text-transform: uppercase; }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
-        th { color: var(--secondary); }
-
-        .badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        .badge-kurucu { background: rgba(255, 170, 0, 0.2); color: var(--primary); }
-        .badge-oyuncu { background: rgba(148, 163, 184, 0.2); color: var(--text-muted); }
-
-        select {
-            background: #07070b;
-            color: #fff;
-            border: 1px solid var(--border);
-            padding: 6px;
-            border-radius: 4px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- 🚨 FLOATING KIRMIZI UYARI MESAJI -->
-    <div id="custom-alert">
-        <button class="close-alert-btn" onclick="closeAlert()">&times;</button>
-        <div>Bu işlemi tamamlamak için lütfen discord adresimiz uzerinden talep açın!</div>
-        <a href="https://discord.gg/TRSFz8sWm" target="_blank"><i class="fa-brands fa-discord"></i> Discord Sunucumuz</a>
-    </div>
-
-    <!-- ÜST NAVİGASYON MENÜSÜ -->
+    <!-- Menü -->
     <nav>
-        <div class="logo">Legacy<span>NW</span></div>
+        <div class="logo">LegacyNetwork</div>
         <div class="nav-links">
-            <button class="nav-btn active" data-tab="anasayfa"><i class="fa-solid fa-house"></i> Ana Sayfa</button>
-            <button class="nav-btn" data-tab="magaza"><i class="fa-solid fa-basket-shopping"></i> Mağaza</button>
-            <button class="nav-btn" data-tab="kurallar"><i class="fa-solid fa-gavel"></i> Kurallar</button>
-            <button class="nav-btn" id="admin-nav-link" data-tab="adminpanel"><i class="fa-solid fa-user-shield"></i> Kurucu Paneli</button>
-            <button class="nav-btn" id="auth-nav-btn" data-tab="hesap" style="background: rgba(0,242,254,0.1); color: var(--secondary);"><i class="fa-solid fa-user"></i> Giriş Yap</button>
+            <a onclick="showSection('home')">Ana Sayfa</a>
+            <a onclick="showSection('store')">Mağaza</a>
+        </div>
+        <div class="nav-links" id="guest-menu">
+            <a onclick="showSection('auth')">Giriş / Kayıt Ol</a>
+        </div>
+        <div class="user-menu" id="logged-menu">
+            <a onclick="showSection('profile')">Profilim (<span id="nav-username"></span>)</a>
+            <a onclick="logout()" style="color: #ef4444;">Çıkış Yap</a>
         </div>
     </nav>
 
-    <!-- ANA İÇERİK ALANLARI -->
-    <div class="container">
+    <!-- Ana Sayfa -->
+    <div id="home" class="section active-section">
+        <h1>LegacyNetwork'e Hoş Geldin!</h1>
+        <p>Macera kaldığı yerden devam ediyor. Savaş, geliş ve en iyisi ol!</p>
+        <img src="https://via.placeholder.com/600x300/1e293b/3b82f6?text=Sunucu+Gorseli" alt="Banner" style="border-radius: 10px; width: 100%; max-width: 600px;">
+    </div>
 
-        <!-- 1. ANA SAYFA SEKMESİ -->
-        <div id="anasayfa" class="tab-content active">
-            <div class="hero">
-                <h1>LegacyNW BoxMining</h1>
-                <p id="live-player-text">Giriş durumu inceleniyor... <i class="fa-solid fa-circle-notch fa-spin"></i></p>
-                <div class="ip-box" onclick="copyIP()">
-                    <code id="server-ip">legacynw.craftmc.com.tr</code>
-                    <i class="fa-regular fa-copy" style="color: var(--secondary); font-size: 1.2rem;"></i>
-                </div>
-            </div>
-            <div class="grid">
-                <div class="card">
-                    <i class="fa-solid fa-cubes" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;"></i>
-                    <h3>Kusursuz Boxmining Dünyası</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">Tamamen optimize edilmiş rütbeli madenler, özel kutular ve adil klan savaşları.</p>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 12px;"></i>
-                    <h3>Güçlü Altyapı</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">Gelişmiş hile engelleme sistemleri ve kesintisiz yüksek TPS oranları.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. MAĞAZA SEKMESİ -->
-        <div id="magaza" class="tab-content">
-            <h2 style="text-align: center; margin-bottom: 30px; text-transform: uppercase;">Sunucu Mağazası</h2>
-            <div class="grid">
-                <!-- VIP -->
-                <div class="card">
-                    <h3>VIP</h3>
-                    <span class="price-tag">30 TL</span>
-                    <ul class="features-list">
-                        <li><i class="fa-solid fa-circle-check"></i> [VIP] Rütbe Tagı</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Özel VIP Başlangıç Kiti</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Sunucu Doluyken Giriş</li>
-                    </ul>
-                    <button class="buy-btn" onclick="showAlert()">Satın Al</button>
-                </div>
-                <!-- VIP+ -->
-                <div class="card">
-                    <h3>VIP+</h3>
-                    <span class="price-tag">50 TL</span>
-                    <ul class="features-list">
-                        <li><i class="fa-solid fa-circle-check"></i> [VIP+] Rütbe Tagı</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Güçlendirilmiş VIP+ Kiti</li>
-                        <li><i class="fa-solid fa-circle-check"></i> /fly Yetkisi (Maden Alanında)</li>
-                    </ul>
-                    <button class="buy-btn" onclick="showAlert()">Satın Al</button>
-                </div>
-                <!-- MVIP -->
-                <div class="card">
-                    <h3>MVIP</h3>
-                    <span class="price-tag">60 TL</span>
-                    <ul class="features-list">
-                        <li><i class="fa-solid fa-circle-check"></i> [MVIP] Rütbe Tagı</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Hasarı Yüksek MVIP Silahları</li>
-                        <li><i class="fa-solid fa-circle-check"></i> %10 Ekstra Maden Kazanç Bonusu</li>
-                    </ul>
-                    <button class="buy-btn" onclick="showAlert()">Satın Al</button>
-                </div>
-                <!-- LegacyVIP -->
-                <div class="card" style="border-color: var(--primary);">
-                    <h3 style="color: var(--primary);">LegacyVIP</h3>
-                    <span class="price-tag">100 TL</span>
-                    <ul class="features-list">
-                        <li><i class="fa-solid fa-circle-check"></i> [LegacyVIP] Efsanevi Tag</li>
-                        <li><i class="fa-solid fa-circle-check"></i> En Güçlü Seviye Kitleri</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Renkli Yazı Yazma Özelliği</li>
-                    </ul>
-                    <button class="buy-btn" style="background: linear-gradient(90deg, var(--primary), #e69500);" onclick="showAlert()">Satın Al</button>
-                </div>
-                <!-- LegacyVIP+ -->
-                <div class="card" style="border-color: var(--secondary);">
-                    <h3 style="color: var(--secondary);">LegacyVIP+</h3>
-                    <span class="price-tag" style="color: var(--secondary);">200 TL</span>
-                    <ul class="features-list">
-                        <li><i class="fa-solid fa-circle-check"></i> [LegacyVIP+] En Üst Seviye Tag</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Tüm Özel Kitlerin Tamamına Erişim</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Kurucu Özel İletişim / Destek</li>
-                    </ul>
-                    <button class="buy-btn" style="background: linear-gradient(90deg, var(--secondary), #00c2cb);" onclick="showAlert()">Satın Al</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. KURALLAR SEKMESİ -->
-        <div id="kurallar" class="tab-content">
-            <div class="content-block">
-                <h2><i class="fa-solid fa-gavel" style="color: var(--secondary);"></i> Sunucu Kuralları</h2>
-                <div style="line-height: 1.8; color: var(--text-muted);">
-                    <p style="margin-bottom: 12px;"><strong style="color: #fff;">1. Hile, Makro ve Harici Yazılımlar:</strong> Boxmining dengesini korumak adına makro veya avantaj sağlayan istemciler (clients) yasaktır. Cezası: Sınırsız Engelleme.</p>
-                    <p style="margin-bottom: 12px;"><strong style="color: #fff;">2. Sohbet Kuralları ve Saygı:</strong> Oyunculara, yetkililere, dini veya ailevi değerlere hakaret/küfür kesinlikle yasaktır. Cezası: Susturma veya Geçici Ban.</p>
-                    <p style="margin-bottom: 12px;"><strong style="color: #fff;">3. Reklam ve Dolandırıcılık:</strong> Oyun içinden başka sunucu tanıtımı yapmak veya takas sistemini manipüle ederek oyuncuları dolandırmak kesinlikle yasaktır.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. HESAP SEKMESİ (GİRİŞ / KAYIT / PROFİL) -->
-        <div id="hesap" class="tab-content">
+    <!-- Giriş / Kayıt -->
+    <div id="auth" class="section">
+        <h1>Hesap İşlemleri</h1>
+        <div class="auth-container">
+            <!-- Giriş -->
             <div class="auth-box">
-                <div class="auth-tabs" id="auth-tabs-nav">
-                    <button class="auth-tab-btn active" id="btn-tab-login" onclick="switchAuthForm('login')">Giriş Yap</button>
-                    <button class="auth-tab-btn" id="btn-tab-register" onclick="switchAuthForm('register')">Kayıt Ol</button>
-                </div>
+                <h3>Giriş Yap</h3>
+                <input type="text" id="login-user" placeholder="Kullanıcı Adı">
+                <input type="password" id="login-pass" placeholder="Şifre">
+                <button onclick="login()">Giriş Yap</button>
+                <p id="login-msg" style="color: #ef4444; font-size: 0.9rem; margin-top: 10px;"></p>
+            </div>
+            <!-- Kayıt -->
+            <div class="auth-box">
+                <h3>Kayıt Ol</h3>
+                <input type="text" id="reg-user" placeholder="Kullanıcı Adı">
+                <input type="password" id="reg-pass" placeholder="Şifre">
+                <button onclick="register()">Kayıt Ol</button>
+                <p id="reg-msg" style="color: #22c55e; font-size: 0.9rem; margin-top: 10px;"></p>
+            </div>
+        </div>
+    </div>
 
-                <!-- Giriş Formu -->
-                <div id="form-login">
-                    <div class="form-group">
-                        <label>Kullanıcı Adı</label>
-                        <input type="text" id="inp-login-user" placeholder="Kullanıcı adını gir">
-                    </div>
-                    <div class="form-group">
-                        <label>Şifre</label>
-                        <input type="password" id="inp-login-pass" placeholder="••••••••">
-                    </div>
-                    <button class="auth-submit-btn" onclick="processLogin()">Giriş Yap</button>
-                </div>
+    <!-- Profil Sayfası -->
+    <div id="profile" class="section">
+        <h1>Oyuncu Profili</h1>
+        <div class="profile-card">
+            <h2 id="prof-username" style="font-size: 2rem;">Kullanıcı</h2>
+            <p>Mevcut Yetki Durumu:</p>
+            <div id="prof-rank" class="rank-badge rank-Oyuncu">Oyuncu</div>
+        </div>
+    </div>
 
-                <!-- Kayıt Formu -->
-                <div id="form-register" style="display: none;">
-                    <div class="form-group">
-                        <label>Kullanıcı Adı</label>
-                        <input type="text" id="inp-register-user" placeholder="Yeni bir kullanıcı adı seç">
-                    </div>
-                    <div class="form-group">
-                        <label>Şifre<
+    <!-- Mağaza Sayfası -->
+    <div id="store" class="section">
+        <h1>VİP Mağazası</h1>
+        <p>Sunucuyu destekle, rakiplerinin önüne geç!</p>
+        <div class="store-container">
+            <div class="vip-card"><div class="vip-title c-vip">VIP</div><div class="price">30 <span>TL</span></div><button>Satın Al</button></div>
+            <div class="vip-card"><div class="vip-title c-vipplus">VIP+</div><div class="price">50 <span>TL</span></div><button>Satın Al</button></div>
+            <div class="vip-card"><div class="vip-title c-mvip">MVIP</div><div class="price">80 <span>TL</span></div><button>Satın Al</button></div>
+            <div class="vip-card"><div class="vip-title c-legacy">LegacyVIP</div><div class="price">100 <span>TL</span></div><button>Satın Al</button></div>
+            <div class="vip-card"><div class="vip-title c-legacyplus">LegacyVIP+</div><div class="price">140 <span>TL</span></div><button>Satın Al</button></div>
+        </div>
+    </div>
+
+    <script>
+        // Veritabanı simülasyonu (Tarayıcı hafızasını kullanır)
+        let users = JSON.parse(localStorage.getItem('legacyDB'));
+        
+        // Sana özel kurucu hesabı yoksa oluştur
+        if (!users) {
+            users = {
+                "Admin": { password: "123", rank: "Kurucu" }
+            };
+            localStorage.setItem('legacyDB', JSON.stringify(users));
+        }
+
+        let currentUser = localStorage.getItem('legacyActiveUser');
+
+        function updateNav() {
+            if (currentUser) {
+                document.getElementById('guest-menu').style.display = 'none';
+                document.getElementById('logged-menu').style.display = 'flex';
+                document.getElementById('nav-username').innerText = currentUser;
+                document.getElementById('prof-username').innerText = currentUser;
+                
+                let rank = users[currentUser].rank;
+                let rankEl = document.getElementById('prof-rank');
+                rankEl.innerText = rank;
+                rankEl.className = "rank-badge rank-" + rank;
+                if(rank !== "Kurucu") rankEl.className = "rank-badge rank-Oyuncu";
+                if(rank === "Kurucu") rankEl.className = "rank-badge rank-Kurucu";
+            } else {
+                document.getElementById('guest-menu').style.display = 'flex';
+                document.getElementById('logged-menu').style.display = 'none';
+            }
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
+            document.getElementById(id).classList.add('active-section');
+            if(id === 'profile' && !currentUser) showSection('auth');
+        }
+
+        function register() {
+            let u = document.getElementById('reg-user').value;
+            let p = document.getElementById('reg-pass').value;
+            if (u === "" || p === "") { document.getElementById('reg-msg').innerText = "Boş alan bırakma!"; return; }
+            if (users[u]) { document.getElementById('reg-msg').style.color = "red"; document.getElementById('reg-msg').innerText = "Bu isim alınmış!"; return; }
+            
+            users[u] = { password: p, rank: "Oyuncu" };
+            localStorage.setItem('legacyDB', JSON.stringify(users));
+            document.getElementById('reg-msg').style.color = "#22c55e";
+            document.getElementById('reg-msg').innerText = "Kayıt Başarılı! Giriş yapabilirsiniz.";
+        }
+
+        function login() {
+            let u = document.getElementById('login-user').value;
+            let p = document.getElementById('login-pass').value;
+            if (users[u] && users[u].password === p) {
+                currentUser = u;
+                localStorage.setItem('legacyActiveUser', u);
+                document.getElementById('login-msg').innerText = "";
+                updateNav();
+                showSection('profile');
+            } else {
+                document.getElementById('login-msg').innerText = "Hatalı kullanıcı adı veya şifre!";
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('legacyActiveUser');
+            updateNav();
+            showSection('home');
+        }
+
+        // Sayfa yüklendiğinde menüyü güncelle
+        updateNav();
+    </script>
+</body>
+</html>
