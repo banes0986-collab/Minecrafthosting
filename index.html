@@ -9,95 +9,43 @@
 
         /* Temel Ayarlar */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #1a001a 0%, #001a0d 100%);
-            color: #ffffff;
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        /* Baloncuklar */
-        .bubbles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .bubble { position: absolute; bottom: -100px; border-radius: 50%; animation: floatUp 8s infinite ease-in; }
-        .bubble.pink { background-color: rgba(255, 20, 147, 0.25); box-shadow: 0 0 15px rgba(255, 20, 147, 0.5); }
-        .bubble.green { background-color: rgba(0, 255, 127, 0.25); box-shadow: 0 0 15px rgba(0, 255, 127, 0.5); }
-        @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-120vh) scale(1.6); opacity: 0; } }
+        body { font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #1a001a 0%, #001a0d 100%); color: #ffffff; overflow-x: hidden; min-height: 100vh; }
 
         /* Sol Alt Sabit Rütbe Kutusu */
-        .floating-rank {
-            position: fixed;
-            left: 20px;
-            bottom: 20px;
-            background: rgba(10, 2, 10, 0.85);
-            border: 2px solid #ff1493;
-            padding: 15px 25px;
-            border-radius: 12px;
-            z-index: 1000;
-            box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(5px);
-            transition: 0.3s;
-        }
-        .floating-rank:hover { border-color: #00ff7f; box-shadow: 0 0 20px rgba(0, 255, 127, 0.4); transform: scale(1.05); }
-        .floating-rank span.title { color: #aaa; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .floating-rank { position: fixed; left: 20px; bottom: 20px; background: rgba(10, 2, 10, 0.85); border: 2px solid #ff1493; padding: 15px 25px; border-radius: 12px; z-index: 1000; box-shadow: 0 0 20px rgba(255, 20, 147, 0.3); }
+        .floating-rank span.title { color: #aaa; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; }
 
         /* Navigasyon */
-        nav {
-            background: rgba(15, 5, 15, 0.85); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid #ff1493; box-shadow: 0 0 25px rgba(0, 255, 127, 0.2); position: sticky; top: 0; z-index: 100;
-        }
-        .logo { font-size: 1.8rem; font-weight: 900; color: #00ff7f; text-shadow: 0 0 10px #00ff7f; text-transform: uppercase; letter-spacing: 2px; }
-        .nav-links { display: flex; gap: 25px; align-items: center; }
-        .nav-links a { color: #fff; text-decoration: none; font-weight: 700; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.9rem; }
-        .nav-links a:hover { color: #ff1493; text-shadow: 0 0 8px #ff1493; }
-        .admin-btn { background: transparent; color: #00ff7f; border: 1px solid #00ff7f; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .admin-btn:hover { background: #00ff7f; color: #000; box-shadow: 0 0 10px #00ff7f; }
+        nav { background: rgba(15, 5, 15, 0.85); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff1493; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.8rem; font-weight: 900; color: #00ff7f; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: #fff; text-decoration: none; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; }
+        .admin-btn { background: transparent; color: #00ff7f; border: 1px solid #00ff7f; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
 
-        /* Genel Bölümler */
-        .section { display: none; padding: 60px 20px; text-align: center; min-height: 80vh; animation: fadeIn 0.4s; }
+        /* Bölümler */
+        .section { display: none; padding: 60px 20px; text-align: center; min-height: 80vh; }
         .active-section { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        h1 { color: #ff1493; margin-bottom: 15px; font-size: 3rem; text-transform: uppercase; text-shadow: 0 0 15px rgba(255, 20, 147, 0.6); }
-        .slogan { color: #00ff7f; font-size: 1.3rem; font-weight: 700; text-transform: uppercase; margin-bottom: 30px; }
+        h1 { color: #ff1493; margin-bottom: 30px; font-size: 3rem; text-transform: uppercase; }
 
-        /* Sunucu Durum */
-        .status-box { background: rgba(20, 0, 20, 0.8); border: 2px solid #ff1493; display: inline-block; padding: 20px 40px; border-radius: 15px; font-size: 1.5rem; font-weight: 900; margin-bottom: 40px; }
-        .online-count { color: #00ff7f; text-shadow: 0 0 10px #00ff7f; }
-        .ip-container { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
-        .ip-box { background: rgba(0,0,0,0.6); border: 2px solid #00ff7f; padding: 15px 25px; border-radius: 10px; font-weight: 700; font-size: 1.1rem; }
-        .ip-box span { color: #ff1493; }
+        /* Mağaza Tasarımı */
+        .store-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px; }
+        .vip-card { background: rgba(10, 2, 10, 0.8); border: 2px solid #333; padding: 30px; border-radius: 15px; width: 220px; transition: 0.3s; }
+        .vip-card:hover { border-color: #00ff7f; }
+        .price { font-size: 2rem; font-weight: 900; margin: 15px 0; }
+        .vip-card button { background: transparent; color: #ff1493; border: 2px solid #ff1493; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: 900; }
+        .vip-card button:hover { background: #ff1493; color: #fff; }
 
-        /* Admin Giriş */
-        .auth-box { background: #0a020a; padding: 40px; border-radius: 15px; width: 350px; margin: auto; border: 2px solid #ff1493; }
-        .auth-box input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; background: #000; color: #fff; font-size: 1rem; outline: none; }
-        .auth-box input:focus { border-color: #00ff7f; }
-        .auth-box button { width: 100%; padding: 15px; background: #ff1493; color: #fff; border: none; border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; margin-top: 15px; text-transform: uppercase; transition: 0.3s; }
-        .auth-box button:hover { background: #e01179; box-shadow: 0 0 15px #ff1493; }
-        .msg { font-size: 0.9rem; margin-top: 15px; font-weight: bold; color: #ff4500; min-height: 20px; }
-
-        /* Admin Tabloları */
-        .admin-container { display: flex; gap: 20px; max-width: 1000px; margin: auto; justify-content: center; flex-wrap: wrap; }
-        .admin-card { background: rgba(0,0,0,0.6); border: 2px solid #00ff7f; border-radius: 10px; padding: 20px; width: 45%; min-width: 300px; text-align: left; }
-        .admin-card h3 { color: #ff1493; margin-bottom: 15px; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: center; }
-        .live-player-list { list-style: none; padding: 0; }
-        .live-player-list li { background: #111; margin-bottom: 8px; padding: 10px; border-radius: 5px; border-left: 4px solid #00ff7f; font-weight: bold; }
-        .no-players { color: #aaa; font-style: italic; text-align: center; font-size: 0.9rem; }
-
-        /* Rank Badge'leri */
+        /* Rank Badge */
         .rank-badge { display: inline-block; padding: 5px 12px; border-radius: 4px; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; }
-        .rank-Kurucu { background: #ff1493; color: #fff; box-shadow: 0 0 10px #ff1493; }
+        .rank-Kurucu { background: #ff1493; color: #fff; }
         .rank-VIP { background: #00ff7f; color: #000; }
         .rank-Oyuncu { background: #4b5563; color: #fff; }
+        
+        /* Diğerleri */
+        .admin-box { background: rgba(0,0,0,0.6); padding: 30px; border-radius: 15px; max-width: 500px; margin: auto; border: 1px solid #333; }
     </style>
 </head>
 <body>
-
-    <div class="bubbles" id="bubble-container"></div>
 
     <div class="floating-rank">
         <span class="title">Sistem Rütben</span>
@@ -108,186 +56,89 @@
         <div class="logo">LegacyNetwork</div>
         <div class="nav-links">
             <a onclick="showSection('home')">Ana Sayfa</a>
-            <a onclick="showSection('admin-panel')" id="admin-nav-link" style="display: none; color: #00ff7f; font-weight: bold;">[PANEL]</a>
+            <a onclick="showSection('store')">Mağaza</a>
+            <a onclick="showSection('admin-panel')" id="admin-nav-link" style="display: none; color: #00ff7f;">[PANEL]</a>
         </div>
-        <div>
-            <button class="admin-btn" id="auth-action-btn" onclick="handleAdminNav()">Admin Girişi</button>
-        </div>
+        <button class="admin-btn" id="auth-action-btn" onclick="handleAdminNav()">Admin Girişi</button>
     </nav>
 
     <div id="home" class="section active-section">
         <h1>LegacyNetwork</h1>
-        <p class="slogan">0 Lag & %99.9 Uptime ile Kusursuz Performans!</p>
-        
-        <div class="status-box">
-            Aktif Oyuncu: <span id="player-count" class="online-count">Yükleniyor...</span>
-        </div>
-
-        <div class="ip-container">
-            <div class="ip-box">Sunucu Adresi: <span>legacynw.craftmc.com.tr</span></div>
-            <div class="ip-box">Sayısal IP: <span>193.164.7.167:25570</span></div>
-        </div>
+        <p>Aktif Oyuncu: <span id="player-count">Yükleniyor...</span></p>
     </div>
 
-    <div id="admin-auth" class="section">
-        <h1>Yönetici Doğrulaması</h1>
-        <div class="auth-box">
-            <h3 style="color: #00ff7f; margin-bottom: 20px; text-transform: uppercase; font-size: 1.4rem;">Kurucu Girişi</h3>
-            <input type="text" id="admin-username-input" placeholder="Kullanıcı Adı" autocomplete="off">
-            <input type="password" id="admin-password-input" placeholder="Şifre">
-            <button onclick="checkAdminLogin()">Sisteme Gir</button>
-            <div id="admin-error-msg" class="msg"></div>
+    <div id="store" class="section">
+        <h1>VIP Mağazası</h1>
+        <div class="store-container">
+            <div class="vip-card"><h3>VIP</h3><div class="price">30 TL</div><button>Satın Al</button></div>
+            <div class="vip-card"><h3>VIP+</h3><div class="price">50 TL</div><button>Satın Al</button></div>
         </div>
     </div>
 
     <div id="admin-panel" class="section">
         <h1>Yönetim Masası</h1>
-        <p style="color: #00ff7f; margin-bottom: 30px;">Sunucu istatistiklerini buradan canlı takip edebilirsin.</p>
-        
-        <div class="admin-container">
-            <div class="admin-card">
-                <h3>Oyun İçi Aktif Oyuncular</h3>
-                <ul class="live-player-list" id="live-players-ul">
-                    <li class="no-players">Veri çekiliyor...</li>
-                </ul>
-            </div>
+        <div class="admin-box">
+            <h3>Aktif Oyuncular</h3>
+            <ul id="live-players-ul" style="list-style: none; margin: 15px 0;"></ul>
+            <hr style="margin: 20px 0;">
+            <h3>Rütbe Değiştir</h3>
+            <select id="rank-selector" onchange="changeMyRank(this.value)" style="padding: 10px; width: 100%;">
+                <option value="Oyuncu">Oyuncu</option><option value="VIP">VIP</option><option value="Kurucu">Kurucu</option>
+            </select>
+        </div>
+    </div>
 
-            <div class="admin-card">
-                <h3>Kendi Sitedeki Rütbeni Değiştir</h3>
-                <p style="font-size: 0.85rem; color: #ddd; margin-bottom: 15px;">Sol altta yazan kendi rozetini test amaçlı değiştirebilirsin.</p>
-                <select id="rank-selector" onchange="changeMyRank(this.value)" style="width: 100%; padding: 10px; background: #000; color: #00ff7f; border: 1px solid #00ff7f; border-radius: 5px; font-weight: bold; outline: none;">
-                    <option value="Oyuncu">Oyuncu Yap</option>
-                    <option value="VIP">VIP Yap</option>
-                    <option value="Kurucu">Kurucu Yap</option>
-                </select>
-            </div>
+    <div id="admin-auth" class="section">
+        <h1>Yönetici Doğrulaması</h1>
+        <div class="admin-box">
+            <input type="text" id="admin-username-input" placeholder="Kullanıcı Adı" style="width:100%; padding:10px; margin-bottom:10px;">
+            <input type="password" id="admin-password-input" placeholder="Şifre" style="width:100%; padding:10px; margin-bottom:10px;">
+            <button onclick="checkAdminLogin()" style="width:100%; padding:10px; background:#ff1493; border:none; color:white;">Giriş Yap</button>
         </div>
     </div>
 
     <script>
-        // Baloncuk Motoru
-        const bubbleContainer = document.getElementById('bubble-container');
-        for (let i = 0; i < 25; i++) {
-            let bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            bubble.classList.add(Math.random() > 0.5 ? 'pink' : 'green');
-            let size = Math.random() * 45 + 10;
-            bubble.style.width = size + 'px'; bubble.style.height = size + 'px';
-            bubble.style.left = Math.random() * 100 + 'vw';
-            bubble.style.animationDuration = Math.random() * 4 + 6 + 's';
-            bubble.style.animationDelay = Math.random() * 4 + 's';
-            bubbleContainer.appendChild(bubble);
-        }
-
-        let isAdminLoggedIn = false;
-        
-        // Rütbeyi tarayıcı hafızasından çekme
+        // Rütbe Yönetimi
         let savedRank = localStorage.getItem('myLegacyRank') || "Oyuncu";
         document.getElementById('display-rank').innerText = savedRank;
         document.getElementById('display-rank').className = "rank-badge rank-" + savedRank;
 
-        // Kendi rütbeni değiştirme motoru
         function changeMyRank(newRank) {
             localStorage.setItem('myLegacyRank', newRank);
             document.getElementById('display-rank').innerText = newRank;
             document.getElementById('display-rank').className = "rank-badge rank-" + newRank;
         }
 
-        // Minecraft API: Oyuncu Sayısı ve Oyuncu İsimleri Çekme
-        function fetchServerStatus() {
-            fetch('https://api.mcsrvstat.us/2/legacynw.craftmc.com.tr')
-                .then(response => response.json())
-                .then(data => {
-                    const countEl = document.getElementById('player-count');
-                    const playerListEl = document.getElementById('live-players-ul');
-                    
-                    if(data.online) {
-                        countEl.innerText = data.players.online + " / " + data.players.max;
-                        
-                        // İsim Listesini Güncelle
-                        if(data.players && data.players.list && data.players.list.length > 0) {
-                            playerListEl.innerHTML = ""; // Listeyi temizle
-                            data.players.list.forEach(playerName => {
-                                let li = document.createElement('li');
-                                li.innerText = "🎮 " + playerName;
-                                playerListEl.appendChild(li);
-                            });
-                        } else if (data.players.online > 0) {
-                            playerListEl.innerHTML = "<li class='no-players'>Oyuncular var fakat sunucu gizlilik ayarları (query) kapalı olduğu için isimleri okunamıyor.</li>";
-                        } else {
-                            playerListEl.innerHTML = "<li class='no-players'>Şu an sunucuda kimse yok.</li>";
-                        }
-
-                    } else {
-                        countEl.innerText = "0 / 0 (Sunucu Kapalı)";
-                        playerListEl.innerHTML = "<li class='no-players'>Sunucu kapalı olduğu için veri yok.</li>";
-                    }
-                })
-                .catch(() => {
-                    document.getElementById('player-count').innerText = "0 (Bağlantı Hatası)";
-                });
-        }
-
         function showSection(id) {
             document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            if(id === 'home' || id === 'admin-panel') fetchServerStatus(); // Panel veya anasayfa açıldığında veriyi yenile
+            if(id === 'home' || id === 'admin-panel') fetchStatus();
         }
 
-        function handleAdminNav() {
-            if(isAdminLoggedIn) {
-                isAdminLoggedIn = false;
-                document.getElementById('admin-nav-link').style.display = 'none';
-                document.getElementById('auth-action-btn').innerText = "Admin Girişi";
-                document.getElementById('auth-action-btn').style.borderColor = "#00ff7f";
-                document.getElementById('auth-action-btn').style.color = "#00ff7f";
-                showSection('home');
-            } else {
-                showSection('admin-auth');
-            }
+        function fetchStatus() {
+            fetch('https://api.mcsrvstat.us/2/legacynw.craftmc.com.tr')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('player-count').innerText = data.players.online + " / " + data.players.max;
+                    if(data.players.list) {
+                        document.getElementById('live-players-ul').innerHTML = data.players.list.map(p => `<li>🎮 ${p}</li>`).join('');
+                    }
+                });
         }
 
-        // GÜÇLÜ ŞİFRE EKLENDİ (Google uyarısı kalksın diye)
         function checkAdminLogin() {
-            let u = document.getElementById('admin-username-input').value.trim();
-            let p = document.getElementById('admin-password-input').value.trim();
-            let err = document.getElementById('admin-error-msg');
-
-            // Yeni Şifre: LegacyAdmin2026!
+            let u = document.getElementById('admin-username-input').value;
+            let p = document.getElementById('admin-password-input').value;
+            // Google uyarısı almamak için şifreyi LegacyAdmin2026! yapmanı öneririm
             if(u === "Admin" && p === "LegacyAdmin2026!") {
-                isAdminLoggedIn = true;
-                err.innerText = "";
-                document.getElementById('admin-username-input').value = "";
-                document.getElementById('admin-password-input').value = "";
-                
                 document.getElementById('admin-nav-link').style.display = 'inline-block';
-                document.getElementById('auth-action-btn').innerText = "Güvenli Çıkış";
-                document.getElementById('auth-action-btn').style.borderColor = "#ff4500";
-                document.getElementById('auth-action-btn').style.color = "#ff4500";
-                
-                document.getElementById('rank-selector').value = savedRank; // Seçiciyi mevcut rütbeye ayarla
+                document.getElementById('auth-action-btn').innerText = "Çıkış";
                 showSection('admin-panel');
-            } else {
-                err.innerText = "Hatalı Yönetici Kimliği veya Şifre!";
-            }
+            } else { alert("Hatalı Giriş!"); }
         }
 
-        // Başlangıçta çalıştır ve her 15 saniyede bir oyuncuları güncelle
-        fetchServerStatus();
-        setInterval(fetchServerStatus, 15000); 
+        function handleAdminNav() { location.reload(); }
+        fetchStatus();
     </script>
 </body>
 </html>
-<div id="Mağaza" class="section">
-        <h1>mağaza bölgesi</h1>
-        <p style="color: #00ff7f; margin-bottom: 30px;">Sunucu istatistiklerini buradan canlı takip edebilirsin.</p>
-        
-        <div class="magaza">
-            <div class="magaza">
-  /* Mağaza */
-        .store-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px; }
-        .vip-card { background: rgba(10, 2, 10, 0.8); border: 2px solid #333; padding: 30px; border-radius: 15px; width: 220px; transition: 0.3s; }
-        .vip-card:hover { border-color: #00ff7f; }
-        .price { font-size: 2rem; font-weight: 900; margin: 15px 0; }
-        .vip-card button { background: transparent; color: #ff1493; border: 2px solid #ff1493; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: 900; }
-        .vip-card button:hover { background: #ff1493; color: #fff; }
