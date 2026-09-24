@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PornHub V2</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0f;
+    --bg2:#111118;
+    --bg3:#18181f;
+    --purple:#9d00ff;
+    --purple2:#7b00cc;
+    --purple3:#c44dff;
+    --purple-glow:rgba(157,0,255,0.18);
+    --text:#f0f0f0;
+    --muted:#888;
+    --card:#16161e;
+    --border:rgba(157,0,255,0.25);
+  }
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;min-height:100vh}
+
+  /* HEADER */
+  header{
+    background:var(--bg2);
+    border-bottom:1.5px solid var(--border);
+    padding:0 1.5rem;
+    position:sticky;top:0;z-index:100;
+    box-shadow:0 2px 24px rgba(157,0,255,0.12);
+  }
+  .header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1.5rem;height:64px;flex-wrap:wrap}
+  .logo{
+    font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;white-space:nowrap;
+    background:linear-gradient(90deg,#fff 30%,var(--purple3));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .logo span{
+    background:var(--purple);
+    -webkit-background-clip:unset;-webkit-text-fill-color:#fff;background-clip:unset;
+    color:#fff;border-radius:5px;padding:1px 7px;font-size:1.3rem;margin-left:3px;
+  }
+  .search-bar{
+    flex:1;display:flex;min-width:160px;
+    background:var(--bg3);border:1.5px solid var(--border);border-radius:24px;overflow:hidden;
+  }
+  .search-bar input{
+    flex:1;background:transparent;border:none;outline:none;padding:.5rem 1rem;color:var(--text);font-size:.95rem;
+  }
+  .search-bar input::placeholder{color:var(--muted)}
+  .search-bar button{
+    background:var(--purple);border:none;padding:.5rem 1.1rem;cursor:pointer;color:#fff;font-size:1rem;
+    transition:background .2s;
+  }
+  .search-bar button:hover{background:var(--purple2)}
+  .header-actions{display:flex;gap:.6rem;align-items:center}
+  .btn-outline{
+    background:transparent;border:1.5px solid var(--border);color:var(--text);
+    padding:.38rem .9rem;border-radius:20px;cursor:pointer;font-size:.85rem;transition:all .2s;
+  }
+  .btn-outline:hover{border-color:var(--purple);color:var(--purple3)}
+  .btn-solid{
+    background:var(--purple);border:none;color:#fff;
+    padding:.4rem 1rem;border-radius:20px;cursor:pointer;font-size:.85rem;font-weight:600;
+    transition:background .2s;
+  }
+  .btn-solid:hover{background:var(--purple2)}
+
+  /* NAV CATEGORIES */
+  nav{
+    background:var(--bg2);border-bottom:1px solid rgba(157,0,255,0.12);
+    padding:0 1.5rem;overflow-x:auto;
+  }
+  .nav-inner{max-width:1400px;margin:0 auto;display:flex;gap:.2rem;padding:.4rem 0}
+  .nav-item{
+    white-space:nowrap;padding:.42rem 1.1rem;border-radius:20px;cursor:pointer;font-size:.85rem;
+    color:var(--muted);transition:all .2s;border:1px solid transparent;
+  }
+  .nav-item:hover{color:var(--text);border-color:var(--border)}
+  .nav-item.active{background:var(--purple);color:#fff;font-weight:600}
+
+  /* MAIN */
+  main{max-width:1400px;margin:0 auto;padding:1.5rem 1.5rem 3rem}
+
+  /* SECTION HEADER */
+  .section-header{
+    display:flex;align-items:center;gap:.8rem;margin-bottom:1.1rem;margin-top:2rem;
+  }
+  .section-header:first-child{margin-top:0}
+  .section-title{font-size:1.25rem;font-weight:700;letter-spacing:.3px}
+  .section-bar{flex:1;height:1px;background:var(--border)}
+  .section-badge{
+    background:var(--purple);color:#fff;font-size:.75rem;font-weight:700;
+    padding:2px 8px;border-radius:10px;
+  }
+
+  /* VIDEO GRID */
+  .video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:1rem;
+  }
+
+  /* VIDEO CARD */
+  .video-card{
+    background:var(--card);border-radius:10px;overflow:hidden;cursor:pointer;
+    border:1px solid rgba(157,0,255,0.12);transition:all .22s;position:relative;
+  }
+  .video-card:hover{border-color:var(--purple);transform:translateY(-3px);box-shadow:0 8px 32px rgba(157,0,255,0.22)}
+  .video-thumb{
+    position:relative;width:100%;aspect-ratio:16/9;background:#0d0d14;overflow:hidden;
+  }
+  .video-thumb video{
+    width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .3s;
+  }
+  .video-card:hover .video-thumb video{transform:scale(1.04)}
+  .play-overlay{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.28);opacity:0;transition:opacity .2s;
+  }
+  .video-card:hover .play-overlay{opacity:1}
+  .play-btn{
+    width:52px;height:52px;border-radius:50%;background:rgba(157,0,255,0.85);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .play-btn svg{fill:#fff;width:22px;height:22px;margin-left:3px}
+  .video-duration{
+    position:absolute;bottom:7px;right:8px;background:rgba(0,0,0,0.75);
+    color:#fff;font-size:.72rem;padding:2px 6px;border-radius:4px;font-weight:600;
+  }
+  .video-info{padding:.7rem .85rem .85rem}
+  .video-title{font-size:.88rem;font-weight:600;line-height:1.4;margin-bottom:.35rem;color:var(--text)}
+  .video-meta{font-size:.75rem;color:var(--muted);display:flex;gap:.5rem;flex-wrap:wrap}
+  .video-views{color:var(--purple3)}
+
+  /* VIDEO MODAL */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:999;
+    align-items:center;justify-content:center;padding:1rem;
+  }
+  .modal-overlay.open{display:flex}
+  .modal-box{
+    background:var(--bg2);border-radius:12px;border:1.5px solid var(--border);
+    width:100%;max-width:900px;overflow:hidden;position:relative;
+  }
+  .modal-close{
+    position:absolute;top:10px;right:12px;background:rgba(157,0,255,0.7);border:none;
+    color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.2rem;
+    z-index:10;display:flex;align-items:center;justify-content:center;
+  }
+  .modal-close:hover{background:var(--purple)}
+  .modal-video{width:100%;aspect-ratio:16/9;background:#000}
+  .modal-video video{width:100%;height:100%;display:block}
+  .modal-title{padding:.8rem 1rem;font-weight:600;font-size:1rem;border-top:1px solid var(--border)}
+
+  /* PHOTO SECTION */
+  .coming-soon-box{
+    background:var(--card);border:1.5px dashed var(--border);border-radius:12px;
+    padding:3rem 1.5rem;text-align:center;
+  }
+  .coming-icon{font-size:3rem;margin-bottom:.8rem}
+  .coming-title{font-size:1.1rem;font-weight:700;color:var(--purple3);margin-bottom:.4rem}
+  .coming-sub{font-size:.88rem;color:var(--muted)}
+
+  /* FOOTER */
+  footer{
+    background:var(--bg2);border-top:1px solid var(--border);
+    text-align:center;padding:1.2rem;color:var(--muted);font-size:.82rem;
+    margin-top:2rem;
+  }
+  footer span{color:var(--purple3)}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--purple2);border-radius:3px}
+
+  @media(max-width:600px){
+    .logo{font-size:1.2rem}
+    .header-actions{display:none}
+    .video-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem}
+    main{padding:1rem .8rem 2rem}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">Porn<span>Hub</span> V2</div>
+    <div class="search-bar">
+      <input type="text" placeholder="Video ara...">
+      <button>🔍</button>
+    </div>
+    <div class="header-actions">
+      <button class="btn-outline">Giriş Yap</button>
+      <button class="btn-solid">Üye Ol</button>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-item active">Tümü</div>
+    <div class="nav-item">🇹🇷 Türk</div>
+    <div class="nav-item">👥 Sizden Gelenler</div>
+    <div class="nav-item">📸 Fotoğraflar</div>
+    <div class="nav-item">🔥 Trend</div>
+    <div class="nav-item">⭐ En Beğenilen</div>
+    <div class="nav-item">🆕 Yeni</div>
+    <div class="nav-item">Amateur</div>
+    <div class="nav-item">Solo</div>
+    <div class="nav-item">Grup</div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- SİZDEN GELENLER -->
+  <div class="section-header">
+    <div class="section-title">👥 Sizden Gelenler</div>
+    <div class="section-badge">3</div>
+    <div class="section-bar"></div>
+  </div>
+
+  <div class="video-grid" id="user-grid">
+
+    <div class="video-card" onclick="openModal('IiBSaUXFmt20Sf2K.mov','Kullanıcı Videosu 1')">
+      <div class="video-thumb">
+        <video preload="metadata" muted>
+          <source src="IiBSaUXFmt20Sf2K.mov">
+        </video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Kullanıcı Videosu #1</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>Sizden Gelenler</span></div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('HYHpP7y4MBNhnpRQ.mov','Kullanıcı Videosu 2')">
+      <div class="video-thumb">
+        <video preload="metadata" muted>
+          <source src="HYHpP7y4MBNhnpRQ.mov">
+        </video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Kullanıcı Videosu #2</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>Sizden Gelenler</span></div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('4_5952017677965856423_1.mp4','Kullanıcı Videosu 3')">
+      <div class="video-thumb">
+        <video preload="metadata" muted>
+          <source src="4_5952017677965856423_1.mp4">
+        </video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Kullanıcı Videosu #3</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>Sizden Gelenler</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TÜRK KATEGORİSİ -->
+  <div class="section-header">
+    <div class="section-title">🇹🇷 Türk</div>
+    <div class="section-badge">7</div>
+    <div class="section-bar"></div>
+  </div>
+
+  <div class="video-grid" id="turk-grid">
+
+    <div class="video-card" onclick="openModal('logo_turkporno.mov','Türk Video #1')">
+      <div class="video-thumb">
+        <video preload="metadata" muted><source src="logo_turkporno.mov"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Türk Porno #1</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>🇹🇷 Türk</span></div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('logo_trland_91.mp4','Türk Video #2')">
+      <div class="video-thumb">
+        <video preload="metadata" muted><source src="logo_trland_91.mp4"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">TR Land #91</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>🇹🇷 Türk</span></div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('logo_trland_89.mp4','Türk Video #3')">
+      <div class="video-thumb">
+        <video preload="metadata" muted><source src="logo_trland_89.mp4"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">TR Land #89</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>🇹🇷 Türk</span></div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('logo_trland_80.mp4','Türk Video #4')">
+      <div class="video-thumb">
+        <video preload="metadata" muted><source src="logo_trland_80.mp4"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">TR Land #80</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>🇹🇷 Türk</span></div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('logo_trland_40.MP4','Türk Video #5')">
+      <div class="video-thumb">
+        <video preload="metadata" muted><source src="logo_trland_40.MP4"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">TR Land #40</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>🇹🇷 Türk</span></div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('logo_trland_1.mov','Türk Video #6')">
+      <div class="video-thumb">
+        <video preload="metadata" muted><source src="logo_trland_1.mov"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">TR Land #1</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>🇹🇷 Türk</span></div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openModal('logo_discordggturkland_4.mp4','Türk Video #7')">
+      <div class="video-thumb">
+        <video preload="metadata" muted><source src="logo_discordggturkland_4.mp4"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="video-duration">--:--</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Turkland Discord #4</div>
+        <div class="video-meta"><span class="video-views">👁 Yeni</span><span>🇹🇷 Türk</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOTOĞRAFLAR -->
+  <div class="section-header">
+    <div class="section-title">📸 Fotoğraflar</div>
+    <div class="section-bar"></div>
+  </div>
+
+  <div class="coming-soon-box">
+    <div class="coming-icon">📸</div>
+    <div class="coming-title">Yakında Eklenecektir!</div>
+    <div class="coming-sub">Fotoğraf galerimiz çok yakında sizlerle. Takipte kalın!</div>
+  </div>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-video">
+      <video id="modal-vid" controls autoplay style="width:100%;height:100%"></video>
+    </div>
+    <div class="modal-title" id="modal-title"></div>
+  </div>
+</div>
+
+<footer>
+  <p><span>PornHub V2</span> &copy; 2025 — Tüm hakları saklıdır. 18+ içerik.</p>
+</footer>
+
+<script>
+  // Duration loader
+  document.querySelectorAll('.video-thumb video').forEach(function(v){
+    v.addEventListener('loadedmetadata',function(){
+      var d=Math.round(v.duration);
+      var m=Math.floor(d/60);var s=d%60;
+      var label=v.closest('.video-thumb').querySelector('.video-duration');
+      if(label)label.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    });
+  });
+
+  // Hover preview
+  document.querySelectorAll('.video-card').forEach(function(card){
+    var vid=card.querySelector('video');
+    if(!vid)return;
+    card.addEventListener('mouseenter',function(){
+      vid.currentTime=0;vid.play().catch(function(){});
+    });
+    card.addEventListener('mouseleave',function(){
+      vid.pause();vid.currentTime=0;
+    });
+  });
+
+  // Modal
+  function openModal(src,title){
+    var mv=document.getElementById('modal-vid');
+    mv.src=src;mv.load();mv.play().catch(function(){});
+    document.getElementById('modal-title').textContent=title;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeModal(){
+    var mv=document.getElementById('modal-vid');
+    mv.pause();mv.src='';
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow='';
+  }
+  function closeModalOutside(e){
+    if(e.target===document.getElementById('modal'))closeModal();
+  }
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+  // Nav tabs
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    item.addEventListener('click',function(){
+      document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+      item.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
