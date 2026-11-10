@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThunderAC v1.5 | SMP-BoxMining Anti-Cheat</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#07050a',
+                        cardDark: '#110b1a',
+                        cardBorder: '#2e1065',
+                        neonPurple: '#a855f7',
+                        glowViolet: '#6b21a8',
+                        brightPurple: '#c084fc',
+                        darkAccent: '#180e29'
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        gaming: ['Rajdhani', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 25px rgba(168, 85, 247, 0.25)' },
+                            '100%': { boxShadow: '0 0 50px rgba(168, 85, 247, 0.65)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Cyber Grid Overlay */
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.7), 0 0 40px rgba(107, 33, 168, 0.5);
+        }
+
+        .glass-card {
+            background: rgba(17, 11, 26, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(192, 132, 252, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px -10px rgba(168, 85, 247, 0.35);
+        }
+
+        .neon-button {
+            background: linear-gradient(135deg, #7e22ce 0%, #9333ea 50%, #6366f1 100%);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .neon-button:hover {
+            box-shadow: 0 0 45px rgba(168, 85, 247, 0.85);
+            transform: scale(1.03);
+        }
+
+        canvas#particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="bg-obsidian text-zinc-100 font-sans antialiased selection:bg-purple-600 selection:text-white min-h-screen relative overflow-x-hidden">
+
+    <!-- Interactive Canvas Particles -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Cyber Ambient Lights -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-purple-900/20 blur-[170px] rounded-full pointer-events-none z-0"></div>
+    <div class="fixed top-[600px] -right-40 w-[600px] h-[600px] bg-indigo-900/15 blur-[180px] rounded-full pointer-events-none z-0"></div>
+
+    <!-- Main Container with Grid -->
+    <div class="relative z-10 cyber-grid">
+
+        <!-- Notification Toast -->
+        <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-darkAccent border border-purple-500/50 text-purple-200 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3">
+            <i class="fa-solid fa-circle-check text-neonPurple text-xl"></i>
+            <span id="toast-msg" class="font-medium">İndirme başlatıldı!</span>
+        </div>
+
+        <!-- Header / Navbar -->
+        <header class="sticky top-0 z-40 backdrop-blur-xl bg-obsidian/80 border-b border-purple-950/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-800 flex items-center justify-center shadow-lg shadow-purple-900/50">
+                        <i class="fa-solid fa-bolt-lightning text-white text-2xl animate-pulse"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl sm:text-3xl font-gaming font-extrabold tracking-wider bg-gradient-to-r from-white via-purple-200 to-neonPurple bg-clip-text text-transparent">
+                            THUNDER<span class="text-neonPurple">AC</span>
+                        </span>
+                        <span class="hidden sm:inline-block ml-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800/50">v1.5 BETA</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide text-zinc-400">
+                    <a href="#features" class="hover:text-neonPurple transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-xs"></i> Özellikler
+                    </a>
+                    <a href="#coming-soon" class="hover:text-neonPurple transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xs"></i> Eklenecekler
+                    </a>
+                    <a href="#download" class="hover:text-neonPurple transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-download text-xs"></i> İndir
+                    </a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="flex items-center gap-4">
+                    <a href="ThunderAC1.5.jar" download="ThunderAC1.5.jar" onclick="triggerDownloadFeedback()" class="neon-button text-white font-bold px-6 py-2.5 rounded-xl text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i>
+                        <span>İndir (v1.5)</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="relative pt-16 sm:pt-24 pb-28">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                
+                <!-- Status Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-950/80 border border-purple-500/30 text-purple-300 text-xs sm:text-sm font-semibold mb-8 animate-float">
+                    <span class="w-2.5 h-2.5 rounded-full bg-neonPurple animate-ping"></span>
+                    <i class="fa-solid fa-gamepad text-neonPurple"></i>
+                    <span>SMP & BoxMining Sunucuları İçin Özel Tasarlandı</span>
+                </div>
+                
+                <!-- Main Title -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 font-gaming uppercase leading-tight">
+                    ÜSTÜN KORUMA <br>
+                    <span class="bg-gradient-to-r from-neonPurple via-brightPurple to-indigo-400 bg-clip-text text-transparent glow-text">
+                        THUNDERAC v1.5
+                    </span>
+                </h1>
+                
+                <!-- Description -->
+                <p class="max-w-3xl mx-auto text-base sm:text-xl text-zinc-300 mb-10 leading-relaxed font-normal">
+                    Güçlü Aura, Elytratarget koruması ve birçok özellikle sizlerle!
+                    Sunucunuzda hilecilere geçit vermeyen, yüksek performanslı koruma sistemi beta aşamasında!
+                </p>
+
+                <!-- Hero Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-5 max-w-md mx-auto sm:max-w-none">
+                    <!-- DIRECT DOWNLOAD LINK WITH FILE ATTRIBUTE -->
+                    <a href="ThunderAC1.5.jar" download="ThunderAC1.5.jar" onclick="triggerDownloadFeedback()" class="w-full sm:w-auto neon-button text-white font-extrabold px-10 py-5 rounded-2xl text-lg flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-file-arrow-down text-2xl"></i>
+                        <div class="text-left">
+                            <div class="text-xs font-normal text-purple-200">Hemen Cihazına Yükle</div>
+                            <div>ThunderAC1.5.jar İndir</div>
+                        </div>
+                    </a>
+
+                    <a href="#features" class="w-full sm:w-auto glass-card hover:bg-purple-950/40 text-zinc-200 font-bold px-8 py-5 rounded-2xl text-base flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-circle-info text-neonPurple"></i>
+                        <span>Özellikleri İncele</span>
+                    </a>
+                </div>
+
+                <!-- Live Specs Cards -->
+                <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="glass-card p-6 rounded-2xl">
+                        <i class="fa-solid fa-shield-virus text-3xl text-neonPurple mb-2"></i>
+                        <div class="text-2xl font-bold font-gaming text-white">Tam Koruma</div>
+                        <div class="text-xs text-zinc-400 uppercase tracking-wider mt-1">Aura & Elytra</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <i class="fa-solid fa-microchip text-3xl text-neonPurple mb-2"></i>
+                        <div class="text-2xl font-bold font-gaming text-white">0.0% TPS</div>
+                        <div class="text-xs text-zinc-400 uppercase tracking-wider mt-1">Minimum Yük</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <i class="fa-solid fa-cubes text-3xl text-neonPurple mb-2"></i>
+                        <div class="text-2xl font-bold font-gaming text-white">SMP / Box</div>
+                        <div class="text-xs text-zinc-400 uppercase tracking-wider mt-1">Özel Modüller</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <i class="fa-solid fa-vial text-3xl text-neonPurple mb-2"></i>
+                        <div class="text-2xl font-bold font-gaming text-white">BETA 1.5</div>
+                        <div class="text-xs text-zinc-400 uppercase tracking-wider mt-1">Aktif Sürüm</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-purple-950/60 text-neonPurple text-xs font-bold tracking-widest uppercase mb-3 border border-purple-800/40">
+                        <i class="fa-solid fa-bolt"></i> AKTİF MODÜLLER
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-gaming uppercase">Mevcut Koruma Özellikleri</h2>
+                    <p class="text-zinc-400 mt-3 text-base">ThunderAC v1.5 ile sunucunuza eklenen gelişmiş güvenlik katmanları.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Feature 1 -->
+                    <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-950/80 border border-purple-500/40 flex items-center justify-center text-neonPurple text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-hand-fist"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white font-gaming">Güçlü Aura Koruması</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Killaura, ClickAura ve Reach hilelerini paket analizi ve dönüş açıları üzerinden saliseler içinde tespit eder ve engeller.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-950/80 border border-purple-500/40 flex items-center justify-center text-neonPurple text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-plane-lock"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white font-gaming">Elytratarget Koruması</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Elytra ile havada süzülürken veya pvp atarken yapılan otomatik kilitlenme ve anormal hedef alma hareketlerini kilitler.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-950/80 border border-purple-500/40 flex items-center justify-center text-neonPurple text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-box-archive"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white font-gaming">SMP-BoxMining Uyumlu</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Maden kırma ve kutu savaşları mekaniklerine özel optimize edilmiş algoritmalar sayesinde yanlış tespit (False-Positive) vermez.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Coming Soon Section (Eklenecekler Bölmesi) -->
+        <section id="coming-soon" class="py-20 relative bg-darkAccent/40 border-y border-purple-950/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-purple-950/80 text-brightPurple text-xs font-bold tracking-widest uppercase mb-3 border border-purple-700/40">
+                        <i class="fa-solid fa-clock"></i> GELECEK GÜNCELLEMELER
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-gaming uppercase">Çok Yakında Eklenecekler</h2>
+                    <p class="text-zinc-400 mt-3 text-base">ThunderAC geliştirilmeye devam ediyor! Gelecek sürümlerde eklenecek modüller:</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Upcoming 1 -->
+                    <div class="glass-card p-8 rounded-3xl border-dashed border-purple-500/40 relative">
+                        <span class="absolute top-4 right-4 bg-purple-950 text-neonPurple border border-purple-500/30 text-[11px] font-bold px-3 py-1 rounded-full">
+                            YAKINDA
+                        </span>
+                        <div class="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-brightPurple text-xl mb-5">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white font-gaming">Gelişmiş Fly Koruması</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Uçma, süzülme, Glide ve harita dışı hareket hilelerine karşı ultra hassas hareket doğrulama modülü.
+                        </p>
+                    </div>
+
+                    <!-- Upcoming 2 -->
+                    <div class="glass-card p-8 rounded-3xl border-dashed border-purple-500/40 relative">
+                        <span class="absolute top-4 right-4 bg-purple-950 text-neonPurple border border-purple-500/30 text-[11px] font-bold px-3 py-1 rounded-full">
+                            YAKINDA
+                        </span>
+                        <div class="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-brightPurple text-xl mb-5">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white font-gaming">Crystal Aura Engelleme</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Kristal savaşlarında kullanılan Auto-Crystal ve seri patlatma hilelerini anında kısıtlayan PvP modülü.
+                        </p>
+                    </div>
+
+                    <!-- Upcoming 3 -->
+                    <div class="glass-card p-8 rounded-3xl border-dashed border-purple-500/40 relative">
+                        <span class="absolute top-4 right-4 bg-purple-950 text-neonPurple border border-purple-500/30 text-[11px] font-bold px-3 py-1 rounded-full">
+                            YAKINDA
+                        </span>
+                        <div class="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-brightPurple text-xl mb-5">
+                            <i class="fa-solid fa-eye-slash"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white font-gaming">Anti X-Ray Teknolojisi</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Maden ekonomisini korumak için sunucuyu yormayan, paket bazlı akıllı maden gizleme motoru.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Banner Section -->
+        <section id="download" class="py-24 relative">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="glass-card p-10 sm:p-16 rounded-3xl relative overflow-hidden animate-pulse-glow border-purple-500/50">
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 rounded-3xl bg-purple-600/30 border border-purple-400/50 flex items-center justify-center text-neonPurple text-4xl mx-auto mb-6">
+                            <i class="fa-solid fa-download"></i>
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 font-gaming uppercase">
+                            ThunderAC1.5.jar Dosyasını İndir
+                        </h2>
+                        <p class="text-zinc-300 max-w-xl mx-auto mb-10 text-base">
+                            Tıkla ve eklentiyi doğrudan cihazına indir. Sunucunun `plugins` klasörüne atarak hemen kullanmaya başla!
+                        </p>
+                        
+                        <!-- DIRECT DOWNLOAD BUTTON -->
+                        <a href="ThunderAC1.5.jar" download="ThunderAC1.5.jar" onclick="triggerDownloadFeedback()" class="inline-flex items-center gap-4 neon-button text-white font-extrabold px-12 py-5 rounded-2xl text-xl shadow-2xl">
+                            <i class="fa-solid fa-cube text-2xl"></i>
+                            <span>ThunderAC1.5.jar İndir</span>
+                        </a>
+
+                        <div class="mt-6 text-xs text-zinc-500 font-mono">
+                            Dosya Adı: ThunderAC1.5.jar | Sürüm: 1.5-BETA
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-10 border-t border-purple-950/80 bg-obsidian text-center text-zinc-500 text-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-neonPurple"></i>
+                    <span class="font-gaming font-bold text-zinc-300 text-lg">ThunderAC v1.5</span>
+                    <span>— SMP & BoxMining Anti-Cheat</span>
+                </div>
+                <div class="text-xs text-zinc-600">
+                    © 2026 ThunderAC. Beta aşamasında sizlerle!
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Particle Background Animation Script -->
+    <script>
+        // Interactive Canvas Particle System
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 45;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 1,
+                speedX: (Math.random() - 0.5) * 0.4,
+                speedY: (Math.random() - 0.5) * 0.4,
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(168, 85, 247, ${p.opacity})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Toast feedback when download clicked
+        function triggerDownloadFeedback() {
+            showToast("ThunderAC1.5.jar indirme işlemi başlatıldı!");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
