@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAntiCrash · Minecraft Flood Koruması</title>
+<style>
+:root{--bg:#070a12;--card:#0f1522;--card2:#141c2e;--line:#1f2a42;--tx:#e8edf8;--mut:#8593b0;--ac:#5b8cff;--ac2:#8a5bff;--red:#ff4d6a;--grn:#2fd98a;--ylw:#ffc247}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);
+background-image:radial-gradient(900px 400px at 15% -10%,#1a2a6055,transparent),radial-gradient(700px 400px at 100% 0,#4a1f8a44,transparent)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-weight:800;font-size:20px;letter-spacing:.3px}.logo i{font-style:normal;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;color:transparent}
+.hero{padding:30px 0 10px}.hero h1{font-size:clamp(30px,6vw,52px);line-height:1.08;margin:0 0 14px;font-weight:800}
+.hero h1 i{font-style:normal;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;color:transparent}
+.hero p{color:var(--mut);font-size:17px;max-width:620px;margin:0}
+.grid{display:grid;gap:12px}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1.1fr .9fr}
+@media(max-width:760px){.g3,.g2{grid-template-columns:1fr}.g3.keep{grid-template-columns:repeat(3,1fr)}}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:16px;padding:18px}
+.stat b{display:block;font-size:30px;font-weight:800}.stat small{color:var(--mut)}
+.feat{font-size:14px;color:var(--mut)}.feat b{display:block;color:var(--tx);margin-bottom:4px;font-size:15px}
+h2{font-size:17px;margin:0 0 12px}.sec{margin-top:26px}
+input{width:100%;padding:13px;margin:6px 0;background:#0a0f1b;border:1px solid var(--line);border-radius:10px;color:var(--tx);font-size:15px;outline:none}
+input:focus{border-color:var(--ac)}
+button,.btn{display:inline-flex;align-items:center;gap:6px;padding:11px 18px;border:0;border-radius:10px;background:linear-gradient(90deg,var(--ac),var(--ac2));color:#fff;font-weight:700;cursor:pointer;text-decoration:none;font-size:14px}
+button.alt{background:#222c45}button.dng{background:#3a1520;color:var(--red)}button.sm{padding:6px 11px;font-size:12px}
+.tabs{display:flex;gap:6px;margin-bottom:14px}.tabs button{background:#151d31;color:var(--mut)}.tabs button.on{background:#22305a;color:#fff}
+.err{color:var(--red);min-height:20px;font-size:14px;margin:4px 0}
+.key{font-family:ui-monospace,monospace;background:#0a0f1b;border:1px dashed #33436b;padding:12px;border-radius:10px;word-break:break-all;color:#b7c9ff;font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.pill{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.5px}
+.live{background:#4a1220;color:var(--red);animation:b 1s infinite}.end{background:#0f3322;color:var(--grn)}.on_{background:#0f3322;color:var(--grn)}.off_{background:#262d40;color:var(--mut)}
+@keyframes b{50%{opacity:.35}}
+.atk{border-left:4px solid var(--grn)}.atk.live_{border-left-color:var(--red);box-shadow:0 0 0 1px #ff4d6a33,0 0 30px #ff4d6a18}
+.big{font-size:34px;font-weight:800}.kv{display:flex;gap:22px;flex-wrap:wrap;margin:10px 0}.kv small{display:block;color:var(--mut);font-size:12px}.kv b{font-size:16px}
+.src{font-family:ui-monospace,monospace;font-size:13px;color:var(--mut);display:flex;gap:14px;flex-wrap:wrap}.src span b{color:var(--tx);font-weight:600}
+.empty{color:var(--mut);text-align:center;padding:26px}
+code,pre{font-family:ui-monospace,monospace}pre{background:#0a0f1b;border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;font-size:13px;color:#b7c9ff;margin:8px 0}
+ol{padding-left:20px;color:var(--mut);line-height:1.8;margin:0}ol b{color:var(--tx)}
+.hide{display:none!important}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.bar{height:8px;background:#0a0f1b;border-radius:99px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#22305a;padding:10px 18px;border-radius:10px;font-size:14px;opacity:0;transition:.25s;pointer-events:none}.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><div class="logo">T<i>AntiCrash</i></div><div id="navr" class="hide row"><span id="un" style="color:var(--mut)"></span><button class="alt sm" id="out">Çıkış</button></div></nav>
+
+<div id="landing">
+  <div class="hero"><h1>Sunucunu <i>çökertmeye</i> çalışanlara karşı kalkan.</h1>
+  <p>Bağlantı ve ping flood koruması, anında chat bildirimi ve her saldırıyı IP, ülke, güç ve süreyle gösteren canlı panel. Minecraft 1.16.5 – 1.21.x.</p></div>
+  <div class="grid g3 keep sec">
+    <div class="card stat"><b id="s1">0</b><small>Kurulu sunucu</small></div>
+    <div class="card stat"><b id="s2">0</b><small>Çevrimiçi</small></div>
+    <div class="card stat"><b id="s3">0</b><small>Kayıtlı saldırı</small></div>
+  </div>
+  <div class="grid g2 sec">
+    <div class="card">
+      <h2>Nasıl çalışır?</h2>
+      <ol><li><b>Kayıt ol</b>, sana özel lisans anahtarı verilir.</li><li><b>Plugini indir</b>, sunucuna at.</li><li>Anahtarı <b>config.yml</b>'ye yaz. Anahtar bağlanınca koruma açılır.</li><li>Saldırıları <b>canlı</b> panelden izle.</li></ol>
+      <div class="grid g3 sec" style="margin-top:18px">
+        <div class="feat"><b>Anahtar korumalı</b>Anahtarsız plugin çalışmaz</div>
+        <div class="feat"><b>Canlı panel</b>IP · ülke · güç · süre</div>
+        <div class="feat"><b>Chat uyarısı</b>Adminlere anında mesaj</div>
+      </div>
+    </div>
+    <div class="card" id="auth">
+      <div class="tabs"><button id="t1" class="on">Giriş</button><button id="t2">Kayıt ol</button></div>
+      <input id="u" placeholder="Kullanıcı adı" autocomplete="username">
+      <input id="p" type="password" placeholder="Şifre (en az 8 karakter)" autocomplete="current-password">
+      <div class="err" id="err"></div>
+      <button id="go" style="width:100%;justify-content:center">Giriş yap</button>
+    </div>
+  </div>
+</div>
+
+<div id="dash" class="hide">
+  <div class="grid g3 keep">
+    <div class="card stat"><b id="d1">0/3</b><small>Sunucu hakkı</small><div class="bar"><i id="d1b" style="width:0"></i></div></div>
+    <div class="card stat"><b id="d2">0</b><small>Aktif saldırı</small></div>
+    <div class="card stat"><b id="d3">0</b><small>Toplam engellenen</small></div>
+  </div>
+
+  <div class="card sec">
+    <div class="row"><h2 style="margin:0">Lisans anahtarın</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="sm" id="cp">Kopyala</button><button class="alt sm" id="rg">Yenile</button><a class="btn sm" href="/download">⬇ Plugini indir</a></div></div>
+    <div class="key" id="key" style="margin-top:12px"></div>
+    <p style="color:var(--mut);font-size:13px;margin:10px 0 0">Anahtarı kimseyle paylaşma. Yenilersen eski anahtarı kullanan sunucularda koruma kapanır.</p>
+  </div>
+
+  <div class="card sec"><h2>Kurulum</h2>
+    <ol><li>İndirdiğin <b>TAntiCrash.jar</b> dosyasını sunucunun <b>plugins</b> klasörüne at ve sunucuyu başlat.</li>
+    <li><b>plugins/TAntiCrash/config.yml</b> dosyasını aç, şu iki satırı doldur:</li></ol>
+    <pre id="snip"></pre>
+    <ol start="3"><li>Sunucuda <b>/tac reload</b> yaz. Konsolda <b>"Lisans dogrulandi"</b> yazısını görünce koruma aktif.</li></ol>
+  </div>
+
+  <div class="sec"><h2>Sunucularım</h2><div class="grid" id="srv" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))"></div></div>
+  <div class="sec"><h2>Saldırılar <span style="color:var(--mut);font-weight:400;font-size:13px">· canlı güncellenir</span></h2><div class="grid" id="atk"></div></div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var $=function(i){return document.getElementById(i)},reg=false,es=null,curKey='';
+function esc(s){var d=document.createElement('div');d.textContent=String(s);return d.innerHTML}
+function dur(s){return s>=3600?Math.floor(s/3600)+' sa '+Math.floor(s%3600/60)+' dk':s>=60?Math.floor(s/60)+' dk '+(s%60)+' sn':s+' sn'}
+function api(p,o){return fetch(p,o).then(function(r){return r.json().then(function(j){j._s=r.status;return j})})}
+function post(p,b){return api(p,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b||{})})}
+function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},1800)}
+function stats(){api('/api/public-stats').then(function(j){$('s1').textContent=j.servers;$('s2').textContent=j.online;$('s3').textContent=j.attacks})}
+
+function mode(r){reg=r;$('t1').className=r?'':'on';$('t2').className=r?'on':'';$('go').textContent=r?'Kayıt ol':'Giriş yap';$('err').textContent=''}
+$('t1').onclick=function(){mode(false)};$('t2').onclick=function(){mode(true)};
+$('go').onclick=function(){
+  var u=$('u').value.trim(),p=$('p').value;
+  if(!u||!p){$('err').textContent='Kullanıcı adı ve şifre gir.';return}
+  $('err').textContent='';$('go').disabled=true;
+  post(reg?'/api/register':'/api/login',{username:u,password:p}).then(function(j){
+    $('go').disabled=false;
+    if(j.ok){$('p').value='';load(true)}else $('err').textContent=j.error||'Hata oluştu';
+  }).catch(function(){
+    $('go').disabled=false;
+    $('err').textContent='Sunucuya ulaşılamıyor. Siteyi "node server.js" ile başlatıp http://localhost:3000 adresinden aç.';
+  });
+};
+if(location.protocol==='file:')$('err').textContent='Bu sayfayı dosyadan açmışsın. "node server.js" çalıştırıp http://localhost:3000 adresini aç.';
+$('p').onkeydown=function(e){if(e.key==='Enter')$('go').click()};
+$('out').onclick=function(){api('/api/logout').then(function(){if(es)es.close();es=null;load()})};
+$('cp').onclick=function(){navigator.clipboard.writeText(curKey).then(function(){toast('Anahtar kopyalandı')})};
+$('rg').onclick=function(){if(confirm('Anahtar yenilensin mi? Eski anahtarlı sunucularda koruma kapanır.'))post('/api/regen-key').then(function(j){toast('Yeni anahtar oluşturuldu');load()})};
+
+function rmServer(id){if(confirm('Bu sunucu silinsin mi?'))post('/api/server/remove',{id:id}).then(load)}
+
+function load(afterAuth){
+  api('/api/me').then(function(m){
+    if(m._s!==200){
+      if(afterAuth===true)$('err').textContent='Giriş yapıldı ama oturum açılamadı. Tarayıcı çerezlerini engelleme.';$('landing').classList.remove('hide');$('dash').classList.add('hide');$('navr').classList.add('hide');return}
+    $('landing').classList.add('hide');$('dash').classList.remove('hide');$('navr').classList.remove('hide');
+    $('un').textContent=m.username;curKey=m.apiKey;$('key').textContent=m.apiKey;
+    $('snip').textContent='api-url: "'+location.origin+'/api/report"\napi-key: "'+m.apiKey+'"';
+    $('d1').textContent=m.servers.length+'/'+m.max;$('d1b').style.width=Math.min(100,m.servers.length/m.max*100)+'%';
+    var tb=0;m.servers.forEach(function(s){tb+=s.totalBlocked||0});$('d3').textContent=tb;
+    $('srv').innerHTML=m.servers.length?m.servers.map(function(s){return '<div class="card"><div class="row"><b>'+esc(s.name||'Sunucu')+'</b><span class="pill '+(s.up?'on_">ÇEVRİMİÇİ':'off_">KAPALI')+'</span></div>'+
+      '<div class="kv"><div><small>Sürüm</small><b style="font-size:13px">'+esc((s.version||'-').split(' ')[0])+'</b></div><div><small>Oyuncu</small><b>'+s.online+'</b></div><div><small>Engellenen</small><b>'+s.totalBlocked+'</b></div></div>'+
+      '<button class="dng sm" onclick="rmServer(\''+esc(s.id)+'\')">Sil</button></div>'}).join(''):'<div class="card empty" style="grid-column:1/-1">Henüz sunucu bağlanmadı. Yukarıdaki kurulum adımlarını uygula.</div>';
+    api('/api/attacks').then(function(a){
+      $('d2').textContent=a.filter(function(x){return x.status==='live'}).length;
+      $('atk').innerHTML=a.length?a.map(function(x){var live=x.status==='live';
+        var src=x.sources.map(function(s){return '<span><b>'+esc(s.ip)+'</b> · '+esc(s.country)+'</span>'}).join('')||'<span>kaynak yok</span>';
+        return '<div class="card atk '+(live?'live_':'')+'"><div class="row"><div><span class="pill '+(live?'live">CANLI':'end">BİTTİ')+'</span> <b style="margin-left:8px">'+esc(x.type)+'</b> <span style="color:var(--mut)">· '+esc(x.server)+'</span></div>'+
+          '<span style="color:var(--mut);font-size:13px">'+new Date(x.startedAt).toLocaleString('tr-TR')+'</span></div>'+
+          '<div class="kv"><div><small>Güç (zirve)</small><span class="big">'+x.peakPerSec+'</span><small>istek/sn</small></div><div><small>Süre</small><b>'+dur(x.durationSec)+'</b></div><div><small>Engellenen</small><b>'+x.blocked+'</b></div><div><small>Anlık</small><b>'+x.currentPerSec+'/sn</b></div></div>'+
+          '<div class="src">'+src+'</div></div>'}).join(''):'<div class="card empty">Henüz saldırı yok, harika.</div>'});
+    if(!es){es=new EventSource('/api/stream');es.onmessage=function(){load();stats()}}
+  });
+}
+stats();load();setInterval(function(){stats();if(!$('dash').classList.contains('hide'))load()},5000);
+</script>
+</body>
+</html>
